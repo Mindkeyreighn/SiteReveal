@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SiteReveal — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#082e27;--green:#0b735c;--mint:#e8f5f0;--paper:#f5f7f6;--ink:#10211d;--muted:#64736f;--line:#dce4e1;--white:#fff;--warn:#9a6200}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"DM Sans",sans-serif}button,input,select,textarea{font:inherit}
+    .hidden{display:none!important}.login{min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#06251f,#0c4438)}
+    .login-card{width:min(430px,100%);background:#fff;border-radius:18px;padding:36px;box-shadow:0 22px 70px #001b1540}.brand{font:800 25px Syne,sans-serif}.brand span{color:var(--green)}
+    .login-card h1{font-size:25px;margin:30px 0 7px}.sub{color:var(--muted);font-size:14px;margin:0 0 24px}.field{display:grid;gap:7px;margin:14px 0}.field label{font-size:12px;font-weight:600}
+    input,select,textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:11px 12px;background:#fff;color:var(--ink)}textarea{min-height:82px;resize:vertical}
+    .primary{border:0;border-radius:9px;background:var(--green);color:#fff;padding:12px 16px;font-weight:700;cursor:pointer}.login-card .primary{width:100%;margin-top:10px}.error{color:#b42318;font-size:13px;min-height:20px;margin-top:12px}
+    .app{min-height:100vh;display:grid;grid-template-columns:245px 1fr}.side{background:var(--navy);color:#d5eee7;padding:26px 20px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+    .side .brand{color:#fff}.side .brand span{color:#8ee0c8}.side small{color:#85afa4;letter-spacing:.15em}.nav{margin-top:36px;display:grid;gap:8px}.nav a{color:#b9d8d0;text-decoration:none;padding:12px;border-radius:9px}.nav a.active{background:#174a40;color:#fff}
+    .owner{margin-top:auto;border-top:1px solid #285247;padding-top:18px;font-size:13px}.owner strong{display:block;color:#fff}.ghost{margin-top:13px;width:100%;border:1px solid #37675c;color:#cbe4dd;background:transparent;border-radius:8px;padding:9px;cursor:pointer}
+    main{padding:38px;min-width:0}.top{display:flex;justify-content:space-between;align-items:start;gap:20px}.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--green);font-weight:700}.top h1{font-size:33px;margin:10px 0 6px}.top p{color:var(--muted);margin:0}
+    .metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin:32px 0 22px}.metric{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px}.metric span{font-size:12px;color:var(--muted)}.metric strong{display:block;font-size:28px;margin:12px 0 2px}
+    .panel{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}.toolbar{display:flex;gap:12px;padding:16px;border-bottom:1px solid var(--line)}.toolbar input{flex:1}
+    table{width:100%;border-collapse:collapse}th{text-align:left;font-size:10px;letter-spacing:.1em;color:#7e8c88;padding:13px 18px;background:#fbfcfc}td{padding:16px 18px;border-top:1px solid #edf1ef;font-size:13px}tbody tr{cursor:pointer}tbody tr:hover{background:#f5faf8}
+    .biz strong{display:block;font-size:14px}.biz span{color:var(--muted);font-size:12px}.pill{display:inline-block;padding:5px 9px;border-radius:18px;background:#e8f1fb;color:#24517b;font-size:10px;font-weight:700}.pill.verified,.pill.sold{background:#e5f5ee;color:#176a51}.pill.research{background:#fff4d8;color:#805700}
+    dialog{border:0;border-radius:15px;width:min(680px,calc(100% - 30px));padding:0;box-shadow:0 30px 100px #001b153b}dialog::backdrop{background:#061f1a99}.modal-head{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.modal-head h2{margin:0}.close{border:0;background:none;font-size:24px;cursor:pointer}.form-grid{padding:22px 24px;display:grid;grid-template-columns:1fr 1fr;gap:13px}.wide{grid-column:1/-1}.check{display:flex;align-items:center;gap:9px}.check input{width:auto}.actions{padding:18px 24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}.danger{border:1px solid #f1b9b4;background:#fff;color:#b42318;border-radius:9px;padding:10px 13px;cursor:pointer}
+    .empty{padding:45px;text-align:center;color:var(--muted)}.notice{background:#fff8df;color:#725300;border:1px solid #eadba6;padding:12px 16px;border-radius:9px;margin:20px 0;font-size:13px}
+    @media(max-width:1000px){.metrics{grid-template-columns:repeat(2,1fr)}.app{grid-template-columns:1fr}.side{height:auto;position:static}.nav{display:none}.owner{margin-top:20px}main{padding:22px}.table-wrap{overflow:auto}}
+    @media(max-width:620px){.metrics{grid-template-columns:1fr 1fr}.top{display:block}.top .primary{margin-top:18px}.form-grid{grid-template-columns:1fr}.wide{grid-column:auto}}
+  </style>
+</head>
+<body>
+  <section id="loginView" class="login">
+    <form id="loginForm" class="login-card">
+      <div class="brand">Site<span>Reveal</span></div>
+      <h1>Admin sign in</h1>
+      <p class="sub">Only the SiteReveal owner can access this command center.</p>
+      <div class="field"><label>Email</label><input id="email" type="email" value="freesevenluck@gmail.com" required></div>
+      <div class="field"><label>Password</label><input id="password" type="password" required></div>
+      <button class="primary" type="submit">Sign in</button>
+      <div id="loginError" class="error"></div>
+      <p class="sub" style="margin:16px 0 0;text-align:center"><a href="index.html">Return to public SiteReveal</a></p>
+    </form>
+  </section>
+
+  <section id="adminView" class="app hidden">
+    <aside class="side">
+      <div class="brand">Site<span>Reveal</span></div><small>OPERATIONS</small>
+      <nav class="nav"><a class="active" href="#">⌂ &nbsp; Lead pipeline</a><a href="index.html">↗ &nbsp; Public website</a></nav>
+      <div class="owner"><strong id="ownerEmail"></strong><span>Workspace owner</span><button id="logout" class="ghost">Sign out</button></div>
+    </aside>
+    <main>
+      <div class="top">
+        <div><div class="eyebrow">SITEREVEAL COMMAND CENTER</div><h1>Lead pipeline</h1><p>Manage businesses from discovery through reveal and sale.</p></div>
+        <button id="addLead" class="primary">+ Add lead</button>
+      </div>
+      <div class="notice">This portable admin saves directly to your Supabase project. It is not dependent on ChatGPT hosting.</div>
+      <div class="metrics">
+        <div class="metric"><span>Total leads</span><strong id="mTotal">0</strong></div>
+        <div class="metric"><span>Verified</span><strong id="mVerified">0</strong></div>
+        <div class="metric"><span>Ready to generate</span><strong id="mReady">0</strong></div>
+        <div class="metric"><span>Site review</span><strong id="mReview">0</strong></div>
+        <div class="metric"><span>Sold</span><strong id="mSold">0</strong></div>
+      </div>
+      <section class="panel">
+        <div class="toolbar"><input id="search" placeholder="Search businesses, services, or city"><select id="stageFilter"><option value="">All stages</option><option>Research</option><option>Ready to Generate</option><option>Site Review</option><option>Contacted</option><option>Sold</option></select></div>
+        <div class="table-wrap"><table><thead><tr><th>BUSINESS</th><th>VERIFICATION</th><th>STAGE</th><th>STATUS</th><th>PUBLIC</th></tr></thead><tbody id="leadRows"></tbody></table><div id="empty" class="empty hidden">No leads found. Add your first business.</div></div>
+      </section>
+    </main>
+  </section>
+
+  <dialog id="leadDialog">
+    <form id="leadForm">
+      <div class="modal-head"><h2 id="dialogTitle">Add lead</h2><button type="button" class="close" id="closeDialog">×</button></div>
+      <div class="form-grid">
+        <input id="leadId" type="hidden">
+        <div class="field"><label>Business name *</label><input id="businessName" required></div>
+        <div class="field"><label>Slug *</label><input id="slug" required pattern="[a-z0-9-]+"></div>
+        <div class="field"><label>Category</label><select id="category"><option>cleaning</option><option>irrigation</option><option>landscaping</option><option>trades</option></select></div>
+        <div class="field"><label>City</label><input id="city"></div>
+        <div class="field"><label>Phone</label><input id="phone"></div>
+        <div class="field"><label>Email</label><input id="leadEmail" type="email"></div>
+        <div class="field"><label>Verification</label><select id="verification"><option>Needs Review</option><option>Verified</option></select></div>
+        <div class="field"><label>Pipeline stage</label><select id="stage"><option>Research</option><option>Ready to Generate</option><option>Site Review</option><option>Contacted</option><option>Sold</option></select></div>
+        <div class="field"><label>Offer status</label><select id="status"><option value="available">Available</option><option value="pending">Pending</option><option value="sold">Sold</option></select></div>
+        <div class="field"><label>Price</label><input id="price" type="number" min="0" value="399"></div>
+        <div class="field"><label>Tagline</label><input id="tagline"></div>
+        <div class="field"><label>Accent color</label><input id="color" type="color" value="#1a56db"></div>
+        <div class="field wide"><label>Description</label><textarea id="description"></textarea></div>
+        <label class="check wide"><input id="published" type="checkbox"> Show this business on the public SiteReveal page</label>
+      </div>
+      <div class="actions"><button id="deleteLead" class="danger hidden" type="button">Delete lead</button><div style="margin-left:auto;display:flex;gap:9px"><button class="ghost" style="color:#334;border-color:#ccd" type="button" id="cancelDialog">Cancel</button><button class="primary" type="submit">Save lead</button></div></div>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script>
+    const cfg=window.SITE_REVEAL_CONFIG;
+    const db=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey);
+    const $=id=>document.getElementById(id);
+    let leads=[];
+    const fields=['businessName','slug','category','city','phone','leadEmail','verification','stage','status','price','tagline','color','description','published'];
+    const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const slugify=s=>s.toLowerCase().trim().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+
+    async function start(){
+      const {data:{session}}=await db.auth.getSession();
+      if(session) await enter(session.user); else showLogin();
+      db.auth.onAuthStateChange((_event,session)=>session?enter(session.user):showLogin());
+    }
+    function showLogin(){$('loginView').classList.remove('hidden');$('adminView').classList.add('hidden')}
+    async function enter(user){
+      if((user.email||'').toLowerCase()!==cfg.adminEmail.toLowerCase()){await db.auth.signOut();$('loginError').textContent='This account is not authorized.';return}
+      $('ownerEmail').textContent=user.email;$('loginView').classList.add('hidden');$('adminView').classList.remove('hidden');await loadLeads();
+    }
+    $('loginForm').addEventListener('submit',async e=>{
+      e.preventDefault();$('loginError').textContent='Signing in…';
+      const {error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});
+      $('loginError').textContent=error?error.message:'';
+    });
+    $('logout').onclick=()=>db.auth.signOut();
+
+    async function loadLeads(){
+      const {data,error}=await db.from('leads').select('*').order('created_at',{ascending:false});
+      if(error){alert('Could not load leads: '+error.message);return} leads=data||[];render();
+    }
+    function render(){
+      const q=$('search').value.toLowerCase(),stage=$('stageFilter').value;
+      const shown=leads.filter(l=>(!q||[l.business_name,l.category,l.city,l.email].join(' ').toLowerCase().includes(q))&&(!stage||l.stage===stage));
+      $('leadRows').innerHTML=shown.map(l=>`<tr data-id="${l.id}"><td class="biz"><strong>${esc(l.business_name)}</strong><span>${esc(l.category)} · ${esc(l.city)}</span></td><td><span class="pill ${l.verification==='Verified'?'verified':'research'}">${esc(l.verification)}</span></td><td><span class="pill">${esc(l.stage)}</span></td><td>${esc(l.status)}</td><td>${l.published?'Yes':'No'}</td></tr>`).join('');
+      $('empty').classList.toggle('hidden',shown.length>0);
+      $('mTotal').textContent=leads.length;$('mVerified').textContent=leads.filter(l=>l.verification==='Verified').length;$('mReady').textContent=leads.filter(l=>l.stage==='Ready to Generate').length;$('mReview').textContent=leads.filter(l=>l.stage==='Site Review').length;$('mSold').textContent=leads.filter(l=>l.stage==='Sold').length;
+      document.querySelectorAll('#leadRows tr').forEach(tr=>tr.onclick=()=>openLead(leads.find(l=>l.id===tr.dataset.id)));
+    }
+    $('search').oninput=render;$('stageFilter').onchange=render;
+    $('businessName').oninput=()=>{if(!$('leadId').value)$('slug').value=slugify($('businessName').value)};
+    function openLead(l){
+      $('leadForm').reset();$('leadId').value=l?.id||'';$('dialogTitle').textContent=l?'Edit lead':'Add lead';$('deleteLead').classList.toggle('hidden',!l);
+      const map={businessName:'business_name',leadEmail:'email'};
+      fields.forEach(id=>{const el=$(id),key=map[id]||id;if(el.type==='checkbox')el.checked=!!l?.[key];else if(l?.[key]!=null)el.value=l[key]});
+      if(!l){$('price').value=399;$('color').value='#1a56db'}$('leadDialog').showModal();
+    }
+    $('addLead').onclick=()=>openLead(null);
+    ['closeDialog','cancelDialog'].forEach(id=>$(id).onclick=()=>$('leadDialog').close());
+    $('leadForm').addEventListener('submit',async e=>{
+      e.preventDefault();
+      const row={business_name:$('businessName').value.trim(),slug:$('slug').value.trim(),category:$('category').value,city:$('city').value.trim(),phone:$('phone').value.trim(),email:$('leadEmail').value.trim()||null,verification:$('verification').value,stage:$('stage').value,status:$('status').value,price:Number($('price').value||0),tagline:$('tagline').value.trim(),color:$('color').value,description:$('description').value.trim(),published:$('published').checked,updated_at:new Date().toISOString()};
+      const id=$('leadId').value; const result=id?await db.from('leads').update(row).eq('id',id):await db.from('leads').insert(row);
+      if(result.error){alert('Could not save: '+result.error.message);return}$('leadDialog').close();await loadLeads();
+    });
+    $('deleteLead').onclick=async()=>{
+      const id=$('leadId').value;if(!id||!confirm('Delete this lead permanently?'))return;
+      const {error}=await db.from('leads').delete().eq('id',id);if(error){alert(error.message);return}$('leadDialog').close();await loadLeads();
+    };
+    start();
+  </script>
+</body>
+</html>

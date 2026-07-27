@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SiteReveal — Your Website Is Already Built</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f4f0;
+    --mid: #9a9890;
+    --accent: #1a56db;
+    --accent-light: #e8f0fe;
+    --reveal: #0f3460;
+    --success: #166534;
+    --success-bg: #dcfce7;
+    --border: #e2e0da;
+    --card-bg: #ffffff;
+    --tab-active: #0d0d0d;
+    --tab-inactive: #6b6962;
+    --curtain: #0f3460;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.2rem;
+    color: var(--ink); letter-spacing: -0.5px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+  .nav-cta {
+    font-size: 0.8rem; font-weight: 500;
+    padding: 7px 16px;
+    background: var(--ink); color: #fff;
+    border-radius: 6px; border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: opacity 0.15s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+  .nav-actions { display:flex; align-items:center; gap:10px; }
+  .admin-link { color:var(--ink); font-size:.78rem; font-weight:500; text-decoration:none; padding:7px 10px; }
+  .demo-notice { max-width:780px; margin:-1.75rem auto 2rem; padding:0 2rem; text-align:center; color:#7a776f; font-size:.78rem; }
+
+  /* HERO */
+  .hero {
+    max-width: 780px; margin: 0 auto;
+    padding: 5rem 2rem 3rem;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent);
+    background: var(--accent-light);
+    padding: 4px 12px; border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -1.5px; color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    font-size: 1.05rem; color: var(--mid);
+    line-height: 1.6; max-width: 520px; margin: 0 auto 2.5rem;
+    font-weight: 300;
+  }
+
+  /* SEARCH BOX */
+  .search-wrap {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 6px 6px 6px 20px;
+    display: flex; align-items: center; gap: 8px;
+    max-width: 540px; margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-wrap:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(26,86,219,0.1);
+  }
+  .search-wrap input {
+    flex: 1; border: none; outline: none;
+    font-size: 1rem; font-family: 'Inter', sans-serif;
+    background: transparent; color: var(--ink);
+  }
+  .search-wrap input::placeholder { color: #b0ada7; }
+  .search-btn {
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 10px;
+    padding: 10px 20px; font-size: 0.9rem;
+    font-weight: 500; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap; transition: background 0.15s;
+  }
+  .search-btn:hover { background: #1446c0; }
+
+  .search-hint {
+    font-size: 0.78rem; color: var(--mid);
+    margin-top: 0.75rem; text-align: center;
+  }
+
+  /* REVEAL ANIMATION */
+  .reveal-stage {
+    max-width: 780px; margin: 0 auto;
+    padding: 0 2rem 2rem;
+    display: none;
+  }
+  .reveal-stage.visible { display: block; }
+  .reveal-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    animation: slideUp 0.4s ease forwards;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal-header {
+    background: var(--reveal);
+    padding: 1.5rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .reveal-header-text h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 1.3rem; color: #fff;
+  }
+  .reveal-header-text p { font-size: 0.82rem; color: #93a8c9; margin-top: 2px; }
+  .reveal-badge {
+    background: rgba(255,255,255,0.15);
+    color: #fff; font-size: 0.72rem; font-weight: 500;
+    padding: 5px 12px; border-radius: 20px; letter-spacing: 0.05em;
+  }
+  .site-preview {
+    width: 100%; height: 420px;
+    border: none; display: block;
+    background: var(--paper);
+  }
+  .reveal-actions {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+  }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 11px 22px; font-size: 0.9rem;
+    font-weight: 500; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.15s;
+  }
+  .btn-primary:hover { background: #1446c0; }
+  .btn-secondary {
+    background: transparent; color: var(--ink);
+    border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 11px 22px;
+    font-size: 0.9rem; font-weight: 500;
+    cursor: pointer; font-family: 'Inter', sans-serif;
+    transition: border-color 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--ink); }
+  .price-tag {
+    margin-left: auto;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem; font-weight: 800; color: var(--ink);
+  }
+  .price-tag span { font-size: 0.8rem; font-weight: 400; color: var(--mid); }
+
+  /* NOT FOUND */
+  .not-found {
+    text-align: center; padding: 3rem 2rem;
+    background: #fff; border-radius: 16px;
+    border: 1px solid var(--border);
+    animation: slideUp 0.3s ease forwards;
+  }
+  .not-found-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .not-found h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem;
+  }
+  .not-found p { color: var(--mid); font-size: 0.9rem; line-height: 1.6; }
+  .notify-row {
+    display: flex; gap: 8px; max-width: 380px;
+    margin: 1.5rem auto 0;
+  }
+  .notify-row input {
+    flex: 1; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 10px 14px;
+    font-size: 0.85rem; font-family: 'Inter', sans-serif;
+    outline: none;
+  }
+  .notify-row input:focus { border-color: var(--accent); }
+  .notify-row button {
+    background: var(--ink); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 10px 16px; font-size: 0.85rem;
+    font-weight: 500; cursor: pointer; white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* GALLERY SECTION */
+  .gallery-section {
+    max-width: 1100px; margin: 0 auto;
+    padding: 3rem 2rem 1rem;
+  }
+  .section-label {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--mid);
+    margin-bottom: 1.25rem;
+  }
+
+  /* TABS */
+  .tabs-bar {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem; padding-bottom: 0;
+  }
+  .tab-btn {
+    background: none; border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--tab-inactive);
+    padding: 8px 14px 10px;
+    cursor: pointer; position: relative;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.15s;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    color: var(--tab-active);
+    border-bottom-color: var(--ink);
+  }
+  .tab-count {
+    font-size: 0.7rem; background: var(--border);
+    color: var(--tab-inactive); border-radius: 10px;
+    padding: 1px 6px; margin-left: 4px;
+  }
+  .tab-btn.active .tab-count {
+    background: var(--ink); color: #fff;
+  }
+
+  /* SITE CARDS GRID */
+  .sites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .site-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .site-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+  .card-thumb {
+    height: 180px; overflow: hidden;
+    background: linear-gradient(135deg, #e8f0fe 0%, #f0f4ff 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .card-thumb iframe {
+    width: 200%; height: 200%;
+    transform: scale(0.5) translate(-50%, -50%);
+    pointer-events: none; border: none;
+    position: absolute; top: 0; left: 0;
+  }
+  .card-thumb .thumb-placeholder {
+    text-align: center;
+  }
+  .thumb-placeholder .biz-initial {
+    width: 56px; height: 56px; border-radius: 12px;
+    background: var(--accent); color: #fff;
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 1.5rem; display: flex; align-items: center;
+    justify-content: center; margin: 0 auto 8px;
+  }
+  .thumb-placeholder p {
+    font-size: 0.78rem; color: var(--mid);
+  }
+  .status-pill {
+    position: absolute; top: 10px; right: 10px;
+    font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px;
+  }
+  .status-pill.available { background: var(--success-bg); color: var(--success); }
+  .status-pill.sold { background: #f1f5f9; color: #64748b; }
+  .status-pill.pending { background: #fef9c3; color: #713f12; }
+  .card-body { padding: 1rem 1.1rem 1.2rem; }
+  .card-biz-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 1rem; color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .card-meta {
+    font-size: 0.78rem; color: var(--mid);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-meta-dot { width: 3px; height: 3px; background: var(--border); border-radius: 50%; }
+  .card-actions {
+    display: flex; gap: 6px; margin-top: 12px;
+  }
+  .card-btn {
+    flex: 1; padding: 8px;
+    font-size: 0.78rem; font-weight: 500;
+    border-radius: 7px; border: 1.5px solid var(--border);
+    background: transparent; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
+  }
+  .card-btn.primary {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+  .card-btn.primary:hover { background: #1446c0; }
+  .card-btn:not(.primary):hover { border-color: var(--ink); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(10,10,20,0.6);
+    z-index: 200; align-items: center; justify-content: center;
+    padding: 1.5rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff; border-radius: 18px;
+    width: 100%; max-width: 560px;
+    padding: 2rem; position: relative;
+    animation: slideUp 0.3s ease forwards;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: var(--paper); border: none;
+    width: 32px; height: 32px; border-radius: 50%;
+    cursor: pointer; font-size: 1.1rem; color: var(--mid);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+  }
+  .modal-sub { color: var(--mid); font-size: 0.88rem; margin-bottom: 1.5rem; line-height: 1.5; }
+  .option-cards { display: flex; flex-direction: column; gap: 10px; }
+  .option-card {
+    border: 1.5px solid var(--border); border-radius: 12px;
+    padding: 1.1rem 1.25rem; cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .option-card:hover { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(26,86,219,0.08); }
+  .option-card.featured { border-color: var(--accent); background: var(--accent-light); }
+  .option-icon {
+    width: 38px; height: 38px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .option-info { flex: 1; }
+  .option-title {
+    font-weight: 600; font-size: 0.92rem; color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .option-desc { font-size: 0.78rem; color: var(--mid); line-height: 1.5; }
+  .option-price {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1rem; color: var(--ink);
+    white-space: nowrap; align-self: center;
+  }
+
+  /* HOW IT WORKS */
+  .how-section {
+    max-width: 860px; margin: 2rem auto 0;
+    padding: 2rem 2rem 4rem;
+  }
+  .how-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; margin-top: 1.5rem;
+  }
+  .how-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 14px; padding: 1.4rem;
+  }
+  .how-num {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 2rem; color: var(--accent-light);
+    line-height: 1; margin-bottom: 0.75rem;
+    -webkit-text-stroke: 2px var(--accent);
+  }
+  .how-title {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.95rem; margin-bottom: 0.4rem;
+  }
+  .how-desc { font-size: 0.82rem; color: var(--mid); line-height: 1.6; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center; padding: 1.5rem;
+    font-size: 0.78rem; color: var(--mid);
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem;
+    background: var(--ink); color: #fff;
+    padding: 12px 20px; border-radius: 10px;
+    font-size: 0.85rem; font-weight: 500;
+    z-index: 300; opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 3rem 1rem 2rem; }
+    .reveal-actions { flex-direction: column; }
+    .price-tag { margin-left: 0; }
+    nav { padding: 0 1rem; }
+    .gallery-section { padding: 2rem 1rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    SiteReveal
+  </div>
+  <div class="nav-actions">
+    <button class="nav-cta" onclick="scrollToGallery()">Browse all sites</button>
+    <a class="admin-link" href="admin.html">Admin login</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">North Idaho &amp; Spokane Valley</div>
+  <h1>Your website is <span>already built.</span></h1>
+  <p class="hero-sub">We build free preview websites for local businesses. Type your business name to see yours — then decide if you want to claim it.</p>
+
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Type your business name..." autocomplete="off"
+      onkeydown="if(event.key==='Enter') revealSite()"/>
+    <button class="search-btn" onclick="revealSite()">Reveal my site →</button>
+  </div>
+  <p class="search-hint">Try: "Wize Guyz Irrigation" · "Spotless Solutions" · "Yard King Sprinklers"</p>
+</section>
+<p class="demo-notice">Current listings are demonstration placeholders while SiteReveal is being prepared for real businesses.</p>
+
+<!-- REVEAL STAGE -->
+<div class="reveal-stage" id="revealStage">
+  <div id="revealContent"></div>
+</div>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="section-label">Demonstration sites — not active offers</div>
+
+  <div class="tabs-bar" id="tabsBar">
+    <button class="tab-btn active" onclick="filterTab('all', this)">All <span class="tab-count" id="count-all">0</span></button>
+    <button class="tab-btn" onclick="filterTab('available', this)">Available <span class="tab-count" id="count-available">0</span></button>
+    <button class="tab-btn" onclick="filterTab('landscaping', this)">Landscaping <span class="tab-count" id="count-landscaping">0</span></button>
+    <button class="tab-btn" onclick="filterTab('cleaning', this)">Cleaning <span class="tab-count" id="count-cleaning">0</span></button>
+    <button class="tab-btn" onclick="filterTab('irrigation', this)">Irrigation <span class="tab-count" id="count-irrigation">0</span></button>
+    <button class="tab-btn" onclick="filterTab('trades', this)">Trades <span class="tab-count" id="count-trades">0</span></button>
+  </div>
+
+  <div class="sites-grid" id="sitesGrid"></div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="section-label">How SiteReveal works</div>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">1</div>
+      <div class="how-title">We find you</div>
+      <div class="how-desc">We scout local businesses without websites and build a professional site for you — at no charge.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">2</div>
+      <div class="how-title">You see it first</div>
+      <div class="how-desc">Search your business name above. Your site is live and waiting — designed for your industry.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">3</div>
+      <div class="how-title">Claim or customize</div>
+      <div class="how-desc">Purchase the site for a flat fee, request a revised version, or ask us to handle hosting and domain.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">4</div>
+      <div class="how-title">Go live</div>
+      <div class="how-desc">We transfer the site to you with your own domain and hosting. Full ownership — yours forever.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PURCHASE MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <h3 id="modalBizName">Claim your site</h3>
+    <p class="modal-sub" id="modalSubtitle">Choose how you want to move forward with your SiteReveal preview.</p>
+    <div class="option-cards">
+      <div class="option-card featured" onclick="choosePlan('buy')">
+        <div class="option-icon" style="background:#e8f0fe;">💳</div>
+        <div class="option-info">
+          <div class="option-title">Buy this site</div>
+          <div class="option-desc">One-time flat fee. Full ownership. We hand off all files immediately.</div>
+        </div>
+        <div class="option-price" id="modalPrice">$299</div>
+      </div>
+      <div class="option-card" onclick="choosePlan('mockup')">
+        <div class="option-icon" style="background:#fef9c3;">✏️</div>
+        <div class="option-info">
+          <div class="option-title">Request a different version</div>
+          <div class="option-desc">Want a different look? We'll build you an alternate mockup to compare.</div>
+        </div>
+        <div class="option-price">Free</div>
+      </div>
+      <div class="option-card" onclick="choosePlan('launch')">
+        <div class="option-icon" style="background:#dcfce7;">🚀</div>
+        <div class="option-info">
+          <div class="option-title">Buy + full launch</div>
+          <div class="option-desc">We handle domain purchase, hosting setup, and get you live. End-to-end.</div>
+        </div>
+        <div class="option-price">$499</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2026 SiteReveal · Coeur d'Alene, ID &amp; Spokane Valley, WA · Built for local businesses · <a href="admin.html" style="color:inherit">Admin</a>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+let SITES = [
+  {
+    id: 'spotless-solutions',
+    name: 'Spotless Solutions',
+    keywords: ['spotless', 'spotless solutions'],
+    category: 'cleaning',
+    city: "Coeur d'Alene, ID",
+    status: 'available',
+    price: 299,
+    tagline: 'House cleaning done right',
+    color: '#1a56db',
+    description: 'Professional residential cleaning services',
+  },
+  {
+    id: 'wize-guyz-irrigation',
+    name: 'Wize Guyz Irrigation',
+    keywords: ['wize guyz', 'wize guyz irrigation', 'wize', 'irrigation'],
+    category: 'irrigation',
+    city: 'Post Falls, ID',
+    status: 'available',
+    price: 299,
+    tagline: 'Irrigation done smart',
+    color: '#0f6e56',
+    description: 'Residential & commercial irrigation systems',
+  },
+  {
+    id: 'yard-king-sprinklers',
+    name: 'Yard King Sprinklers',
+    keywords: ['yard king', 'yard king sprinklers'],
+    category: 'irrigation',
+    city: "Coeur d'Alene, ID",
+    status: 'available',
+    price: 299,
+    tagline: 'Keep your yard thriving',
+    color: '#166534',
+    description: 'Sprinkler installation & repair',
+  },
+  {
+    id: 'northern-immortals',
+    name: 'Northern Immortals LLC',
+    keywords: ['northern immortals', 'northern immortals llc'],
+    category: 'trades',
+    city: 'North Idaho',
+    status: 'available',
+    price: 349,
+    tagline: 'Taxidermy & artisan jewelry',
+    color: '#4a1b0c',
+    description: 'Custom taxidermy and handcrafted jewelry',
+  },
+  {
+    id: 'mm-property',
+    name: 'M&M Property & Maintenance',
+    keywords: ['m&m', 'm&m property', 'mm property', 'colyer'],
+    category: 'trades',
+    city: 'Spokane Valley, WA',
+    status: 'sold',
+    price: 299,
+    tagline: 'Painting & drywall you can count on',
+    color: '#0f3460',
+    description: 'Interior painting, drywall, and property maintenance',
+  },
+  {
+    id: 'demo-landscaping',
+    name: 'Green Edge Landscaping',
+    keywords: ['green edge', 'green edge landscaping'],
+    category: 'landscaping',
+    city: 'Spokane Valley, WA',
+    status: 'available',
+    price: 299,
+    tagline: 'Landscapes that make an impression',
+    color: '#27500a',
+    description: 'Full-service residential landscaping',
+  },
+  {
+    id: 'demo-cleaning2',
+    name: 'Crystal Clear Cleaning Co.',
+    keywords: ['crystal clear', 'crystal clear cleaning'],
+    category: 'cleaning',
+    city: "Coeur d'Alene, ID",
+    status: 'available',
+    price: 299,
+    tagline: 'Spotless every time',
+    color: '#185fa5',
+    description: 'Residential deep cleaning and recurring service',
+  },
+  {
+    id: 'demo-hvac',
+    name: 'Cascade HVAC Services',
+    keywords: ['cascade hvac', 'cascade'],
+    category: 'trades',
+    city: 'Post Falls, ID',
+    status: 'pending',
+    price: 349,
+    tagline: 'Heating & cooling done right',
+    color: '#533f1e',
+    description: 'HVAC install, repair, and maintenance',
+  },
+];
+
+let activeFilter = 'all';
+let activeSite = null;
+
+function buildCard(site) {
+  const initial = site.name.charAt(0).toUpperCase();
+  const statusLabel = site.status === 'available' ? 'Available' : site.status === 'sold' ? 'Claimed' : 'Pending';
+  const statusClass = site.status;
+  const actionBtn = site.status === 'available'
+    ? `<button class="card-btn primary" onclick="openModal('${site.id}', event)">Claim this site</button>`
+    : `<button class="card-btn" disabled style="opacity:.4;cursor:default">Already claimed</button>`;
+
+  return `
+    <div class="site-card" onclick="searchFromCard('${site.name}')">
+      <div class="card-thumb">
+        <div class="thumb-placeholder">
+          <div class="biz-initial" style="background:${site.color}">${initial}</div>
+          <p>${site.tagline}</p>
+        </div>
+        <div class="status-pill ${statusClass}">${statusLabel}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-biz-name">${site.name}</div>
+        <div class="card-meta">
+          <span>${site.category.charAt(0).toUpperCase()+site.category.slice(1)}</span>
+          <span class="card-meta-dot"></span>
+          <span>${site.city}</span>
+        </div>
+        <div class="card-actions">
+          <button class="card-btn" onclick="previewSite('${site.id}', event)">Preview →</button>
+          ${actionBtn}
+        </div>
+      </div>
+    </div>`;
+}
+
+function updateCounts() {
+  const cats = ['all','available','landscaping','cleaning','irrigation','trades'];
+  cats.forEach(cat => {
+    const el = document.getElementById('count-' + cat);
+    if (!el) return;
+    const count = cat === 'all' ? SITES.length
+      : cat === 'available' ? SITES.filter(s => s.status === 'available').length
+      : SITES.filter(s => s.category === cat).length;
+    el.textContent = count;
+  });
+}
+
+function renderGrid(filter) {
+  const grid = document.getElementById('sitesGrid');
+  const filtered = filter === 'all' ? SITES
+    : filter === 'available' ? SITES.filter(s => s.status === 'available')
+    : SITES.filter(s => s.category === filter);
+  grid.innerHTML = filtered.map(buildCard).join('');
+}
+
+function filterTab(cat, el) {
+  activeFilter = cat;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderGrid(cat);
+}
+
+function revealSite() {
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (!query) return;
+
+  const match = SITES.find(s =>
+    s.keywords.some(k => query.includes(k) || k.includes(query)) ||
+    s.name.toLowerCase().includes(query)
+  );
+
+  const stage = document.getElementById('revealStage');
+  const content = document.getElementById('revealContent');
+  stage.classList.add('visible');
+
+  if (match) {
+    activeSite = match;
+    const statusBadge = match.status === 'available' ? '✦ Available to claim' : '✓ Already claimed';
+    const actionArea = match.status === 'available' ? `
+      <button class="btn-primary" onclick="openModal('${match.id}')">Claim this site — $${match.price}</button>
+      <button class="btn-secondary" onclick="choosePlanDirect('mockup', '${match.id}')">Request a different version</button>
+      <div class="price-tag">$${match.price} <span>flat fee</span></div>
+    ` : `<button class="btn-secondary" style="opacity:.5;cursor:default">This site has been claimed</button>`;
+
+    content.innerHTML = `
+      <div class="reveal-card">
+        <div class="reveal-header" style="background:${match.color}">
+          <div class="reveal-header-text">
+            <h2>${match.name}</h2>
+            <p>${match.description} · ${match.city}</p>
+          </div>
+          <div class="reveal-badge">${statusBadge}</div>
+        </div>
+        <div style="padding:2rem; background:#f8faff; text-align:center; min-height:200px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px;">
+          <div style="width:60px;height:60px;border-radius:14px;background:${match.color};color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;display:flex;align-items:center;justify-content:center;margin:0 auto">${match.name.charAt(0)}</div>
+          <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;color:#0d0d0d">${match.name}</div>
+          <div style="font-size:0.9rem;color:#9a9890">${match.tagline}</div>
+          <div style="font-size:0.78rem;color:#b0ada7;margin-top:4px">Full site preview — ${match.city}</div>
+        </div>
+        <div class="reveal-actions">${actionArea}</div>
+      </div>`;
+  } else {
+    content.innerHTML = `
+      <div class="not-found">
+        <div class="not-found-icon">🔍</div>
+        <h3>We haven't built "${query}" yet</h3>
+        <p>We're adding new businesses every week. Leave your email and we'll notify you as soon as your site is ready — or reach out and we'll build it next.</p>
+        <div class="notify-row">
+          <input type="email" placeholder="your@email.com" id="notifyEmail"/>
+          <button onclick="submitNotify()">Notify me</button>
+        </div>
+      </div>`;
+  }
+
+  stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function searchFromCard(name) {
+  document.getElementById('searchInput').value = name;
+  revealSite();
+}
+
+function previewSite(id, e) {
+  if (e) e.stopPropagation();
+  const site = SITES.find(s => s.id === id);
+  if (site) searchFromCard(site.name);
+}
+
+function openModal(id, e) {
+  if (e) e.stopPropagation();
+  const site = SITES.find(s => s.id === id);
+  if (!site) return;
+  activeSite = site;
+  document.getElementById('modalBizName').textContent = 'Claim — ' + site.name;
+  document.getElementById('modalSubtitle').textContent = 'Choose how you want to move forward with your SiteReveal preview.';
+  document.getElementById('modalPrice').textContent = '$' + site.price;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function choosePlan(plan) {
+  closeModalDirect();
+  const msgs = {
+    buy: '💳 Purchase request received! We\'ll send payment link within 1 hour.',
+    mockup: '✏️ Mockup request sent! Alternate version coming within 48 hours.',
+    launch: '🚀 Full launch request received! We\'ll be in touch within 24 hours.',
+  };
+  showToast(msgs[plan] || 'Request received!');
+}
+
+function choosePlanDirect(plan, id) {
+  activeSite = SITES.find(s => s.id === id);
+  choosePlan(plan);
+}
+
+function submitNotify() {
+  const email = document.getElementById('notifyEmail').value;
+  if (!email) return;
+  showToast('✓ You\'re on the list! We\'ll email you when your site is ready.');
+  document.getElementById('notifyEmail').value = '';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+function scrollToGallery() {
+  document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
+}
+
+async function loadPublishedSites() {
+  if (!window.SITE_REVEAL_CONFIG || !window.supabase) return;
+  try {
+    const client = window.supabase.createClient(
+      window.SITE_REVEAL_CONFIG.supabaseUrl,
+      window.SITE_REVEAL_CONFIG.supabaseAnonKey
+    );
+    const { data, error } = await client
+      .from('leads')
+      .select('slug,business_name,category,city,status,price,tagline,color,description')
+      .eq('published', true)
+      .order('created_at', { ascending: false });
+    if (error || !data || !data.length) return;
+    SITES = data.map(site => ({
+      id: site.slug,
+      name: site.business_name,
+      keywords: [site.business_name.toLowerCase(), site.slug.replaceAll('-', ' ')],
+      category: site.category || 'trades',
+      city: site.city || '',
+      status: site.status || 'available',
+      price: Number(site.price || 299),
+      tagline: site.tagline || 'A professional website preview',
+      color: site.color || '#1a56db',
+      description: site.description || ''
+    }));
+    updateCounts();
+    renderGrid(activeFilter);
+  } catch (error) {
+    console.warn('Using bundled demonstration listings.', error);
+  }
+}
+
+updateCounts();
+renderGrid('all');
+loadPublishedSites();
+</script>
+</body>
+</html>
