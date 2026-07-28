@@ -83,7 +83,7 @@
         <div class="field"><label>Verification</label><select id="verification"><option>Needs Review</option><option>Verified</option></select></div>
         <div class="field"><label>Pipeline stage</label><select id="stage"><option>Research</option><option>Ready to Generate</option><option>Site Review</option><option>Contacted</option><option>Sold</option></select></div>
         <div class="field"><label>Offer status</label><select id="status"><option value="available">Available</option><option value="pending">Pending</option><option value="sold">Sold</option></select></div>
-        <div class="field"><label>Price</label><input id="price" type="number" min="0" value="299"></div>
+        <div class="field"><label>Price</label><input id="price" type="number" min="0" value="399"></div>
         <div class="field"><label>Tagline</label><input id="tagline"></div>
         <div class="field"><label>Accent color</label><input id="color" type="color" value="#1a56db"></div>
         <div class="field wide"><label>Website folder path</label><input id="sitePath" placeholder="sites/business-slug/index.html"></div>
@@ -140,7 +140,7 @@
       $('leadForm').reset();$('leadId').value=l?.id||'';$('dialogTitle').textContent=l?'Edit lead':'Add lead';$('deleteLead').classList.toggle('hidden',!l);
       const map={businessName:'business_name',leadEmail:'email',sitePath:'site_path'};
       fields.forEach(id=>{const el=$(id),key=map[id]||id;if(el.type==='checkbox')el.checked=!!l?.[key];else if(l?.[key]!=null)el.value=l[key]});
-      if(!l){$('price').value=299;$('color').value='#1a56db'}$('leadDialog').showModal();
+      if(!l){$('price').value=399;$('color').value='#1a56db'}$('leadDialog').showModal();
     }
     $('addLead').onclick=()=>openLead(null);
     ['closeDialog','cancelDialog'].forEach(id=>$(id).onclick=()=>$('leadDialog').close());
