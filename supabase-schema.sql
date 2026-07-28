@@ -129,5 +129,56 @@ set site_path = excluded.site_path,
     tagline = excluded.tagline;
 
 -- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Lake City Powder Coating','lake-city-powder-coating','powder coating','Coeur d''Alene, ID','(208) 664-9485','Verified','Site Review','available',399,'Color that works as hard as the metal.','#1264db','Custom powder coating for wheels, frames, vehicle parts and metal projects','sites/lake-city-powder-coating/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,email,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('NozWorx Mobile Detail','nozworx-mobile-detail','auto detailing','Post Falls, ID','(208) 889-2740','NozWorxMobile@gmail.com','Verified','Site Review','available',399,'We wash. We wax. You relax.','#718800','Mobile detailing, paint correction, ceramic coating and monthly care','sites/nozworx-mobile-detail/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    email = excluded.email,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,email,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('OCDetail','ocdetail','auto detailing','Post Falls, ID','(406) 396-9798','pnwocdetail@gmail.com','Verified','Site Review','available',399,'Showroom clean. Driveway convenient.','#1459e6','Luxury mobile interior, exterior and protection detailing','sites/ocdetail/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    email = excluded.email,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Black Ops Detailing','black-ops-detailing','auto detailing','Hayden, ID','(208) 771-2405','Verified','Site Review','available',399,'Mission: Immaculate.','#e79a2d','Professional interior, exterior and complete vehicle detailing','sites/black-ops-detailing/index.html',true)
+on conflict (slug) do update
+set business_name = excluded.business_name,
+    site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
 -- Safe to run even if every record is already $399.
 UPDATE public.leads SET price = 399 WHERE price <> 399;

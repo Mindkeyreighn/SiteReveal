@@ -22,6 +22,10 @@ sites/yard-king-lawn-care/   Yard King Lawn Care
 sites/clear-cut-lawn/   Clear Cut Lawn LLC
 sites/quality-care-landscaping/   Quality Care Landscaping LLC
 sites/mullen-landscaping-lawn-care/   Mullen Landscaping & Lawn Care
+sites/black-ops-detailing/   Black Ops Detailing
+sites/ocdetail/   OCDetail
+sites/nozworx-mobile-detail/   NozWorx Mobile Detail (redesign concept)
+sites/lake-city-powder-coating/   Lake City Powder Coating
 
 FIRST-TIME DATABASE SETUP
 -------------------------
