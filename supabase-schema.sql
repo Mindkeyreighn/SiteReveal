@@ -132,6 +132,78 @@ set site_path = excluded.site_path,
 insert into public.leads
   (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
 values
+  ('Dawn''s Purple Poodle','dawns-purple-poodle','pet grooming','Coeur d''Alene, ID','(208) 704-4685','Verified','Site Review','available',399,'A fresh look with a gentle touch.','#4b2142','Caring local dog grooming, bathing, haircuts, nail trims and coat care','sites/dawns-purple-poodle/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Apryl''s 3rd St Doghouse','apryls-3rd-st-doghouse','pet grooming','Coeur d''Alene, ID','(208) 664-5300','Verified','Site Review','available',399,'Where dogs are remembered by name.','#a84537','Friendly neighborhood dog grooming, haircuts, nail care and coat upkeep','sites/apryls-3rd-st-doghouse/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Star''s Pet Grooming','stars-pet-grooming','pet grooming','Coeur d''Alene, ID','(208) 292-4547','Verified','Site Review','available',399,'Every dog deserves the star treatment.','#07192f','Experienced, patient grooming for different breeds, coats and temperaments','sites/stars-pet-grooming/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Woof Pack Pet Spa','woof-pack-pet-spa','pet grooming','Coeur d''Alene, ID','(208) 610-8110','Verified','Site Review','available',399,'Fresh coat. Happy pup. Full tail wag.','#df735f','Bathing, haircuts, nail trims, ear cleaning and de-shedding','sites/woof-pack-pet-spa/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('B & R Boat Care Center','br-boat-care-center','boat repair','Rathdrum, ID','(208) 687-0820','Verified','Site Review','available',399,'Thirty years of keeping boats ready.','#102f29','Boat repair, storage, covers, upholstery and restoration care','sites/br-boat-care-center/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Advance Marine and Industrial Coverings','advance-marine-industrial-coverings','marine upholstery','Hayden, ID','(208) 215-1768','Verified','Site Review','available',399,'Made to fit. Built to protect.','#123c65','Custom boat covers, upholstery, aircraft interiors, canvas goods and tarps','sites/advance-marine-industrial-coverings/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
   ('Lake City Powder Coating','lake-city-powder-coating','powder coating','Coeur d''Alene, ID','(208) 664-9485','Verified','Site Review','available',399,'Color that works as hard as the metal.','#1264db','Custom powder coating for wheels, frames, vehicle parts and metal projects','sites/lake-city-powder-coating/index.html',true)
 on conflict (slug) do update
 set site_path = excluded.site_path,

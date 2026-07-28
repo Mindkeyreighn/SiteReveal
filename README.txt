@@ -26,6 +26,11 @@ sites/black-ops-detailing/   Black Ops Detailing
 sites/ocdetail/   OCDetail
 sites/nozworx-mobile-detail/   NozWorx Mobile Detail (redesign concept)
 sites/lake-city-powder-coating/   Lake City Powder Coating
+sites/advance-marine-industrial-coverings/   Advance Marine and Industrial Coverings
+sites/br-boat-care-center/   B & R Boat Care Center
+sites/woof-pack-pet-spa/   Woof Pack Pet Spa
+sites/stars-pet-grooming/   Star's Pet Grooming
+sites/apryls-3rd-st-doghouse/   Apryl's 3rd St Doghouse
 
 FIRST-TIME DATABASE SETUP
 -------------------------
@@ -84,3 +89,7 @@ Supabase URL Configuration. The website files remain fully owned by you.
 
 The Supabase project is also under your own account. You can export its database
 later if you ever decide to move to another database provider.
+
+LATEST SITE
+-----------
+sites/dawns-purple-poodle/   Dawn's Purple Poodle
