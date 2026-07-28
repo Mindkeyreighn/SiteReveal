@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Clear Cut Lawn LLC — dependable weekly mowing, edging and yard cleanups in Post Falls, Idaho.">
+  <title>Clear Cut Lawn LLC | Post Falls, Idaho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--teal:#0f4c4c;--deep:#0a3535;--amber:#e08a2b;--amber-light:#fbe8cf;--paper:#f6f4ec;--ink:#182424;--muted:#5e6b68;--white:#fff;--line:#dde3dd}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Sora,sans-serif;line-height:1.65}
+    a{color:inherit}.wrap{width:min(1140px,calc(100% - 40px));margin:auto}
+    .preview{background:var(--deep);color:#c3d3d1;text-align:center;padding:8px 16px;font-size:12px}.preview strong{color:#fff}.preview a{color:var(--amber);font-weight:700}
+    header{position:sticky;top:0;z-index:30;background:#f6f4ecf2;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .nav{height:74px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+    .brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+    .mark{width:44px;height:44px;border-radius:10px;background:var(--teal);color:var(--amber-light);display:grid;place-items:center;font:700 17px "Space Grotesk"}
+    .brand strong{display:block;font:700 18px "Space Grotesk"}.brand small{display:block;margin-top:3px;color:var(--teal);font-weight:600;letter-spacing:.1em;font-size:9px;text-transform:uppercase}
+    .links{display:flex;align-items:center;gap:24px}.links a{text-decoration:none;font-size:13px;font-weight:600}
+    .nav-cta{background:var(--teal);color:#fff!important;padding:10px 17px;border-radius:8px}
+    .hero{position:relative;overflow:hidden;padding:76px 0 0;background:var(--paper)}
+    .hero:before{content:"";position:absolute;right:-160px;top:-180px;width:520px;height:520px;border-radius:50%;background:var(--amber-light)}
+    .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center;padding-bottom:56px}
+    .eyebrow{color:var(--teal);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+    .hero h1{font-family:"Space Grotesk";font-weight:700;line-height:1.02;letter-spacing:-.02em;font-size:clamp(40px,6vw,66px);margin:16px 0 18px}
+    .hero h1 span{color:var(--teal)}
+    .hero p{max-width:500px;color:var(--muted);font-size:17px}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:9px;text-decoration:none;font-weight:700;font-size:14px;border:1.5px solid transparent;cursor:pointer;font-family:Sora}
+    .btn-amber{background:var(--teal);color:#fff}
+    .btn-outline{border-color:var(--teal);color:var(--teal);background:transparent}
+    .lawn-card{background:var(--deep);border-radius:22px;padding:30px;color:#fff}
+    .stripes{height:210px;border-radius:14px;background:repeating-linear-gradient(100deg,#136363 0,#136363 36px,#1a7a7a 36px,#1a7a7a 72px)}
+    .lawn-card h2{font:700 22px "Space Grotesk";margin:20px 0 4px}
+    .lawn-card p{font-size:13px;color:#a9c4c1;margin:0}
+    .facts{position:relative;z-index:3}
+    .fact-grid{background:#fff;border-radius:16px;box-shadow:0 15px 40px rgba(15,76,76,.12);display:grid;grid-template-columns:repeat(4,1fr);transform:translateY(28px)}
+    .fact{padding:20px 22px;border-right:1px solid var(--line);text-align:center}.fact:last-child{border:0}
+    .fact strong{display:block;font:700 20px "Space Grotesk";color:var(--teal)}.fact span{font-size:12px;color:var(--muted)}
+    section{padding:96px 0}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:36px;margin-bottom:40px}
+    .section-head h2{font-family:"Space Grotesk";font-weight:700;font-size:clamp(30px,4.2vw,42px);max-width:600px;margin:0;letter-spacing:-.01em}
+    .section-head h2 span{color:var(--teal)}
+    .section-head p{max-width:380px;color:var(--muted);margin:0}
+    .services{background:#fff;padding-top:120px}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+    .card{border:1px solid var(--line);border-radius:15px;padding:24px;background:var(--paper)}
+    .card .ic{width:42px;height:42px;border-radius:11px;background:var(--amber-light);color:var(--teal);display:grid;place-items:center;font-size:19px}
+    .card h3{font-size:17px;margin:18px 0 8px;font-weight:600}
+    .card p{font-size:13.5px;color:var(--muted);margin:0}
+    .about{background:var(--teal);color:#fff}
+    .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+    .about .eyebrow{color:var(--amber)}
+    .about h2{font-family:"Space Grotesk";font-size:clamp(28px,4vw,40px);margin:12px 0 18px;font-weight:700}
+    .about p{color:#c3d9d6}
+    .checks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+    .checks div{border-top:1px solid rgba(255,255,255,.22);padding-top:12px;font-weight:600;font-size:14px}
+    .checks div:before{content:"✓";color:var(--amber);margin-right:8px}
+    .quote-block{background:var(--deep);border-radius:18px;padding:36px}
+    .quote-block .stars{color:var(--amber);letter-spacing:3px;margin-bottom:14px}
+    .quote-block blockquote{font-family:"Space Grotesk";font-size:19px;margin:0 0 14px;line-height:1.4}
+    .quote-block cite{font-style:normal;color:#a9c4c1;font-size:13px}
+    .reviews{background:var(--paper)}
+    .review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .review{border:1px solid var(--line);border-radius:15px;padding:24px;background:#fff}
+    .stars-sm{color:var(--amber);letter-spacing:2px;margin-bottom:10px;font-size:14px}
+    .review p{font-size:13.5px;color:var(--ink)}
+    .review small{display:block;margin-top:12px;color:var(--muted);font-size:12px;font-weight:600}
+    .contact{background:#fff}
+    .contact-card{display:grid;grid-template-columns:.85fr 1.15fr;border-radius:20px;overflow:hidden;box-shadow:0 20px 50px rgba(15,76,76,.14)}
+    .contact-copy{background:var(--deep);color:#fff;padding:46px}
+    .contact-copy h2{font-family:"Space Grotesk";font-size:33px;margin:12px 0 14px;font-weight:700}
+    .contact-copy p{color:#a9c4c1}
+    .info{border-top:1px solid rgba(255,255,255,.2);padding-top:15px;margin-top:18px}
+    .info small{display:block;color:var(--amber);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:11px}
+    .info strong{display:block;margin-top:5px;font-weight:600}
+    .form{background:var(--paper);padding:46px;display:grid;grid-template-columns:1fr 1fr;gap:13px}
+    .field{display:grid;gap:6px}.field.full{grid-column:1/-1}
+    .field label{font-size:12px;font-weight:700}
+    .field input,.field select,.field textarea{border:1px solid var(--line);border-radius:9px;padding:12px;font:inherit;background:#fff}
+    .field textarea{height:96px;resize:vertical}
+    .form p,.form button{grid-column:1/-1}.form p{font-size:12px;color:var(--muted);margin:0}
+    .form button{border:0}
+    footer{background:var(--deep);color:#94aaa7;padding:34px 0}
+    .footer-row{display:flex;justify-content:space-between;align-items:center;gap:24px}
+    .footer-row a{color:#fff;text-decoration:none;font-weight:700}
+    .toast{position:fixed;right:20px;bottom:20px;background:var(--teal);color:#fff;padding:14px 18px;border-radius:10px;box-shadow:0 15px 40px rgba(0,0,0,.25);opacity:0;transform:translateY(24px);transition:.25s;pointer-events:none;z-index:40}
+    .toast.show{opacity:1;transform:none}
+    @media(max-width:920px){.hero-grid,.about-grid,.contact-card{grid-template-columns:1fr}.fact-grid{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr 1fr}.review-grid{grid-template-columns:1fr}.links a:not(.nav-cta){display:none}.section-head{display:block}.section-head p{margin-top:14px}}
+    @media(max-width:600px){.wrap{width:min(100% - 28px,1140px)}.nav{height:66px}.brand strong{font-size:16px}.lawn-card{padding:22px}.stripes{height:160px}.fact-grid{grid-template-columns:1fr 1fr}.fact{border-right:0;border-bottom:1px solid var(--line)}.cards,.checks,.form{grid-template-columns:1fr}section{padding:64px 0}.services{padding-top:100px}.contact-copy,.form{padding:26px}.footer-row{display:block}.footer-row a{display:inline-block;margin-top:12px}}
+  </style>
+</head>
+<body>
+  <div class="preview"><strong>SiteReveal preview:</strong> This website concept was prepared for Clear Cut Lawn LLC. <a href="../../index.html">Return to SiteReveal</a></div>
+  <header><div class="wrap nav">
+    <a class="brand" href="#top"><span class="mark">CC</span><span><strong>Clear Cut Lawn</strong><small>Post Falls, Idaho</small></span></a>
+    <nav class="links" aria-label="Primary navigation"><a href="#services">Services</a><a href="#about">About</a><a href="#reviews">Reviews</a><a class="nav-cta" href="#contact">Get a quote</a></nav>
+  </div></header>
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">Locally owned · Post Falls</div>
+          <h1>Cut clean.<br><span>Every time.</span></h1>
+          <p>Dependable weekly mowing, edging and seasonal cleanups for homeowners around Post Falls who want a lawn that looks lined up like an airstrip — every visit.</p>
+          <div class="actions">
+            <a class="btn btn-amber" href="#contact">Get a free quote →</a>
+            <a class="btn btn-outline" href="#services">See services</a>
+          </div>
+        </div>
+        <div class="lawn-card">
+          <div class="stripes" aria-label="Stylized freshly mowed lawn stripes"></div>
+          <h2>Clear Cut Lawn LLC</h2>
+          <p>Fast quotes · Reliable scheduling · Sharp results</p>
+        </div>
+      </div>
+      <div class="wrap facts">
+        <div class="fact-grid">
+          <div class="fact"><strong>4.9★</strong><span>Average rating</span></div>
+          <div class="fact"><strong>17</strong><span>Verified reviews</span></div>
+          <div class="fact"><strong>Mon–Sat</strong><span>8 AM – 5 PM</span></div>
+          <div class="fact"><strong>Fast</strong><span>Quote turnaround</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="services"><div class="wrap">
+      <div class="section-head"><div><h2>The essentials, <span>done sharp.</span></h2></div><p>Straightforward lawn care built around a clean, consistent finish and a schedule you can count on.</p></div>
+      <div class="cards">
+        <article class="card"><div class="ic">✂</div><h3>Weekly mowing</h3><p>Consistent cuts that keep your lawn healthy-looking and camera-ready all season.</p></article>
+        <article class="card"><div class="ic">⌁</div><h3>Edging &amp; trimming</h3><p>Crisp lines along walks, driveways and beds, plus careful weed-eating in the tight spots.</p></article>
+        <article class="card"><div class="ic">✦</div><h3>Seasonal cleanups</h3><p>Spring and fall resets that clear debris and get the property looking sharp again.</p></article>
+        <article class="card"><div class="ic">☎</div><h3>Fast, friendly quotes</h3><p>Quick replies by call or text and a quote that doesn't take a week to land.</p></article>
+      </div>
+    </div></section>
+
+    <section class="about" id="about"><div class="wrap about-grid">
+      <div>
+        <div class="eyebrow">Who's behind it</div>
+        <h2>One crew. One standard.</h2>
+        <p>Clear Cut Lawn is run hands-on — the person quoting your yard is the same one mowing it. That means fast answers, no call-center runaround, and a level of care that shows up in the finish every time.</p>
+        <div class="checks"><div>Responsive by call or text</div><div>Consistent weekly scheduling</div><div>Careful edge and detail work</div><div>Fair, straightforward pricing</div></div>
+      </div>
+      <div class="quote-block">
+        <div class="stars">★★★★★</div>
+        <blockquote>"Lined it up like an air strip. Top notch quality and would highly recommend."</blockquote>
+        <cite>— Verified Post Falls customer</cite>
+      </div>
+    </div></section>
+
+    <section class="reviews" id="reviews"><div class="wrap">
+      <div class="section-head"><div><h2>What <span>customers say.</span></h2></div><p>Public reviews from real customers around Post Falls.</p></div>
+      <div class="review-grid">
+        <div class="review"><div class="stars-sm">★★★★★</div><p>Did a great job mowing and trimming up the edges, including the hard-to-reach spots. Loved the quality and the price — will book again.</p><small>Verified customer</small></div>
+        <div class="review"><div class="stars-sm">★★★★★</div><p>Handled a spring cleanup without a long wait for a quote or appointment. Quick to respond to calls and texts, and the yard looks so much better.</p><small>Verified customer</small></div>
+        <div class="review"><div class="stars-sm">★★★★★</div><p>Comes out weekly for yard maintenance and the work is consistently solid — worth booking ahead before the schedule fills up.</p><small>Verified customer</small></div>
+      </div>
+    </div></section>
+
+    <section class="contact" id="contact"><div class="wrap contact-card">
+      <div class="contact-copy">
+        <div class="eyebrow" style="color:var(--amber)">Free quote</div>
+        <h2>Ready for a cleaner-looking lawn?</h2>
+        <p>Share a few details and the best way to reach you.</p>
+        <div class="info"><small>Service area</small><strong>Post Falls &amp; North Idaho</strong></div>
+        <div class="info"><small>Hours listed online</small><strong>Monday–Saturday · 8 AM–5 PM</strong></div>
+      </div>
+      <form class="form" id="quoteForm">
+        <div class="field"><label for="name">Your name</label><input id="name" required autocomplete="name"></div>
+        <div class="field"><label for="phone">Phone number</label><input id="phone" required autocomplete="tel"></div>
+        <div class="field"><label for="service">Service needed</label><select id="service"><option>Weekly mowing</option><option>Edging and trimming</option><option>Seasonal cleanup</option><option>Other</option></select></div>
+        <div class="field"><label for="area">Property location</label><input id="area" placeholder="Neighborhood or ZIP code"></div>
+        <div class="field full"><label for="details">Lawn details</label><textarea id="details" placeholder="Approximate lawn size and preferred schedule"></textarea></div>
+        <p>This is a SiteReveal website preview. The form will be connected to Clear Cut Lawn's verified contact method when the site is claimed.</p>
+        <button class="btn btn-amber" type="submit">Prepare my quote request</button>
+      </form>
+    </div></section>
+  </main>
+  <footer><div class="wrap footer-row"><span>© 2026 Clear Cut Lawn LLC · Post Falls, Idaho</span><a href="../../index.html">Website preview by SiteReveal</a></div></footer>
+  <div class="toast" id="toast">Your request is ready.</div>
+  <script>document.getElementById("quoteForm").addEventListener("submit",function(e){e.preventDefault();const n=document.getElementById("name").value.trim();const t=document.getElementById("toast");t.textContent=`Thanks, ${n}. This preview form will be connected when Clear Cut Lawn claims the site.`;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),5000)});</script>
+</body>
+</html>

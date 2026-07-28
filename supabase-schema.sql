@@ -66,6 +66,28 @@ set site_path = excluded.site_path,
     tagline = excluded.tagline;
 
 insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Quality Care Landscaping LLC','quality-care-landscaping','landscaping','Careywood, ID','(208) 603-9669','Verified','Site Review','available',399,'Good work shows. Quality care lasts.','#1f4933','Weekly lawn maintenance, de-thatching, property cleanups and snow removal','sites/quality-care-landscaping/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+insert into public.leads
+  (business_name,slug,category,city,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Mullen Landscaping & Lawn Care','mullen-landscaping-lawn-care','landscaping','Rathdrum, ID','Verified','Site Review','available',399,'Built well. Kept sharp.','#a95032','Mowing, trimming, pruning, mulch, rock and irrigation','sites/mullen-landscaping-lawn-care/index.html',true)
+on conflict (slug) do update
+set business_name = excluded.business_name,
+    site_path = excluded.site_path,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+insert into public.leads
   (business_name,slug,category,city,phone,email,verification,stage,status,price,tagline,color,description,site_path,published)
 values
   ('Wize Guyz Irrigation LLC','wize-guyz-irrigation','irrigation','Post Falls, ID','(208) 704-8295','wizeguyzsprinklers@gmail.com','Verified','Site Review','available',399,'Better coverage. The Wize way.','#008fbd','Irrigation design, installation, repairs, blowouts and backflow testing','sites/wize-guyz-irrigation/index.html',true)
