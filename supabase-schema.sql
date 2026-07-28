@@ -66,12 +66,43 @@ set site_path = excluded.site_path,
     tagline = excluded.tagline;
 
 insert into public.leads
+  (business_name,slug,category,city,phone,email,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Wize Guyz Irrigation LLC','wize-guyz-irrigation','irrigation','Post Falls, ID','(208) 704-8295','wizeguyzsprinklers@gmail.com','Verified','Site Review','available',399,'Better coverage. The Wize way.','#008fbd','Irrigation design, installation, repairs, blowouts and backflow testing','sites/wize-guyz-irrigation/index.html',true)
+on conflict (slug) do update
+set business_name = excluded.business_name,
+    site_path = excluded.site_path,
+    phone = excluded.phone,
+    email = excluded.email,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+insert into public.leads
+  (business_name,slug,category,city,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Post Falls Lawn Care','post-falls-lawn-care','landscaping','Post Falls, ID','Verified','Site Review','available',399,'Less yard work. More weekend.','#173d2d','Local lawn mowing, edging, seasonal cleanup and property care','sites/post-falls-lawn-care/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    description = excluded.description,
+    tagline = excluded.tagline;
+
+insert into public.leads
   (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
 values
   ('TLC Lawn Care & Landscaping LLC','tlc-lawn-care-landscaping','landscaping','Coeur d''Alene, ID','(208) 967-2670','Verified','Site Review','available',399,'Your yard deserves a little more TLC','#123d2c','Lawn mowing, landscape maintenance, sod installation and yard cleanups','sites/tlc-lawn-care-landscaping/index.html',true)
 on conflict (slug) do update
 set site_path = excluded.site_path,
     phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline;
+
+insert into public.leads
+  (business_name,slug,category,city,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Whittaker''s Lawn Service','whittakers-lawn-service','landscaping','Coeur d''Alene, ID','Verified','Site Review','available',399,'A great lawn, without the hassle','#1464f4','Friendly local lawn mowing, edging and routine yard care','sites/whittakers-lawn-service/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
     description = excluded.description,
     tagline = excluded.tagline;
 

@@ -15,6 +15,9 @@ CURRENT COMPLETE WEBSITES
 -------------------------
 sites/northern-immortals/   Northern Immortals LLC
 sites/tlc-lawn-care-landscaping/   TLC Lawn Care & Landscaping LLC
+sites/whittakers-lawn-service/   Whittaker's Lawn Service
+sites/post-falls-lawn-care/   Post Falls Lawn Care
+sites/wize-guyz-irrigation/   Wize Guyz Irrigation LLC
 
 FIRST-TIME DATABASE SETUP
 -------------------------
