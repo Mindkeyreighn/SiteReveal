@@ -65,6 +65,16 @@ set site_path = excluded.site_path,
     description = excluded.description,
     tagline = excluded.tagline;
 
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('TLC Lawn Care & Landscaping LLC','tlc-lawn-care-landscaping','landscaping','Coeur d''Alene, ID','(208) 967-2670','Verified','Site Review','available',399,'Your yard deserves a little more TLC','#123d2c','Lawn mowing, landscape maintenance, sod installation and yard cleanups','sites/tlc-lawn-care-landscaping/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline;
+
 -- Price correction for any earlier $299 or $349 records.
 -- Safe to run even if every record is already $399.
 UPDATE public.leads SET price = 399 WHERE price <> 399;
