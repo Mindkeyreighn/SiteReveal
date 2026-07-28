@@ -59,13 +59,12 @@ alter table public.leads add column if not exists site_path text not null defaul
 insert into public.leads
   (business_name,slug,category,city,verification,stage,status,price,tagline,color,description,site_path,published)
 values
-  ('Northern Immortals LLC','northern-immortals','trades','North Idaho','Verified','Site Review','available',349,'Taxidermy and artisan jewelry','#4a1b0c','Custom taxidermy and handcrafted jewelry','sites/northern-immortals/index.html',true)
+  ('Northern Immortals LLC','northern-immortals','trades','North Idaho','Verified','Site Review','available',399,'Taxidermy and artisan jewelry','#4a1b0c','Custom taxidermy and handcrafted jewelry','sites/northern-immortals/index.html',true)
 on conflict (slug) do update
 set site_path = excluded.site_path,
     description = excluded.description,
     tagline = excluded.tagline;
 
--- Price correction: if you ran an earlier version of this schema that used $299,
--- run this line to update all existing records to the correct $399 price point.
--- Safe to run even if records are already at $399.
-UPDATE public.leads SET price = 399 WHERE price = 299;
+-- Price correction for any earlier $299 or $349 records.
+-- Safe to run even if every record is already $399.
+UPDATE public.leads SET price = 399 WHERE price <> 399;
