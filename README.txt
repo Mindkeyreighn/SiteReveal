@@ -9,6 +9,11 @@ index.html            Public SiteReveal website
 admin.html            Private owner login and lead manager
 config.js             Your Supabase public connection settings
 supabase-schema.sql   Tables and security rules for Supabase
+sites/                Complete business websites shown by SiteReveal
+
+CURRENT COMPLETE WEBSITES
+-------------------------
+sites/northern-immortals/   Northern Immortals LLC
 
 FIRST-TIME DATABASE SETUP
 -------------------------
@@ -49,16 +54,6 @@ protects the records. Never put a service_role key in any HTML or JavaScript.
 
 Only the authenticated account freesevenluck@gmail.com is allowed to create,
 edit, or delete leads. Public visitors can only read published listings.
-
-PRICING
--------
-All sites are priced at $399 (flat fee). The admin panel defaults to $399
-for every new lead. The supabase-schema.sql seeds starter records at $399.
-
-If you ran an earlier version of this schema (v1, which used $299), the
-SQL file now includes a correction UPDATE at the bottom. Run the full file
-again in Supabase SQL Editor — the on conflict clause skips re-inserting
-duplicates, and the UPDATE corrects any records still at $299.
 
 PORTABILITY
 -----------

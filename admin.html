@@ -83,9 +83,10 @@
         <div class="field"><label>Verification</label><select id="verification"><option>Needs Review</option><option>Verified</option></select></div>
         <div class="field"><label>Pipeline stage</label><select id="stage"><option>Research</option><option>Ready to Generate</option><option>Site Review</option><option>Contacted</option><option>Sold</option></select></div>
         <div class="field"><label>Offer status</label><select id="status"><option value="available">Available</option><option value="pending">Pending</option><option value="sold">Sold</option></select></div>
-        <div class="field"><label>Price</label><input id="price" type="number" min="0" value="399"></div>
+        <div class="field"><label>Price</label><input id="price" type="number" min="0" value="299"></div>
         <div class="field"><label>Tagline</label><input id="tagline"></div>
         <div class="field"><label>Accent color</label><input id="color" type="color" value="#1a56db"></div>
+        <div class="field wide"><label>Website folder path</label><input id="sitePath" placeholder="sites/business-slug/index.html"></div>
         <div class="field wide"><label>Description</label><textarea id="description"></textarea></div>
         <label class="check wide"><input id="published" type="checkbox"> Show this business on the public SiteReveal page</label>
       </div>
@@ -100,7 +101,7 @@
     const db=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey);
     const $=id=>document.getElementById(id);
     let leads=[];
-    const fields=['businessName','slug','category','city','phone','leadEmail','verification','stage','status','price','tagline','color','description','published'];
+    const fields=['businessName','slug','category','city','phone','leadEmail','verification','stage','status','price','tagline','color','sitePath','description','published'];
     const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const slugify=s=>s.toLowerCase().trim().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 
@@ -137,15 +138,15 @@
     $('businessName').oninput=()=>{if(!$('leadId').value)$('slug').value=slugify($('businessName').value)};
     function openLead(l){
       $('leadForm').reset();$('leadId').value=l?.id||'';$('dialogTitle').textContent=l?'Edit lead':'Add lead';$('deleteLead').classList.toggle('hidden',!l);
-      const map={businessName:'business_name',leadEmail:'email'};
+      const map={businessName:'business_name',leadEmail:'email',sitePath:'site_path'};
       fields.forEach(id=>{const el=$(id),key=map[id]||id;if(el.type==='checkbox')el.checked=!!l?.[key];else if(l?.[key]!=null)el.value=l[key]});
-      if(!l){$('price').value=399;$('color').value='#1a56db'}$('leadDialog').showModal();
+      if(!l){$('price').value=299;$('color').value='#1a56db'}$('leadDialog').showModal();
     }
     $('addLead').onclick=()=>openLead(null);
     ['closeDialog','cancelDialog'].forEach(id=>$(id).onclick=()=>$('leadDialog').close());
     $('leadForm').addEventListener('submit',async e=>{
       e.preventDefault();
-      const row={business_name:$('businessName').value.trim(),slug:$('slug').value.trim(),category:$('category').value,city:$('city').value.trim(),phone:$('phone').value.trim(),email:$('leadEmail').value.trim()||null,verification:$('verification').value,stage:$('stage').value,status:$('status').value,price:Number($('price').value||0),tagline:$('tagline').value.trim(),color:$('color').value,description:$('description').value.trim(),published:$('published').checked,updated_at:new Date().toISOString()};
+      const row={business_name:$('businessName').value.trim(),slug:$('slug').value.trim(),category:$('category').value,city:$('city').value.trim(),phone:$('phone').value.trim(),email:$('leadEmail').value.trim()||null,verification:$('verification').value,stage:$('stage').value,status:$('status').value,price:Number($('price').value||0),tagline:$('tagline').value.trim(),color:$('color').value,site_path:$('sitePath').value.trim(),description:$('description').value.trim(),published:$('published').checked,updated_at:new Date().toISOString()};
       const id=$('leadId').value; const result=id?await db.from('leads').update(row).eq('id',id):await db.from('leads').insert(row);
       if(result.error){alert('Could not save: '+result.error.message);return}$('leadDialog').close();await loadLeads();
     });

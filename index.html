@@ -623,6 +623,7 @@ let SITES = [
     tagline: 'Taxidermy & artisan jewelry',
     color: '#4a1b0c',
     description: 'Custom taxidermy and handcrafted jewelry',
+    sitePath: 'sites/northern-immortals/index.html',
   },
   {
     id: 'mm-property',
@@ -752,7 +753,11 @@ function revealSite() {
   if (match) {
     activeSite = match;
     const statusBadge = match.status === 'available' ? '✦ Available to claim' : '✓ Already claimed';
+    const previewAction = match.sitePath
+      ? `<button class="btn-primary" onclick="previewSite('${match.id}', event)">View the complete website →</button>`
+      : '';
     const actionArea = match.status === 'available' ? `
+      ${previewAction}
       <button class="btn-primary" onclick="openModal('${match.id}')">Claim this site — $${match.price}</button>
       <button class="btn-secondary" onclick="choosePlanDirect('mockup', '${match.id}')">Request a different version</button>
       <div class="price-tag">$${match.price} <span>flat fee</span></div>
@@ -799,7 +804,12 @@ function searchFromCard(name) {
 function previewSite(id, e) {
   if (e) e.stopPropagation();
   const site = SITES.find(s => s.id === id);
-  if (site) searchFromCard(site.name);
+  if (!site) return;
+  if (site.sitePath) {
+    window.open(site.sitePath, '_blank', 'noopener');
+    return;
+  }
+  searchFromCard(site.name);
 }
 
 function openModal(id, e) {
@@ -862,11 +872,12 @@ async function loadPublishedSites() {
     );
     const { data, error } = await client
       .from('leads')
-      .select('slug,business_name,category,city,status,price,tagline,color,description')
+      .select('slug,business_name,category,city,status,price,tagline,color,description,site_path')
       .eq('published', true)
       .order('created_at', { ascending: false });
     if (error || !data || !data.length) return;
-    SITES = data.map(site => ({
+    const bundledWebsites = SITES.filter(site => site.sitePath);
+    const databaseSites = data.map(site => ({
       id: site.slug,
       name: site.business_name,
       keywords: [site.business_name.toLowerCase(), site.slug.replaceAll('-', ' ')],
@@ -876,8 +887,13 @@ async function loadPublishedSites() {
       price: Number(site.price || 299),
       tagline: site.tagline || 'A professional website preview',
       color: site.color || '#1a56db',
-      description: site.description || ''
+      description: site.description || '',
+      sitePath: site.site_path || ''
     }));
+    SITES = [
+      ...databaseSites,
+      ...bundledWebsites.filter(local => !databaseSites.some(remote => remote.id === local.id))
+    ];
     updateCounts();
     renderGrid(activeFilter);
   } catch (error) {

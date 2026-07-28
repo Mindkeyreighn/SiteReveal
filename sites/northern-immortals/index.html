@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Northern Immortals LLC — Timeless Pieces of Art</title>
+<meta name="description" content="Northern Immortals LLC — a brother-and-sister artisan brand. Achieving immortality through the creation of timeless pieces of art.">
+<link rel="icon" type="image/png" href="assets/images/logo/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&family=Italianno&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   NORTHERN IMMORTALS LLC — DESIGN TOKENS
+   ============================================================ */
+:root{
+  --black:#0c0d08;
+  --char:#15160e;          /* deep olive charcoal — page base */
+  --char-2:#1b1c12;        /* raised surfaces */
+  --char-3:#222317;        /* cards */
+  --walnut:#5c4129;
+  --walnut-deep:#3d2c1c;
+  --bone:#e9dfc8;           /* aged bone ivory — primary text */
+  --bone-dim:#b3a98e;       /* secondary text */
+  --bone-faint:#7d765f;     /* labels / meta */
+  --moss:#49542f;
+  --forest:#2e3a26;
+  --brass:#b18b4a;
+  --gold:#cda35c;
+  --amber:#e6ae62;
+  --turquoise:#56b0a6;
+  --line:rgba(233,223,200,.12);
+  --line-strong:rgba(233,223,200,.22);
+
+  --serif:'Cormorant Garamond', Georgia, serif;
+  --sans:'Jost', 'Segoe UI', sans-serif;
+  --script:'Italianno', cursive;
+
+  --maxw:1240px;
+  --r:3px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:
+    linear-gradient(rgba(10,12,8,.40), rgba(10,12,8,.72)),
+    url("assets/images/background/site-atmosphere.jpg") center top / cover fixed,
+    var(--char);
+  color:var(--bone);
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:16px;
+  line-height:1.7;
+  letter-spacing:.02em;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px;}
+
+::selection{background:var(--brass);color:var(--black);}
+
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(105,120,75,.20), transparent 34%),
+    radial-gradient(circle at 85% 10%, rgba(177,139,74,.10), transparent 30%),
+    linear-gradient(90deg, rgba(0,0,0,.45), transparent 35%, rgba(0,0,0,.45));
+}
+@media (max-width:768px){
+  body{background-attachment:scroll, scroll, scroll;}
+}
+
+/* ============================================================
+   TYPE SYSTEM
+   ============================================================ */
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:500;line-height:1.15;}
+.eyebrow{
+  font-family:var(--sans);font-size:11px;font-weight:500;
+  letter-spacing:.32em;text-transform:uppercase;color:var(--brass);
+}
+.eyebrow.tq{color:var(--turquoise);}
+
+/* hero labels need extra presence over photography */
+.hero-inner .eyebrow{
+  font-size:14px;font-weight:600;letter-spacing:.36em;
+  color:#e0b873;
+  text-shadow:0 2px 14px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.85);
+}
+.hero-inner .eyebrow.tq{color:#84d6cb;}
+.h-display{font-size:clamp(40px,5.2vw,68px);font-weight:500;letter-spacing:.01em;}
+.h-page{font-size:clamp(38px,4.6vw,60px);font-weight:500;}
+.h-section{font-size:clamp(28px,3vw,40px);font-weight:500;}
+.h-card{font-family:var(--serif);font-size:24px;font-weight:600;letter-spacing:.02em;}
+.lede{font-size:17px;color:var(--bone-dim);max-width:62ch;}
+.script{font-family:var(--script);font-size:clamp(44px,4.5vw,58px);color:var(--gold);font-weight:400;line-height:1;}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-block;font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;
+  padding:15px 30px;border-radius:var(--r);
+  transition:all .25s ease;cursor:pointer;text-align:center;
+}
+.btn-gold{background:var(--brass);color:var(--black);border:1px solid var(--brass);}
+.btn-gold:hover{background:var(--amber);border-color:var(--amber);}
+.btn-ghost{background:transparent;color:var(--bone);border:1px solid var(--line-strong);}
+.btn-ghost:hover{border-color:var(--brass);color:var(--gold);}
+.btn-tq{background:transparent;color:var(--turquoise);border:1px solid rgba(86,176,166,.45);}
+.btn-tq:hover{background:rgba(86,176,166,.12);border-color:var(--turquoise);}
+.btn-row{display:flex;gap:16px;flex-wrap:wrap;}
+
+/* ============================================================
+   IMAGE PLACEHOLDERS  (replace with real photography)
+   ============================================================ */
+.ph{
+  position:relative;overflow:hidden;border-radius:var(--r);
+  background:
+    radial-gradient(120% 90% at 20% 10%, rgba(177,139,74,.14), transparent 55%),
+    radial-gradient(100% 80% at 85% 90%, rgba(73,84,47,.22), transparent 60%),
+    linear-gradient(160deg, #23241a 0%, #15160e 55%, #0e0f0a 100%);
+  border:1px solid var(--line);
+}
+.ph::before{ /* subtle grain */
+  content:"";position:absolute;inset:0;opacity:.5;
+  background-image:repeating-linear-gradient(115deg, rgba(255,255,255,.012) 0 2px, transparent 2px 5px);
+}
+.ph::after{
+  content:attr(data-label);
+  position:absolute;left:0;right:0;bottom:0;
+  padding:10px 14px;
+  font-family:var(--sans);font-size:10px;font-weight:500;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--bone-faint);
+  background:linear-gradient(transparent, rgba(10,11,7,.85));
+}
+.ph.tq{background:
+    radial-gradient(110% 90% at 80% 15%, rgba(86,176,166,.16), transparent 55%),
+    radial-gradient(100% 80% at 15% 90%, rgba(177,139,74,.12), transparent 60%),
+    linear-gradient(160deg, #20211a 0%, #14150f 55%, #0d0e0a 100%);}
+.ph.warm{background:
+    radial-gradient(120% 100% at 50% 0%, rgba(230,174,98,.18), transparent 60%),
+    linear-gradient(170deg, #26211a 0%, #16140e 60%, #0e0d09 100%);}
+
+/* real photography inside frames */
+.ph>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.ph.has-img::before,.ph.has-img::after{display:none;}
+
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(12,13,8,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav{
+  max-width:var(--maxw);margin:0 auto;padding:0 40px;
+  display:flex;align-items:center;justify-content:space-between;height:78px;
+}
+.nav-mark{display:flex;flex-direction:row;align-items:center;gap:12px;line-height:1.05;flex-shrink:0;}
+.nav-mark img{height:54px;width:auto;}
+.nav-mark .nm-text{display:flex;flex-direction:column;}
+.hero-logo{
+  width:min(840px,92%);height:auto;margin:0 auto;display:block;
+  filter:drop-shadow(0 10px 34px rgba(0,0,0,.75)) drop-shadow(0 0 60px rgba(230,174,98,.18));
+}
+.foot-lockup{width:min(320px,100%);height:auto;margin-bottom:16px;display:block;}
+
+/* ===== contact / commission form ===== */
+.contact-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:60px;align-items:center;}
+.c-form{display:flex;flex-direction:column;gap:16px;}
+.c-form input,.c-form select,.c-form textarea{
+  background:rgba(10,11,7,.7);border:1px solid var(--line-strong);border-radius:var(--r);
+  color:var(--bone);font-family:var(--sans);font-weight:300;font-size:15px;
+  padding:14px 16px;width:100%;outline:none;transition:border-color .2s;
+}
+.c-form input:focus,.c-form select:focus,.c-form textarea:focus{border-color:var(--brass);}
+.c-form textarea{resize:vertical;min-height:130px;}
+.c-form ::placeholder{color:var(--bone-faint);}
+.form-note{font-size:12px;color:var(--bone-faint);letter-spacing:.04em;}
+.contact-side{text-align:center;}
+.contact-side img{width:min(320px,80%);height:auto;margin:0 auto 18px;}
+.contact-side p{color:var(--bone-dim);font-size:14.5px;max-width:36ch;margin:0 auto;}
+@media (max-width:1080px){
+  .nav-mark .nm-text{display:none;}
+}
+@media (max-width:880px){.contact-grid{grid-template-columns:1fr;gap:44px;}}
+
+/* ===== prices + claim buttons ===== */
+.price{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--gold);margin-top:10px;}
+.btn-cart{
+  display:block;width:100%;margin-top:14px;padding:11px 0;text-align:center;cursor:pointer;
+  font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+  background:transparent;color:var(--turquoise);border:1px solid rgba(86,176,166,.45);border-radius:var(--r);
+  transition:all .2s ease;
+}
+.btn-cart:hover{background:rgba(86,176,166,.12);border-color:var(--turquoise);}
+.btn-cart.claimed{color:var(--bone-faint);border-color:var(--line);cursor:default;}
+.btn-cart.gold{color:var(--gold);border-color:rgba(177,139,74,.5);}
+.btn-cart.gold:hover{background:rgba(177,139,74,.12);border-color:var(--brass);}
+.btn-cart.gold.claimed{color:var(--bone-faint);border-color:var(--line);background:none;}
+.wcard-body .btn-cart{margin-top:12px;}
+
+/* ===== cart ===== */
+.cart-btn{
+  position:relative;flex-shrink:0;background:none;border:1px solid var(--line-strong);border-radius:var(--r);
+  color:var(--bone);cursor:pointer;padding:9px 13px;margin-left:18px;transition:border-color .2s;
+}
+.cart-btn:hover{border-color:var(--brass);}
+.cart-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;display:block;}
+.cart-count{
+  position:absolute;top:-7px;right:-7px;min-width:18px;height:18px;border-radius:9px;
+  background:var(--brass);color:var(--black);font-size:11px;font-weight:600;
+  display:none;align-items:center;justify-content:center;padding:0 4px;font-family:var(--sans);
+}
+.cart-count.show{display:flex;}
+.cart-overlay{position:fixed;inset:0;background:rgba(8,9,5,.6);z-index:90;opacity:0;pointer-events:none;transition:opacity .25s;}
+.cart-overlay.open{opacity:1;pointer-events:auto;}
+.cart-drawer{
+  position:fixed;top:0;right:-420px;width:min(400px,92vw);height:100%;z-index:95;
+  background:#101108;border-left:1px solid var(--line-strong);
+  display:flex;flex-direction:column;transition:right .3s ease;
+}
+.cart-drawer.open{right:0;}
+.cart-head{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line);}
+.cart-head h3{font-family:var(--serif);font-size:22px;}
+.cart-close{background:none;border:none;color:var(--bone-dim);font-size:26px;cursor:pointer;line-height:1;}
+.cart-items{flex:1;overflow-y:auto;padding:10px 24px;}
+.cart-item{display:flex;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);}
+.cart-item img{width:62px;height:62px;object-fit:cover;border-radius:var(--r);border:1px solid var(--line);}
+.ci-info{flex:1;}
+.ci-name{font-family:var(--serif);font-size:16px;font-weight:600;}
+.ci-meta{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-faint);margin-top:3px;}
+.ci-price{font-family:var(--serif);color:var(--gold);font-size:16px;}
+.ci-remove{background:none;border:none;color:var(--bone-faint);cursor:pointer;font-size:18px;padding:4px;}
+.ci-remove:hover{color:var(--bone);}
+.cart-empty{text-align:center;color:var(--bone-faint);padding:60px 20px;font-size:14px;}
+.cart-foot{padding:20px 24px 26px;border-top:1px solid var(--line);}
+.cart-total{display:flex;justify-content:space-between;font-family:var(--serif);font-size:19px;margin-bottom:16px;}
+.cart-total span:last-child{color:var(--gold);font-weight:600;}
+.cart-note{font-size:11.5px;color:var(--bone-faint);margin-top:12px;line-height:1.5;}
+.nav-mark .nm{font-family:var(--serif);font-size:17px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);white-space:nowrap;}
+.nav-mark .llc{font-size:8.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--brass);margin-top:3px;white-space:nowrap;}
+.nav-links{display:flex;gap:18px;align-items:center;list-style:none;flex-wrap:nowrap;}
+.nav-links a{
+  font-size:11px;font-weight:400;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--bone-dim);padding:6px 0;border-bottom:1px solid transparent;
+  transition:all .2s ease;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--bone);}
+.nav-links a.active{color:var(--gold);border-bottom-color:var(--brass);}
+.nav-toggle{display:none;background:none;border:1px solid var(--line-strong);color:var(--bone);
+  font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  padding:9px 16px;border-radius:var(--r);cursor:pointer;}
+
+/* ============================================================
+   PAGE SWITCHING
+   ============================================================ */
+.page{display:none;}
+.page.active{display:block;animation:fadeUp .5s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion: reduce){
+  .page.active{animation:none;}
+  html{scroll-behavior:auto;}
+}
+
+/* ============================================================
+   SHARED SECTION RHYTHM
+   ============================================================ */
+section{padding:90px 0;background:rgba(16,17,11,.78);}
+.hero,.b-hero,.s-hero{background:transparent;}
+.section-head{margin-bottom:48px;}
+.section-head .eyebrow{display:block;margin-bottom:14px;}
+.rule{width:64px;height:1px;background:var(--brass);margin:22px 0 0;}
+.rule.center{margin-left:auto;margin-right:auto;}
+.center{text-align:center;}
+
+/* ============================================================
+   HOMEPAGE
+   ============================================================ */
+.hero{
+  position:relative;padding:0;border-bottom:1px solid var(--line);
+}
+.hero-media{position:relative;height:min(78vh,720px);min-height:520px;}
+.hero-media .ph{position:absolute;inset:0;border:none;border-radius:0;}
+.hero-media::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(12,13,8,.35) 0%, rgba(12,13,8,.55) 55%, rgba(12,13,8,.94) 100%);
+}
+.hero-inner{
+  position:absolute;inset:auto 0 0 0;z-index:2;text-align:center;
+  padding:0 40px 72px;
+}
+.hero-inner .nm-word{
+  font-family:var(--serif);font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  font-size:clamp(30px,4.4vw,56px);color:var(--bone);
+}
+.hero-inner .llc-word{font-size:11px;letter-spacing:.6em;text-transform:uppercase;color:var(--brass);margin-top:6px;}
+.hero-inner .tagline{
+  font-family:var(--serif);font-style:italic;font-size:clamp(17px,1.8vw,22px);
+  color:var(--bone-dim);margin:20px auto 34px;max-width:56ch;
+}
+.hero-inner .btn-row{justify-content:center;}
+
+/* brand story */
+.story{border-bottom:1px solid var(--line);}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;}
+.story p+p{margin-top:18px;}
+.story .ph{aspect-ratio:4/3;}
+
+/* feature cards */
+.features{border-bottom:1px solid var(--line);background:rgba(9,10,6,.90);}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;}
+.fcard{
+  position:relative;border:1px solid var(--line);border-radius:var(--r);
+  overflow:hidden;background:var(--char-2);transition:border-color .25s ease;
+}
+.fcard:hover{border-color:rgba(177,139,74,.5);}
+.fcard .ph{aspect-ratio:16/8.5;border:none;border-radius:0;}
+.fcard-body{padding:30px 32px 36px;border-top:1px solid var(--line);}
+.fcard-body .eyebrow{display:block;margin-bottom:10px;}
+.fcard-body p{color:var(--bone-dim);font-size:15px;margin:12px 0 22px;}
+.fcard-link{
+  font-size:11px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);
+}
+.fcard-link::after{content:" \2192";}
+
+/* gallery */
+.gallery-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+.gallery-grid .ph{aspect-ratio:1;}
+.gallery-note{margin-top:26px;color:var(--bone-faint);font-size:13px;letter-spacing:.06em;}
+
+/* custom orders band */
+.band{
+  background:linear-gradient(135deg, var(--walnut-deep) 0%, #2a2013 60%, var(--char-2) 100%);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.band-inner{display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;}
+.band-inner p{color:var(--bone-dim);max-width:60ch;margin-top:8px;}
+
+/* footer */
+footer{background:rgba(8,9,6,.95);border-top:1px solid var(--line);padding:70px 0 36px;}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:48px;margin-bottom:54px;}
+.foot-mark .nm{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;}
+.foot-mark .llc{font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--brass);}
+.foot-mark p{color:var(--bone-faint);font-size:13.5px;margin-top:16px;max-width:34ch;font-style:italic;font-family:var(--serif);font-size:15px;}
+.foot-col h4{font-size:11px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--bone-faint);margin-bottom:18px;}
+.foot-col ul{list-style:none;}
+.foot-col li{margin-bottom:10px;}
+.foot-col a{font-size:13.5px;color:var(--bone-dim);transition:color .2s;}
+.foot-col a:hover{color:var(--gold);}
+.foot-contact p{font-size:13.5px;color:var(--bone-dim);margin-bottom:10px;}
+.foot-base{
+  border-top:1px solid var(--line);padding-top:26px;
+  display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
+  font-size:11.5px;letter-spacing:.12em;color:var(--bone-faint);text-transform:uppercase;
+}
+.socials{display:flex;gap:18px;}
+.socials a{color:var(--bone-faint);transition:color .2s;}
+.socials a:hover{color:var(--gold);}
+.socials svg{width:17px;height:17px;fill:currentColor;}
+
+/* ============================================================
+   BROTHER PAGE
+   ============================================================ */
+.b-hero{position:relative;padding:0;border-bottom:1px solid var(--line);}
+.b-hero .hero-media{height:min(64vh,560px);min-height:440px;}
+.b-hero .hero-inner{padding-bottom:64px;}
+.b-hero .h-page{color:var(--bone);}
+.b-hero .sub{
+  font-family:var(--serif);font-style:italic;color:var(--bone-dim);
+  font-size:clamp(16px,1.6vw,20px);margin-top:14px;
+}
+
+/* category tabs */
+.tabs{display:flex;justify-content:center;gap:0;border-bottom:1px solid var(--line);background:rgba(9,10,6,.90);flex-wrap:wrap;}
+.tab{
+  padding:26px 38px;text-align:center;cursor:pointer;background:none;border:none;
+  border-bottom:2px solid transparent;transition:all .2s ease;
+}
+.tab .t-name{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--bone-dim);display:block;}
+.tab .t-sub{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--bone-faint);margin-top:4px;display:block;}
+.tab:hover .t-name{color:var(--bone);}
+.tab.active{border-bottom-color:var(--brass);}
+.tab.active .t-name{color:var(--gold);}
+
+/* work grid */
+.work-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+.work-grid .wide{grid-column:span 2;grid-row:span 2;}
+.wcard{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--char-2);transition:border-color .25s;}
+.wcard:hover{border-color:rgba(177,139,74,.5);}
+.wcard .ph{aspect-ratio:1;border:none;border-radius:0;}
+.wcard.wide .ph{aspect-ratio:auto;height:100%;min-height:300px;}
+.wcard-body{padding:16px 18px 18px;border-top:1px solid var(--line);}
+.wcard-body .t{font-family:var(--serif);font-size:18px;font-weight:600;}
+.wcard-body .m{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-faint);margin-top:4px;}
+
+/* process */
+.process{background:rgba(9,10,6,.90);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.process-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;}
+.pcard{border:1px solid var(--line);border-radius:var(--r);background:var(--char-2);overflow:hidden;}
+.pcard .ph{aspect-ratio:4/3;border:none;border-radius:0;}
+.pcard-body{padding:18px 18px 20px;text-align:center;border-top:1px solid var(--line);}
+.pcard-body .t{font-family:var(--serif);font-size:19px;font-weight:600;}
+.pcard-body .d{font-size:12.5px;color:var(--bone-faint);margin-top:6px;line-height:1.5;}
+
+/* materials */
+.mat-row{display:flex;gap:14px;flex-wrap:wrap;}
+.mat{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--bone-dim);
+  border:1px solid var(--line-strong);border-radius:var(--r);padding:11px 22px;
+}
+
+/* ============================================================
+   SISTER PAGE
+   ============================================================ */
+.s-hero{position:relative;padding:0;border-bottom:1px solid var(--line);}
+.s-hero .hero-media{height:min(66vh,580px);min-height:460px;}
+.s-hero .hero-inner{padding-bottom:64px;}
+.s-hero .sub{
+  font-family:var(--serif);font-style:italic;color:var(--bone-dim);
+  font-size:clamp(16px,1.7vw,21px);margin-top:14px;
+}
+
+/* concept statements */
+.concepts{border-bottom:1px solid var(--line);padding:56px 0;}
+.concept-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.concept{
+  text-align:center;padding:10px 28px;border-left:1px solid var(--line);
+}
+.concept:first-child{border-left:none;}
+.concept p{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--bone-dim);line-height:1.5;}
+
+/* chips */
+.chip-row{display:flex;gap:13px;flex-wrap:wrap;justify-content:center;}
+.chip{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  border:1px solid var(--line-strong);border-radius:30px;padding:11px 24px;
+  color:var(--bone-dim);cursor:pointer;background:none;font-family:var(--sans);font-weight:400;
+  transition:all .2s ease;
+}
+.chip:hover,.chip.active{border-color:var(--turquoise);color:var(--turquoise);}
+
+/* jewelry grid */
+.j-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;}
+.jcard{background:var(--char-2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .25s;}
+.jcard:hover{border-color:rgba(86,176,166,.45);}
+.jcard .ph{aspect-ratio:4/5;border:none;border-radius:0;}
+.jcard-body{padding:18px 20px 22px;border-top:1px solid var(--line);}
+.jcard-body .t{font-family:var(--serif);font-size:18px;font-weight:600;}
+.jcard-body .m{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--turquoise);margin-top:5px;}
+.jcard-body .one{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-faint);margin-top:8px;}
+
+/* remnants story */
+.remnant-story{background:rgba(9,10,6,.90);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.remnant-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;}
+.remnant-grid .ph{aspect-ratio:4/3;}
+.remnant-grid p+p{margin-top:18px;}
+
+/* transformation */
+.transform{border-bottom:1px solid var(--line);}
+.transform-row{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:26px;align-items:center;margin-top:54px;}
+.t-step{text-align:center;}
+.t-step .ph{aspect-ratio:1;border-radius:50%;width:min(100%,290px);margin:0 auto;}
+.t-step .ph::after{display:none;}
+.t-step .t-label{font-family:var(--serif);font-size:20px;font-weight:600;margin-top:22px;}
+.t-step .t-sub{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-faint);margin-top:5px;}
+.t-arrow{font-size:30px;color:var(--brass);font-family:var(--serif);}
+
+/* sister CTA */
+.s-cta{padding:90px 0;}
+.s-cta .btn-row{justify-content:center;margin-top:36px;}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1080px){
+  .gallery-grid{grid-template-columns:repeat(3,1fr);}
+  .work-grid{grid-template-columns:repeat(3,1fr);}
+  .work-grid .wide{grid-column:span 3;grid-row:span 1;}
+  .process-grid{grid-template-columns:repeat(3,1fr);}
+  .j-grid{grid-template-columns:repeat(3,1fr);}
+  .concept-row{grid-template-columns:repeat(2,1fr);row-gap:30px;}
+  .concept:nth-child(3){border-left:none;}
+  .foot-grid{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:880px){
+  .nav-links{
+    display:none;position:absolute;top:78px;left:0;right:0;
+    background:rgba(12,13,8,.98);border-bottom:1px solid var(--line);
+    flex-direction:column;gap:0;padding:14px 0;
+  }
+  .nav-links.open{display:flex;}
+  .nav-links li{width:100%;text-align:center;}
+  .nav-links a{display:block;padding:13px 0;}
+  .nav-toggle{display:block;}
+  .cart-btn{margin-left:auto;margin-right:14px;}
+  .story-grid,.remnant-grid,.feature-grid{grid-template-columns:1fr;gap:40px;}
+  .transform-row{grid-template-columns:1fr;gap:18px;}
+  .t-arrow{transform:rotate(90deg);}
+}
+@media (max-width:640px){
+  .wrap{padding:0 22px;}
+  section{padding:64px 0;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .work-grid{grid-template-columns:repeat(2,1fr);}
+  .work-grid .wide{grid-column:span 2;}
+  .process-grid{grid-template-columns:repeat(2,1fr);}
+  .j-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
+  .concept-row{grid-template-columns:1fr;}
+  .concept{border-left:none;border-top:1px solid var(--line);padding:22px 10px;}
+  .concept:first-child{border-top:none;}
+  .foot-grid{grid-template-columns:1fr;gap:34px;}
+  .tab{padding:18px 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= NAVIGATION ================= -->
+<header>
+  <nav class="nav">
+    <a href="#home" class="nav-mark" data-route="home">
+      <img src="assets/images/logo/logo-mark.png" alt="Northern Immortals emblem">
+      <span class="nm-text">
+        <span class="nm">Northern Immortals</span>
+        <span class="llc">LLC &middot; North Idaho</span>
+      </span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">Menu</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" data-route="home">Home</a></li>
+      <li><a href="#brother" data-route="brother">Brother&rsquo;s Work</a></li>
+      <li><a href="#sister" data-route="sister">Sister&rsquo;s Jewelry</a></li>
+      <li><a href="#home" data-route="home" data-anchor="gallery">Gallery</a></li>
+      <li><a href="#home" data-route="home" data-anchor="custom">Custom Orders</a></li>
+      <li><a href="#home" data-route="home" data-anchor="footer">Shows / Events</a></li>
+      <li><a href="#home" data-route="home" data-anchor="story">About</a></li>
+      <li><a href="#home" data-route="home" data-anchor="contact">Contact</a></li>
+    </ul>
+    <button class="cart-btn" id="cartBtn" aria-label="Cart">
+      <svg viewBox="0 0 24 24"><circle cx="9.5" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="17.5" cy="20" r="1.4" fill="currentColor" stroke="none"/><path d="M3 4h2.4l2.5 11.3a1.7 1.7 0 0 0 1.7 1.3h7.6a1.7 1.7 0 0 0 1.7-1.3L21 8.2H6.1"/></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </nav>
+</header>
+
+<!-- ============================================================
+     PAGE 1 — HOMEPAGE
+     ============================================================ -->
+<main id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-media">
+      <div class="ph warm has-img"><img src="assets/images/home/home-hero-background.jpg" alt="Candlelit display of skull mounts, carved grips and turquoise jewelry on moss" loading="lazy"></div>
+    </div>
+    <div class="hero-inner">
+      <img class="hero-logo" src="assets/images/logo/home-hero-logo-lockup.png" alt="Northern Immortals LLC — Timeless Pieces of Art">
+      <div style="height:30px;"></div>
+      <div class="btn-row">
+        <a class="btn btn-gold" href="#home" data-route="home" data-anchor="gallery">View The Collection</a>
+        <a class="btn btn-ghost" href="#home" data-route="home" data-anchor="custom">Request A Custom Piece</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRAND STORY -->
+  <section class="story" id="anchor-story">
+    <div class="wrap story-grid">
+      <div>
+        <span class="eyebrow">A Brother &amp; Sister Brand</span>
+        <h2 class="h-section">Two Crafts. One Bloodline.</h2>
+        <div class="rule"></div>
+        <p style="margin-top:28px;">The brother preserves and reshapes natural forms into timeless display pieces &mdash; skull mounts, antler art, and handcrafted work built to outlast its maker.</p>
+        <p>The sister transforms the remnants of that work into one-of-one wearable art, giving every remaining fragment a second life. Nothing beautiful is wasted.</p>
+      </div>
+      <div class="ph has-img"><img src="assets/images/home/brand-story.jpg" alt="The workshop — mounts on the wall above the bench under warm light" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- FEATURE CARDS -->
+  <section class="features">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">The Two Branches</span>
+        <h2 class="h-section">Explore The Craft</h2>
+        <div class="rule center"></div>
+      </div>
+      <div class="feature-grid">
+        <a class="fcard" href="#brother" data-route="brother">
+          <div class="ph has-img"><img src="assets/images/home/feature-brothers-craft.jpg" alt="Workshop bench with antlers and skull mounts under warm shop light" loading="lazy"></div>
+          <div class="fcard-body">
+            <span class="eyebrow">Rugged &middot; Grounded &middot; Built To Last</span>
+            <h3 class="h-card">The Brother&rsquo;s Craft</h3>
+            <p>Taxidermy, skull mounts, antler art, and custom grip panels &mdash; shaped by hand in a North Idaho workshop.</p>
+            <span class="fcard-link">Enter The Workshop</span>
+          </div>
+        </a>
+        <a class="fcard" href="#sister" data-route="sister">
+          <div class="ph tq has-img"><img src="assets/images/home/feature-sisters-jewelry.jpg" alt="Candlelit jewelry display with necklace busts, black cards, feathers and fur" loading="lazy"></div>
+          <div class="fcard-body">
+            <span class="eyebrow tq">Refined &middot; Reclaimed &middot; One Of One</span>
+            <h3 class="h-card">The Sister&rsquo;s Jewelry</h3>
+            <p>Wearable art made from the remnants of the craft &mdash; bone, antler, leather, stone, and turquoise.</p>
+            <span class="fcard-link">Enter The Boutique</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="anchor-gallery">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">From The Bench</span>
+        <h2 class="h-section">Recent Work</h2>
+        <div class="rule center"></div>
+      </div>
+      <div class="gallery-grid">
+        <div class="ph has-img"><img src="assets/images/gallery/recent-work-01-antler-turquoise-earrings.jpg" alt="Antler and turquoise earrings" loading="lazy"></div>
+        <div class="ph tq has-img"><img src="assets/images/gallery/recent-work-02-longhorn-skull-blade.jpg" alt="Longhorn skull and blade mount" loading="lazy"></div>
+        <div class="ph warm has-img"><img src="assets/images/gallery/recent-work-03-claw-pearl-earrings.jpg" alt="Claw and pearl earrings" loading="lazy"></div>
+        <div class="ph has-img"><img src="assets/images/gallery/recent-work-04-beaver-skull-mount.jpg" alt="Beaver skull mount with antique traps" loading="lazy"></div>
+        <div class="ph tq has-img"><img src="assets/images/gallery/recent-work-05-snake-vertebrae-set.jpg" alt="Snake vertebrae necklace set" loading="lazy"></div>
+        <div class="ph warm has-img"><img src="assets/images/gallery/recent-work-06-sr1911-elk-antler-grips.jpg" alt="SR1911 with elk antler grips" loading="lazy"></div>
+        <div class="ph has-img"><img src="assets/images/gallery/recent-work-07-peacock-feather-necklace.jpg" alt="Peacock feather necklace" loading="lazy"></div>
+        <div class="ph has-img"><img src="assets/images/gallery/recent-work-08-whitetail-euro-mount.jpg" alt="Whitetail european mount" loading="lazy"></div>
+        <div class="ph tq has-img"><img src="assets/images/gallery/recent-work-09-coyote-claw-earrings.jpg" alt="Coyote claw earrings" loading="lazy"></div>
+        <div class="ph has-img"><img src="assets/images/gallery/recent-work-10-mixed-artifact-detail.jpg" alt="Matching mammoth ivory grip set" loading="lazy"></div>
+      </div>
+      <p class="gallery-note center">Follow the bench on Instagram &mdash; @northernimmortalsllc</p>
+    </div>
+  </section>
+
+  <!-- CUSTOM ORDERS BAND -->
+  <section class="band" id="anchor-custom" style="padding:64px 0;">
+    <div class="wrap band-inner">
+      <div>
+        <span class="eyebrow">Commissions Open</span>
+        <h2 class="h-section">Custom Orders</h2>
+        <p>Bring us the idea, the antler, the hide, or the memory. We build pieces meant to be passed down.</p>
+      </div>
+      <a class="btn btn-gold" href="#home" data-route="home" data-anchor="contact">Start A Commission</a>
+    </div>
+  </section>
+
+  <!-- CONTACT / COMMISSION FORM -->
+  <section id="anchor-contact">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">Get In Touch</span>
+        <h2 class="h-section">Request A Piece</h2>
+        <div class="rule center"></div>
+      </div>
+      <div class="contact-grid">
+        <form class="c-form" action="https://formsubmit.co/hello@northernimmortals.com" method="POST">
+          <input type="hidden" name="_subject" value="New inquiry — Northern Immortals website">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="name" placeholder="Your Name" required>
+          <input type="email" name="email" placeholder="Your Email" required>
+          <select name="interest">
+            <option value="" disabled selected>What are you interested in?</option>
+            <option>The Brother&rsquo;s Craft — mounts, antler art, grips</option>
+            <option>The Sister&rsquo;s Jewelry — one-of-one pieces</option>
+            <option>Custom Commission</option>
+            <option>Claiming pieces from my cart</option>
+            <option>Something else</option>
+          </select>
+          <textarea name="message" id="contactMessage" placeholder="Tell us about the piece you have in mind&hellip;"></textarea>
+          <button class="btn btn-gold" type="submit">Send Inquiry</button>
+          <p class="form-note">Replies usually within a day or two. For claims, pieces are held once we confirm by email.</p>
+        </form>
+        <div class="contact-side">
+          <img src="assets/images/logo/contact-seal-logo.png" alt="Northern Immortals maker&rsquo;s seal">
+          <p>Every piece leaves the workshop under the maker&rsquo;s mark &mdash; handcrafted in North Idaho, made to be passed down.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     PAGE 2 — THE BROTHER'S WORK
+     ============================================================ -->
+<main id="page-brother" class="page">
+
+  <section class="b-hero">
+    <div class="hero-media">
+      <div class="ph warm has-img"><img src="assets/images/brother/brother-hero-background.jpg" alt="Crowned predator skull art piece with antler spike crown, staged on moss in a North Idaho forest" loading="lazy"></div>
+    </div>
+    <div class="hero-inner">
+      <span class="eyebrow">The Workshop</span>
+      <h1 class="h-page" style="margin-top:14px;">The Brother&rsquo;s Work</h1>
+      <p class="sub">Natural forms, preserved and reshaped into pieces built to outlast their maker.</p>
+    </div>
+  </section>
+
+  <!-- CATEGORY TABS -->
+  <div class="tabs" role="tablist" aria-label="Work categories">
+    <button class="tab active" role="tab"><span class="t-name">Taxidermy</span><span class="t-sub">Preserved &amp; mounted</span></button>
+    <button class="tab" role="tab"><span class="t-name">Skull Mounts</span><span class="t-sub">European &amp; plaque</span></button>
+    <button class="tab" role="tab"><span class="t-name">Antler Art</span><span class="t-sub">Lighting &amp; display</span></button>
+    <button class="tab" role="tab"><span class="t-name">Custom Pistol Grips</span><span class="t-sub">Handcrafted grip panels</span></button>
+  </div>
+
+  <!-- FEATURED WORK -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Featured Work</span>
+        <h2 class="h-section">From The Bench</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="work-grid">
+        <div class="wcard wide">
+          <div class="ph has-img"><img src="assets/images/brother/featured-longhorn-skull-blade.jpg" alt="Longhorn bull skull with inlaid blade mounted on a live-edge wood slab" loading="lazy"></div>
+          <div class="wcard-body"><div class="t">Longhorn Skull &amp; Blade</div><div class="m">Skull Mounts &middot; Statement Piece</div><div class="price">$450</div><button class="btn-cart gold" data-id="longhorn-skull-and-blade" data-name="Longhorn Skull &amp; Blade" data-price="450">Claim This Piece</button></div>
+        </div>
+        <div class="wcard">
+          <div class="ph has-img"><img src="assets/images/brother/featured-big-whitetail-euro-mount.jpg" alt="Whitetail deer european skull mount on burnt-edge wood plaque" loading="lazy"></div>
+          <div class="wcard-body"><div class="t">Big Whitetail Euro Mount</div><div class="m">Skull Mounts</div><div class="price">$250</div><button class="btn-cart gold" data-id="big-whitetail-euro-mount" data-name="Big Whitetail Euro Mount" data-price="250">Claim This Piece</button></div>
+        </div>
+        <div class="wcard">
+          <div class="ph has-img"><img src="assets/images/brother/featured-beaver-skull-mount.jpg" alt="Beaver skull mounted on birch rounds flanked by antique traps" loading="lazy"></div>
+          <div class="wcard-body"><div class="t">Beaver Skull Mount</div><div class="m">Taxidermy &middot; Antique Traps</div><div class="price">$180</div><button class="btn-cart gold" data-id="beaver-skull-mount" data-name="Beaver Skull Mount" data-price="180">Claim This Piece</button></div>
+        </div>
+        <div class="wcard">
+          <div class="ph has-img"><img src="assets/images/brother/featured-polished-elk-antler-grips.jpg" alt="SR1911 fitted with hand-polished elk antler grip panels" loading="lazy"></div>
+          <div class="wcard-body"><div class="t">Polished Elk Antler Grips</div><div class="m">Custom Pistol Grips</div><div class="price">$225</div><button class="btn-cart gold" data-id="polished-elk-antler-grips" data-name="Polished Elk Antler Grips" data-price="225">Claim This Piece</button></div>
+        </div>
+        <div class="wcard">
+          <div class="ph has-img"><img src="assets/images/brother/featured-buffalo-horn-grips.jpg" alt="Colt 1911 fitted with American buffalo horn grips and silver buffalo nickel inlays" loading="lazy"></div>
+          <div class="wcard-body"><div class="t">Buffalo Horn Grips</div><div class="m">Custom Pistol Grips</div><div class="price">$250</div><button class="btn-cart gold" data-id="buffalo-horn-grips" data-name="Buffalo Horn Grips" data-price="250">Claim This Piece</button></div>
+        </div>
+        <div class="wcard">
+          <div class="ph has-img"><img src="assets/images/brother/featured-mammoth-ivory-grips.jpg" alt="SR1911 with handmade ancient mammoth ivory grip panels" loading="lazy"></div>
+          <div class="wcard-body"><div class="t">Mammoth Ivory Grips</div><div class="m">Custom Pistol Grips</div><div class="price">$375</div><button class="btn-cart gold" data-id="mammoth-ivory-grips" data-name="Mammoth Ivory Grips" data-price="375">Claim This Piece</button></div>
+        </div>
+        <div class="wcard">
+          <div class="ph has-img"><img src="assets/images/brother/featured-workshop-detail.jpg" alt="Matching set of ancient mammoth ivory grips on two 1911s" loading="lazy"></div>
+          <div class="wcard-body"><div class="t">Matching Mammoth Ivory Set</div><div class="m">Custom Pistol Grips</div><div class="price">$650</div><button class="btn-cart gold" data-id="matching-mammoth-ivory-set" data-name="Matching Mammoth Ivory Set" data-price="650">Claim This Piece</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow">How It&rsquo;s Made</span>
+        <h2 class="h-section">The Process</h2>
+        <div class="rule center"></div>
+      </div>
+      <div class="process-grid">
+        <div class="pcard"><div class="ph has-img"><img src="assets/images/brother/process-cleaning.jpg" alt="Bones drying on the cleaning rack" loading="lazy"></div>
+          <div class="pcard-body"><div class="t">Cleaning</div><div class="d">Every piece begins raw and is brought back to bone.</div></div></div>
+        <div class="pcard"><div class="ph has-img"><img src="assets/images/brother/process-shaping.jpg" alt="Cut and polished ivory blanks" loading="lazy"></div>
+          <div class="pcard-body"><div class="t">Shaping</div><div class="d">Cut, carved, and worked entirely by hand.</div></div></div>
+        <div class="pcard"><div class="ph has-img"><img src="assets/images/brother/process-mounting.jpg" alt="Skull mounted on burnt-edge plaque" loading="lazy"></div>
+          <div class="pcard-body"><div class="t">Mounting</div><div class="d">Set on walnut, leather, and dark metal.</div></div></div>
+        <div class="pcard"><div class="ph has-img"><img src="assets/images/brother/process-finishing.jpg" alt="Finished longhorn showpiece" loading="lazy"></div>
+          <div class="pcard-body"><div class="t">Finishing</div><div class="d">Sealed and detailed to last generations.</div></div></div>
+        <div class="pcard"><div class="ph warm has-img"><img src="assets/images/brother/process-custom-orders.jpg" alt="Custom mammoth ivory grip commission" loading="lazy"></div>
+          <div class="pcard-body"><div class="t">Custom Orders</div><div class="d">Built to your story, your animal, your idea.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATERIALS -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Worked By Hand</span>
+        <h2 class="h-section">Materials</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="story-grid">
+        <div class="ph has-img" style="aspect-ratio:4/3;"><img src="assets/images/brother/materials-story.jpg" alt="Ancient mammoth and walrus ivory grip blanks staged on fur" loading="lazy"></div>
+        <div>
+          <p style="color:var(--bone-dim);margin-bottom:26px;">Worked by hand from natural and reclaimed material &mdash; including ancient mammoth and walrus ivory.</p>
+          <div class="mat-row">
+            <span class="mat">Mammoth Ivory</span>
+            <span class="mat">Walrus Ivory</span>
+            <span class="mat">Elk Antler</span>
+            <span class="mat">Buffalo Horn</span>
+            <span class="mat">Bone</span>
+            <span class="mat">Walnut</span>
+            <span class="mat">Leather</span>
+            <span class="mat">Dark Metal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="band" style="padding:64px 0;">
+    <div class="wrap band-inner">
+      <div>
+        <span class="eyebrow">Commissions Open</span>
+        <h2 class="h-section">Have Something In Mind?</h2>
+        <p>From field to finished mount &mdash; bring your harvest or your concept to the workshop.</p>
+      </div>
+      <a class="btn btn-gold" href="#home" data-route="home" data-anchor="contact">Request A Custom Piece</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     PAGE 3 — THE SISTER'S JEWELRY
+     ============================================================ -->
+<main id="page-sister" class="page">
+
+  <section class="s-hero">
+    <div class="hero-media">
+      <div class="ph tq has-img"><img src="assets/images/sister/sister-hero-background.jpg" alt="King of the North — mountain lion teeth and claws hand-wrapped in gold and black wire on a braided leather cord" loading="lazy"></div>
+    </div>
+    <div class="hero-inner">
+      <span class="eyebrow tq">The Sister&rsquo;s Jewelry</span>
+      <h1 class="h-page" style="margin-top:14px;">Made From Remnants</h1>
+      <p class="sub">Transforming what remains into wearable art.</p>
+    </div>
+  </section>
+
+  <!-- CONCEPT STATEMENTS -->
+  <section class="concepts">
+    <div class="wrap concept-row">
+      <div class="concept"><p>&ldquo;Nothing beautiful is wasted.&rdquo;</p></div>
+      <div class="concept"><p>&ldquo;Every piece is one of one.&rdquo;</p></div>
+      <div class="concept"><p>&ldquo;Wearable art from reclaimed natural materials.&rdquo;</p></div>
+      <div class="concept"><p>&ldquo;Made from the remnants of the craft.&rdquo;</p></div>
+    </div>
+  </section>
+
+  <!-- CATEGORY CHIPS + GRID -->
+  <section>
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow tq">The Collection</span>
+        <h2 class="h-section">One-Of-One Pieces</h2>
+        <div class="rule center" style="background:var(--turquoise);"></div>
+      </div>
+      <div class="chip-row" style="margin-bottom:54px;">
+        <button class="chip active">One-of-One Earrings</button>
+        <button class="chip">Antler Pendants</button>
+        <button class="chip">Tooth &amp; Claw Jewelry</button>
+        <button class="chip">Leather Cord Necklaces</button>
+        <button class="chip">Natural Stone Pieces</button>
+        <button class="chip">Turquoise Accented</button>
+        <button class="chip">Custom Requests</button>
+      </div>
+      <div class="j-grid">
+        <div class="jcard"><div class="ph has-img"><img src="assets/images/sister/product-antler-turquoise-earrings.jpg" alt="Antler and turquoise drop earrings on a black jewelry card" loading="lazy"></div>
+          <div class="jcard-body"><div class="t">Antler &amp; Turquoise Earrings</div><div class="m">Turquoise Accented</div><div class="one">One of One</div><div class="price">$60</div><button class="btn-cart" data-id="antler-and-turquoise-earrings" data-name="Antler &amp; Turquoise Earrings" data-price="60">Claim This Piece</button></div></div>
+        <div class="jcard"><div class="ph has-img"><img src="assets/images/sister/product-claw-pearl-earrings.jpg" alt="Claw and pearl earrings in gold wire on a black jewelry card" loading="lazy"></div>
+          <div class="jcard-body"><div class="t">Claw &amp; Pearl Earrings</div><div class="m">Tooth &amp; Claw</div><div class="one">One of One</div><div class="price">$60</div><button class="btn-cart" data-id="claw-and-pearl-earrings" data-name="Claw &amp; Pearl Earrings" data-price="60">Claim This Piece</button></div></div>
+        <div class="jcard"><div class="ph has-img"><img src="assets/images/sister/product-snake-vertebrae-set.jpg" alt="Snake vertebrae necklace and earring set on a black display bust" loading="lazy"></div>
+          <div class="jcard-body"><div class="t">Snake Vertebrae Set</div><div class="m">Natural Stone &amp; Bone</div><div class="one">One of One</div><div class="price">$60</div><button class="btn-cart" data-id="snake-vertebrae-set" data-name="Snake Vertebrae Set" data-price="60">Claim This Piece</button></div></div>
+        <div class="jcard"><div class="ph has-img"><img src="assets/images/sister/product-deer-antler-set.jpg" alt="Deer antler pendant necklace and matching earrings on a black bust" loading="lazy"></div>
+          <div class="jcard-body"><div class="t">Deer Antler Set</div><div class="m">Antler Pendants</div><div class="one">One of One</div><div class="price">$60</div><button class="btn-cart" data-id="deer-antler-set" data-name="Deer Antler Set" data-price="60">Claim This Piece</button></div></div>
+        <div class="jcard"><div class="ph has-img"><img src="assets/images/sister/product-coyote-claw-earrings.jpg" alt="Coyote claw chandelier earrings displayed on an antler stand" loading="lazy"></div>
+          <div class="jcard-body"><div class="t">Coyote Claw Earrings</div><div class="m">Tooth &amp; Claw</div><div class="one">One of One</div><div class="price">$60</div><button class="btn-cart" data-id="coyote-claw-earrings" data-name="Coyote Claw Earrings" data-price="60">Claim This Piece</button></div></div>
+        <div class="jcard"><div class="ph has-img"><img src="assets/images/sister/product-peacock-feather-necklace.jpg" alt="Peacock feather and lapis bead necklace" loading="lazy"></div>
+          <div class="jcard-body"><div class="t">Peacock Feather Necklace</div><div class="m">One-of-One</div><div class="one">One of One</div><div class="price">$60</div><button class="btn-cart" data-id="peacock-feather-necklace" data-name="Peacock Feather Necklace" data-price="60">Claim This Piece</button></div></div>
+        <div class="jcard"><div class="ph has-img"><img src="assets/images/sister/product-coyote-teeth-set.jpg" alt="Coyote teeth earrings and necklace set displayed on a pinecone and fur" loading="lazy"></div>
+          <div class="jcard-body"><div class="t">Coyote Teeth Set</div><div class="m">Tooth &amp; Claw</div><div class="one">One of One</div><div class="price">$60</div><button class="btn-cart" data-id="coyote-teeth-set" data-name="Coyote Teeth Set" data-price="60">Claim This Piece</button></div></div>
+        <div class="jcard"><div class="ph has-img"><img src="assets/images/sister/product-black-bear-piece.jpg" alt="Black bear claw necklace displayed with a bear skull on fur" loading="lazy"></div>
+          <div class="jcard-body"><div class="t">North Idaho Black Bear</div><div class="m">Statement Piece</div><div class="one">One of One</div><div class="price">$60</div><button class="btn-cart" data-id="north-idaho-black-bear" data-name="North Idaho Black Bear" data-price="60">Claim This Piece</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MADE FROM REMNANTS STORY -->
+  <section class="remnant-story">
+    <div class="wrap remnant-grid">
+      <div class="ph tq has-img"><img src="assets/images/sister/made-from-remnants-story.jpg" alt="Bear claw necklace and skulls staged on fur at a live show" loading="lazy"></div>
+      <div>
+        <span class="eyebrow tq">The Philosophy</span>
+        <h2 class="h-section">Made From Remnants</h2>
+        <div class="rule" style="background:var(--turquoise);"></div>
+        <p style="margin-top:28px;">Every fragment left behind on the brother&rsquo;s bench &mdash; a sliver of antler, a piece of bone, an offcut of leather &mdash; carries the same story as the work it came from.</p>
+        <p>Instead of being discarded, each remnant is reclaimed, shaped, and set by hand into a piece of jewelry that exists exactly once. When it&rsquo;s claimed, it&rsquo;s gone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSFORMATION -->
+  <section class="transform">
+    <div class="wrap center">
+      <span class="script">Unique Transformation</span>
+      <p class="lede" style="margin:18px auto 0;">Follow a single remnant from the workshop floor to a finished one-of-one piece.</p>
+      <div class="transform-row">
+        <div class="t-step">
+          <div class="ph has-img"><img src="assets/images/sister/transformation-raw-scraps.jpg" alt="Cleaned bones drying on the rack — bone cleaning day" loading="lazy"></div>
+          <div class="t-label">Raw Scraps</div>
+          <div class="t-sub">Gathered from the bench</div>
+        </div>
+        <div class="t-arrow">&#10230;</div>
+        <div class="t-step">
+          <div class="ph has-img"><img src="assets/images/sister/transformation-shaped-remnants.jpg" alt="Cut and polished ivory blanks on fur" loading="lazy"></div>
+          <div class="t-label">Shaped Remnants</div>
+          <div class="t-sub">Cleaned, cut &amp; polished</div>
+        </div>
+        <div class="t-arrow">&#10230;</div>
+        <div class="t-step">
+          <div class="ph tq has-img"><img src="assets/images/sister/transformation-finished-jewelry.jpg" alt="Finished coyote claw earrings displayed on an antler stand" loading="lazy"></div>
+          <div class="t-label">Finished Jewelry</div>
+          <div class="t-sub">One of one, ready to wear</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SISTER CTA -->
+  <section class="s-cta center">
+    <div class="wrap">
+      <span class="eyebrow tq">Claim Yours</span>
+      <h2 class="h-section">Each Piece Exists Once</h2>
+      <div class="rule center" style="background:var(--turquoise);"></div>
+      <div class="btn-row">
+        <a class="btn btn-gold" href="#sister">Shop One-of-One Pieces</a>
+        <a class="btn btn-tq" href="#home" data-route="home" data-anchor="contact">Request Custom Jewelry</a>
+        <a class="btn btn-ghost" href="#sister">Claim A Piece</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER (shared) ================= -->
+<footer id="anchor-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-mark">
+        <img class="foot-lockup" src="assets/images/logo/footer-logo-lockup.png" alt="Northern Immortals LLC — Timeless Pieces of Art">
+        <p>&ldquo;Achieving immortality through the creation of timeless pieces of art.&rdquo;</p>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#home" data-route="home">Home</a></li>
+          <li><a href="#brother" data-route="brother">Brother&rsquo;s Work</a></li>
+          <li><a href="#sister" data-route="sister">Sister&rsquo;s Jewelry</a></li>
+          <li><a href="#home" data-route="home" data-anchor="gallery">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#home" data-route="home" data-anchor="custom">Custom Orders</a></li>
+          <li><a href="#">Shows / Events</a></li>
+          <li><a href="#home" data-route="home" data-anchor="story">About</a></li>
+          <li><a href="#home" data-route="home" data-anchor="contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col foot-contact">
+        <h4>Contact</h4>
+        <p>hello@northernimmortals.com</p>
+        <p>North Idaho, USA</p>
+        <div class="socials" style="margin-top:16px;">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.8.1-1.1.1-1.5.2-1.8.3-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.1.3-.3.7-.3 1.8-.1 1.3-.1 1.7-.1 4.8s0 3.5.1 4.8c.1 1.1.2 1.5.3 1.8.2.5.4.8.7 1.1.3.3.6.5 1.1.7.3.1.7.3 1.8.3 1.3.1 1.7.1 4.8.1s3.5 0 4.8-.1c1.1-.1 1.5-.2 1.8-.3.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.1-.3.3-.7.3-1.8.1-1.3.1-1.7.1-4.8s0-3.5-.1-4.8c-.1-1.1-.2-1.5-.3-1.8-.2-.5-.4-.8-.7-1.1-.3-.3-.6-.5-1.1-.7-.3-.1-.7-.3-1.8-.3-1.3-.1-1.7-.1-4.8-.1zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8zm0 8.1a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.2-8.3a1.1 1.1 0 1 1-2.3 0 1.1 1.1 0 0 1 2.3 0z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 Northern Immortals LLC &middot; All Rights Reserved</span>
+      <span>Handcrafted in North Idaho</span>
+    </div>
+  </div>
+</footer>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart">
+  <div class="cart-head"><h3>Your Claimed Pieces</h3><button class="cart-close" id="cartClose">&times;</button></div>
+  <div class="cart-items" id="cartItems"><div class="cart-empty">Nothing claimed yet.<br>Every piece is one of one &mdash; when it&rsquo;s gone, it&rsquo;s gone.</div></div>
+  <div class="cart-foot">
+    <div class="cart-total"><span>Total</span><span id="cartTotal">$0</span></div>
+    <button class="btn btn-gold" style="width:100%;" id="cartCheckout">Claim These Pieces</button>
+    <p class="cart-note">Online checkout is coming soon. For now, claiming sends your selection to us through the request form and we hold the pieces for you.</p>
+  </div>
+</aside>
+
+<script>
+/* ============================================================
+   HASH-BASED PAGE ROUTING  (home / brother / sister)
+   ============================================================ */
+(function(){
+  var pages = ['home','brother','sister'];
+  var navLinks = document.getElementById('navLinks');
+  var navToggle = document.getElementById('navToggle');
+
+  function show(route, anchor){
+    if(pages.indexOf(route) === -1) route = 'home';
+    pages.forEach(function(p){
+      document.getElementById('page-'+p).classList.toggle('active', p === route);
+    });
+    /* nav highlight */
+    document.querySelectorAll('.nav-links a').forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('data-route') === route && !a.getAttribute('data-anchor'));
+    });
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded','false');
+    if(anchor){
+      var el = document.getElementById('anchor-'+anchor);
+      if(el){ setTimeout(function(){ el.scrollIntoView({behavior:'smooth'}); }, 60); return; }
+    }
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+  }
+
+  /* clicks on any internal hash link (sandbox-safe) */
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+    e.preventDefault();
+    var href = a.getAttribute('href');
+    if(href === '#') return;                          /* placeholder links */
+    var route = a.getAttribute('data-route') || href.slice(1);
+    if(pages.indexOf(route) === -1) route = 'home';
+    var anchor = a.getAttribute('data-anchor');
+    try{ if(location.hash !== '#'+route) history.pushState(null,'','#'+route); }catch(err){}
+    show(route, anchor);
+  });
+
+  window.addEventListener('hashchange', function(){
+    show(location.hash.replace('#',''));
+  });
+
+  navToggle.addEventListener('click', function(){
+    var open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  /* brother tabs + sister chips — visual selection only until products are wired */
+  document.querySelectorAll('.tabs').forEach(function(group){
+    group.addEventListener('click', function(e){
+      var t = e.target.closest('.tab'); if(!t) return;
+      group.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('active'); });
+      t.classList.add('active');
+    });
+  });
+  document.querySelectorAll('.chip-row').forEach(function(group){
+    group.addEventListener('click', function(e){
+      var c = e.target.closest('.chip'); if(!c) return;
+      group.querySelectorAll('.chip').forEach(function(x){ x.classList.remove('active'); });
+      c.classList.add('active');
+    });
+  });
+
+  /* ===== one-of-one cart (in-memory placeholder) ===== */
+  var cart = [];
+  var cartBtn = document.getElementById('cartBtn'), cartCount = document.getElementById('cartCount');
+  var drawer = document.getElementById('cartDrawer'), overlay = document.getElementById('cartOverlay');
+  function openCart(){ drawer.classList.add('open'); overlay.classList.add('open'); }
+  function closeCart(){ drawer.classList.remove('open'); overlay.classList.remove('open'); }
+  cartBtn.addEventListener('click', openCart);
+  document.getElementById('cartClose').addEventListener('click', closeCart);
+  overlay.addEventListener('click', closeCart);
+
+  function renderCart(){
+    var box = document.getElementById('cartItems');
+    cartCount.textContent = cart.length;
+    cartCount.classList.toggle('show', cart.length > 0);
+    document.getElementById('cartTotal').textContent = '$' + cart.reduce(function(s,i){return s+i.price;},0);
+    if(!cart.length){
+      box.innerHTML = '<div class="cart-empty">Nothing claimed yet.<br>Every piece is one of one &mdash; when it&rsquo;s gone, it&rsquo;s gone.</div>';
+      return;
+    }
+    box.innerHTML = cart.map(function(i){
+      return '<div class="cart-item">' + (i.img ? '<img src="'+i.img+'" alt="">' : '') +
+        '<div class="ci-info"><div class="ci-name">'+i.name+'</div><div class="ci-meta">One of One</div></div>' +
+        '<div class="ci-price">$'+i.price+'</div>' +
+        '<button class="ci-remove" data-rid="'+i.id+'" aria-label="Remove">&times;</button></div>';
+    }).join('');
+  }
+  document.getElementById('cartItems').addEventListener('click', function(e){
+    var b = e.target.closest('.ci-remove'); if(!b) return;
+    cart = cart.filter(function(i){ return i.id !== b.getAttribute('data-rid'); });
+    document.querySelectorAll('.btn-cart[data-id="'+b.getAttribute('data-rid')+'"]').forEach(function(x){
+      x.textContent = 'Claim This Piece'; x.classList.remove('claimed');
+    });
+    renderCart();
+  });
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('.btn-cart'); if(!b || b.classList.contains('claimed')) return;
+    var id = b.getAttribute('data-id');
+    if(cart.some(function(i){ return i.id === id; })) return;
+    var card = b.closest('.jcard, .wcard'); var img = card ? card.querySelector('.ph img') : null;
+    cart.push({ id: id, name: b.getAttribute('data-name'), price: parseInt(b.getAttribute('data-price'),10), img: img ? img.src : null });
+    b.textContent = 'Claimed \u2713'; b.classList.add('claimed');
+    renderCart(); openCart();
+  });
+  document.getElementById('cartCheckout').addEventListener('click', function(){
+    if(!cart.length) return;
+    var msg = 'I would like to claim the following one-of-one pieces:\n\n' +
+      cart.map(function(i){ return '\u2022 ' + i.name + ' \u2014 $' + i.price; }).join('\n') +
+      '\n\nTotal: $' + cart.reduce(function(s,i){return s+i.price;},0);
+    var ta = document.getElementById('contactMessage');
+    if(ta) ta.value = msg;
+    var sel = document.querySelector('.c-form select'); if(sel) sel.selectedIndex = 4;
+    closeCart();
+    try{ history.pushState(null,'','#home'); }catch(err){}
+    show('home','contact');
+  });
+
+  /* initial route */
+  show(location.hash.replace('#','') || 'home');
+})();
+</script>
+</body>
+</html>

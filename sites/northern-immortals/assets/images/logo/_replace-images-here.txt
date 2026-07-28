@@ -1,0 +1,1 @@
+Replace images in this logo folder with the final Northern Immortals LLC assets. Keep filenames the same to avoid editing index.html.

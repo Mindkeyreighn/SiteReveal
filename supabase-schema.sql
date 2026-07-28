@@ -14,10 +14,11 @@ create table if not exists public.leads (
   verification text not null default 'Needs Review',
   stage text not null default 'Research',
   status text not null default 'available',
-  price numeric(10,2) not null default 399,
+  price numeric(10,2) not null default 299,
   tagline text not null default '',
   color text not null default '#1a56db',
   description text not null default '',
+  site_path text not null default '',
   published boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -46,13 +47,20 @@ grant select, insert, update, delete on public.leads to authenticated;
 insert into public.leads
   (business_name,slug,category,city,verification,stage,status,price,tagline,color,description,published)
 values
-  ('Wize Guyz Irrigation','wize-guyz-irrigation','irrigation','Post Falls, ID','Verified','Ready to Generate','available',399,'Irrigation done smart','#0f6e56','Residential and commercial irrigation systems',true),
-  ('Green Edge Landscaping','green-edge-landscaping','landscaping','Spokane Valley, WA','Needs Review','Research','available',399,'Landscapes that make an impression','#27500a','Full-service residential landscaping',true),
-  ('Crystal Clear Cleaning Co.','crystal-clear-cleaning','cleaning','Coeur d''Alene, ID','Verified','Site Review','available',399,'Spotless every time','#185fa5','Residential deep cleaning and recurring service',true),
-  ('Yard King Sprinklers','yard-king-sprinklers','irrigation','Coeur d''Alene, ID','Verified','Contacted','available',399,'Keep your yard thriving','#166534','Sprinkler installation and repair',true)
+  ('Wize Guyz Irrigation','wize-guyz-irrigation','irrigation','Post Falls, ID','Verified','Ready to Generate','available',299,'Irrigation done smart','#0f6e56','Residential and commercial irrigation systems',true),
+  ('Green Edge Landscaping','green-edge-landscaping','landscaping','Spokane Valley, WA','Needs Review','Research','available',299,'Landscapes that make an impression','#27500a','Full-service residential landscaping',true),
+  ('Crystal Clear Cleaning Co.','crystal-clear-cleaning','cleaning','Coeur d''Alene, ID','Verified','Site Review','available',299,'Spotless every time','#185fa5','Residential deep cleaning and recurring service',true),
+  ('Yard King Sprinklers','yard-king-sprinklers','irrigation','Coeur d''Alene, ID','Verified','Contacted','available',299,'Keep your yard thriving','#166534','Sprinkler installation and repair',true)
 on conflict (slug) do nothing;
 
--- Price correction: if you ran an earlier version of this schema that used $299,
--- run this line to update all existing records to the correct $399 price point.
--- Safe to run even if records are already at $399.
-UPDATE public.leads SET price = 399 WHERE price = 299;
+-- Safe upgrade for projects that created the leads table before site_path existed.
+alter table public.leads add column if not exists site_path text not null default '';
+
+insert into public.leads
+  (business_name,slug,category,city,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Northern Immortals LLC','northern-immortals','trades','North Idaho','Verified','Site Review','available',349,'Taxidermy and artisan jewelry','#4a1b0c','Custom taxidermy and handcrafted jewelry','sites/northern-immortals/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    description = excluded.description,
+    tagline = excluded.tagline;
