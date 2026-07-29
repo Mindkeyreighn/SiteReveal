@@ -1,197 +1,56 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Yard King Lawn Care — weekly lawn maintenance, sprinkler repair, landscape installs and snow removal in Coeur d'Alene, Idaho.">
-  <title>Yard King Lawn Care | Coeur d'Alene, Idaho</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{--forest:#14432b;--deep:#0b2a1a;--gold:#c8a13c;--gold-light:#f1e2b6;--cream:#faf6ea;--ink:#1c2a1f;--muted:#66705f;--white:#fff;--line:#e2ddc7}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:Outfit,sans-serif;line-height:1.6}
-    a{color:inherit}.wrap{width:min(1160px,calc(100% - 40px));margin:auto}
-    .preview{background:var(--deep);color:#c9d6c9;text-align:center;padding:8px 16px;font-size:12px}.preview strong{color:#fff}.preview a{color:var(--gold);font-weight:700}
-    header{position:sticky;top:0;z-index:30;background:#faf6eaf2;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-    .nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-    .crown{width:46px;height:46px;border-radius:50%;background:var(--forest);color:var(--gold-light);display:grid;place-items:center;font-size:20px;box-shadow:0 0 0 2px var(--gold)}
-    .brand strong{display:block;font:700 20px/1 Cinzel,serif;letter-spacing:.01em}.brand small{display:block;margin-top:4px;color:var(--forest);font-weight:700;letter-spacing:.14em;font-size:9px;text-transform:uppercase}
-    .links{display:flex;align-items:center;gap:26px}.links a{text-decoration:none;font-size:13px;font-weight:600}
-    .nav-cta{background:var(--forest);color:#fff!important;padding:10px 18px;border-radius:8px}
-    .hero{position:relative;overflow:hidden;padding:80px 0 0;background:linear-gradient(180deg,var(--cream) 60%,var(--gold-light) 260%)}
-    .hero:before{content:"";position:absolute;width:640px;height:640px;border-radius:50%;right:-200px;top:-260px;background:var(--gold-light);opacity:.6}
-    .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center;padding-bottom:60px}
-    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--forest);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
-    .hero h1{font-family:Cinzel,serif;font-weight:700;line-height:1.05;letter-spacing:0;font-size:clamp(42px,6vw,68px);margin:18px 0 20px}
-    .hero h1 em{font-style:normal;color:var(--forest)}
-    .hero p{max-width:520px;color:var(--muted);font-size:17px}
-    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:9px;text-decoration:none;font-weight:700;font-size:14px;border:1.5px solid transparent;cursor:pointer;font-family:Outfit,sans-serif}
-    .btn-gold{background:var(--forest);color:#fff}
-    .btn-outline{border-color:var(--forest);color:var(--forest);background:transparent}
-    .crest-card{background:var(--deep);border-radius:24px;padding:34px;color:#fff;box-shadow:16px 18px 0 var(--gold-light);position:relative}
-    .crest{height:230px;border-radius:16px;background:repeating-linear-gradient(105deg,#1c5a37 0,#1c5a37 40px,#256e43 40px,#256e43 80px);position:relative;overflow:hidden;display:grid;place-items:center}
-    .crest span{font:800 110px Cinzel,serif;color:#ffffff26}
-    .crest-card h2{font:700 24px Cinzel,serif;margin:22px 0 4px}
-    .crest-card p{font-size:13px;color:#bcd0c0;margin:0}
-    .facts{position:relative;z-index:3}
-    .fact-grid{background:#fff;border-radius:16px;box-shadow:0 15px 45px rgba(20,67,43,.12);display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden;transform:translateY(30px)}
-    .fact{padding:22px 24px;border-right:1px solid var(--line);text-align:center}.fact:last-child{border:0}
-    .fact strong{display:block;font:700 22px Cinzel,serif;color:var(--forest)}.fact span{font-size:12px;color:var(--muted)}
-    section{padding:100px 0}
-    .section-head{display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:44px}
-    .section-head h2{font-family:Cinzel,serif;font-weight:700;font-size:clamp(32px,4.5vw,46px);max-width:640px;margin:10px 0 0;letter-spacing:0}
-    .section-head h2 em{font-style:normal;color:var(--forest)}
-    .section-head p{max-width:400px;color:var(--muted);margin:10px 0 0}
-    .services{background:#fff;padding-top:130px}
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .card{border:1px solid var(--line);border-radius:16px;padding:28px;background:var(--cream)}
-    .card .no{font:700 13px Cinzel,serif;color:var(--gold);letter-spacing:.1em}
-    .card h3{font-size:19px;margin:16px 0 10px;font-weight:600}
-    .card p{font-size:14px;color:var(--muted);margin:0}
-    .about{background:var(--cream)}
-    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
-    .about p{color:var(--muted);font-size:16px}
-    .about blockquote{font-family:Cinzel,serif;font-size:19px;color:var(--forest);margin:20px 0 0;font-style:normal}
-    .values{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .value{border-top:1px solid var(--line);padding-top:14px}
-    .value strong{display:block;font-size:15px;margin-bottom:4px}
-    .value span{font-size:13px;color:var(--muted)}
-    .award{background:var(--forest);color:#fff;text-align:center}
-    .award .badge{width:70px;height:70px;border-radius:50%;background:var(--gold);color:var(--deep);display:grid;place-items:center;margin:0 auto 18px;font:700 13px Cinzel,serif}
-    .award h2{font-family:Cinzel,serif;font-size:clamp(28px,4vw,42px);margin:0 0 16px;font-weight:700}
-    .award h2 em{font-style:normal;color:var(--gold-light)}
-    .award p{max-width:600px;margin:0 auto;color:#cfe0d3}
-    .reviews{background:#fff}
-    .review-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-    .review{border:1px solid var(--line);border-radius:16px;padding:28px;background:var(--cream)}
-    .stars{color:var(--gold);letter-spacing:3px;margin-bottom:12px}
-    .review p{font-size:14.5px;color:var(--ink)}
-    .review-author{display:flex;align-items:center;gap:10px;margin-top:16px}
-    .avatar{width:34px;height:34px;border-radius:50%;background:var(--forest);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
-    .review-author small{display:block;color:var(--muted);font-size:12px}
-    .contact{background:var(--cream)}
-    .contact-card{display:grid;grid-template-columns:.85fr 1.15fr;border-radius:22px;overflow:hidden;box-shadow:0 20px 55px rgba(20,67,43,.14)}
-    .contact-copy{background:var(--deep);color:#fff;padding:48px}
-    .contact-copy h2{font-family:Cinzel,serif;font-size:36px;margin:12px 0 16px;font-weight:700}
-    .contact-copy p{color:#c9d6c9}
-    .info{border-top:1px solid rgba(255,255,255,.2);padding-top:16px;margin-top:20px}
-    .info small{display:block;color:var(--gold-light);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:11px}
-    .info strong{display:block;margin-top:5px;font-weight:600}
-    .form{background:#fff;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .field{display:grid;gap:6px}.field.full{grid-column:1/-1}
-    .field label{font-size:12px;font-weight:700}
-    .field input,.field select,.field textarea{border:1px solid var(--line);border-radius:9px;padding:12px;font:inherit;background:#fbfaf5}
-    .field textarea{height:100px;resize:vertical}
-    .form p,.form button{grid-column:1/-1}.form p{font-size:12px;color:var(--muted);margin:0}
-    .form button{border:0}
-    footer{background:var(--deep);color:#a9bcac;padding:36px 0}
-    .footer-row{display:flex;justify-content:space-between;align-items:center;gap:24px}
-    .footer-row a{color:#fff;text-decoration:none;font-weight:700}
-    .toast{position:fixed;right:20px;bottom:20px;background:var(--forest);color:#fff;padding:15px 18px;border-radius:10px;box-shadow:0 15px 40px rgba(0,0,0,.25);opacity:0;transform:translateY(24px);transition:.25s;pointer-events:none;z-index:40}
-    .toast.show{opacity:1;transform:none}
-    @media(max-width:920px){.hero-grid,.about-grid,.contact-card{grid-template-columns:1fr}.fact-grid{grid-template-columns:1fr 1fr}.cards,.review-grid{grid-template-columns:1fr 1fr}.links a:not(.nav-cta){display:none}.section-head{display:block}.section-head p{margin-top:16px}}
-    @media(max-width:600px){.wrap{width:min(100% - 28px,1160px)}.nav{height:68px}.brand strong{font-size:17px}.crest-card{padding:22px}.crest{height:170px}.fact-grid{grid-template-columns:1fr 1fr}.fact{border-right:0;border-bottom:1px solid var(--line)}.cards,.values,.review-grid,.form{grid-template-columns:1fr}section{padding:70px 0}.services{padding-top:110px}.contact-copy,.form{padding:28px}.footer-row{display:block}.footer-row a{display:inline-block;margin-top:14px}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Yard King Lawn Care provides weekly lawn maintenance, sprinkler repair, small landscape installs, seasonal cleanup and snow removal in Coeur d'Alene and North Idaho.">
+<title>Yard King Lawn Care | Coeur d'Alene, Idaho</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--black:#10100f;--charcoal:#1d201c;--green:#2f6535;--green2:#477d43;--orange:#e66f0b;--gold:#d3b900;--cream:#f6f3eb;--paper:#fff;--ink:#1d241e;--muted:#667068;--line:#d9ddd4}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "DM Sans",Arial,sans-serif}a{color:inherit}.wrap{width:min(1180px,calc(100% - 42px));margin:auto}
+.preview{background:#090a09;color:#bec4bd;text-align:center;padding:7px 16px;font-size:11px}.preview strong{color:#fff}.preview a{color:#f39a4d;font-weight:800}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97);border-bottom:1px solid #d7d7d2;box-shadow:0 8px 28px rgba(16,16,15,.07);backdrop-filter:blur(14px)}.nav{height:98px;display:flex;align-items:center;justify-content:space-between;gap:30px}.brand{display:flex;align-items:center;text-decoration:none;overflow:hidden}.brand img{display:block;width:auto;height:90px;margin-bottom:-10px}.links{display:flex;align-items:center;gap:28px}.links a{text-decoration:none;color:var(--black);font-size:13px;font-weight:700}.nav-cta{padding:12px 18px;background:var(--black);color:#fff!important;border-bottom:3px solid var(--orange)}
+.hero{position:relative;min-height:760px;display:grid;align-items:center;background:var(--black) url('assets/yard-king-lawn-care-hero.png') center/cover;overflow:hidden}.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,13,10,.98) 0%,rgba(15,19,14,.91) 40%,rgba(23,31,21,.3) 69%,rgba(23,31,21,.04) 100%)}.hero:after{content:"";position:absolute;left:0;bottom:0;width:54%;height:6px;background:linear-gradient(90deg,var(--orange),var(--gold))}.hero-copy{position:relative;z-index:1;max-width:680px;color:#fff;padding:100px 0}.eyebrow{display:flex;align-items:center;gap:12px;color:#f3903b;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}.eyebrow:before{content:"";width:32px;height:2px;background:currentColor}.hero h1,.section-head h2,.story-copy h2,.award h2,.season h2,.contact-copy h2{font-family:Oswald,Arial,sans-serif;text-transform:uppercase;line-height:.93;letter-spacing:-.025em}.hero h1{margin:19px 0 26px;font-size:clamp(4.3rem,8.3vw,7.7rem)}.hero h1 span{display:block;color:#f28a31}.hero p{max-width:620px;color:#dce2d9;font-size:1.16rem}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 23px;border:1px solid transparent;text-decoration:none;font:700 13px "DM Sans";cursor:pointer}.btn-primary{background:var(--orange);color:#fff}.btn-secondary{border-color:#aeb8ab;background:rgba(255,255,255,.05);color:#fff}
+.facts{background:var(--black);color:#fff}.fact-grid{display:grid;grid-template-columns:repeat(4,1fr)}.fact{padding:25px 26px;border-right:1px solid rgba(255,255,255,.14)}.fact:last-child{border:0}.fact strong{display:block;font:600 1.25rem Oswald;text-transform:uppercase}.fact span{display:block;color:#aeb8ad;font-size:11px;margin-top:4px}
+section{padding:104px 0}.section-head{display:grid;grid-template-columns:1fr .72fr;gap:80px;align-items:end;margin-bottom:46px}.kicker{color:var(--orange);font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.section-head h2,.story-copy h2,.award h2,.season h2,.contact-copy h2{margin:11px 0 0;font-size:clamp(3.3rem,6vw,5.4rem)}.section-head p{margin:0;color:var(--muted);font-size:1.04rem}
+.services{background:var(--cream)}.service-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.service{position:relative;grid-column:span 4;min-height:270px;padding:29px;background:#fff;border-top:5px solid var(--green);box-shadow:0 10px 30px rgba(16,16,15,.04)}.service:nth-child(2),.service:nth-child(5){border-color:var(--orange)}.service-no{color:#c7cec4;font:600 3.8rem/1 Oswald}.service h3{margin:26px 0 10px;font-size:1.42rem}.service p{margin:0;color:var(--muted);font-size:14px}
+.story{background:#fff}.story-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:85px;align-items:center}.story-panel{min-height:560px;padding:50px;background:var(--green);color:#fff;position:relative;overflow:hidden;display:flex;align-items:flex-end}.story-panel:before{content:"";position:absolute;width:430px;height:430px;background:var(--orange);opacity:.13;border-radius:52% 48% 70% 30%;right:-180px;top:-160px;transform:rotate(24deg)}.story-panel:after{content:"♛";position:absolute;right:35px;top:17px;color:rgba(255,255,255,.08);font-size:15rem;line-height:1}.story-panel blockquote{position:relative;z-index:1;margin:0;font:600 clamp(2rem,4vw,3.5rem)/1.08 Oswald;text-transform:uppercase}.story-copy>p{color:var(--muted);font-size:1.08rem}.values{display:grid;grid-template-columns:1fr 1fr;margin-top:32px;border-top:1px solid var(--line);border-left:1px solid var(--line)}.value{padding:21px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.value b{display:block;font-size:13px}.value small{display:block;color:var(--muted);margin-top:5px}
+.award{background:var(--charcoal);color:#fff}.award-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:80px;align-items:center}.award-badge{width:245px;height:245px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--gold);box-shadow:inset 0 0 0 14px var(--charcoal),inset 0 0 0 16px rgba(211,185,0,.42);color:var(--gold);text-align:center;font:700 2.7rem/1 Oswald}.award-badge small{display:block;color:#fff;font:600 11px "DM Sans";letter-spacing:.18em;margin-top:8px}.award p{color:#c5ccc3;max-width:650px}.award-note{color:#8f9a90!important;font-size:11px}
+.season{background:#eef2ea}.season-head{display:flex;justify-content:space-between;align-items:end;gap:60px;margin-bottom:48px}.season-head p{max-width:470px;color:var(--muted)}.season-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid var(--black)}.season-item{position:relative;padding:29px 24px;border-right:1px solid #cbd3c7}.season-item:last-child{border:0}.season-item:before{content:"";position:absolute;top:-8px;left:24px;width:14px;height:14px;border-radius:50%;background:var(--orange);border:3px solid #eef2ea}.season-item small{color:var(--green);font-weight:800;text-transform:uppercase;letter-spacing:.12em}.season-item h3{margin:27px 0 8px;font-size:1.28rem}.season-item p{margin:0;color:var(--muted);font-size:13px}
+.reviews{background:#fff}.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.review{padding:34px;border:1px solid var(--line);border-left:5px solid var(--orange);background:#fbfcfa}.stars{color:var(--gold);letter-spacing:3px}.review p{font-size:1rem}.review footer{background:none;color:var(--ink);padding:0;margin-top:20px}.review footer b{display:block}.review footer small{color:var(--muted)}
+.contact{background:var(--cream)}.contact-card{display:grid;grid-template-columns:.82fr 1.18fr;background:#fff;box-shadow:0 24px 70px rgba(16,16,15,.1)}.contact-copy{padding:50px;background:var(--black);color:#fff}.contact-copy h2{font-size:3.7rem}.contact-copy p{color:#c7cec5}.info{padding:16px 0;border-top:1px solid rgba(255,255,255,.18)}.info small{display:block;color:#f19443;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.info strong{display:block;margin-top:4px}.form{padding:50px;display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:11px;font-weight:800}.field input,.field select,.field textarea{width:100%;padding:13px;border:1px solid var(--line);background:#fbfcfa;font:inherit}.field textarea{height:110px;resize:vertical}.form p,.form button{grid-column:1/-1}.form p{color:var(--muted);font-size:11px}.form button{border:0}.toast{position:fixed;right:20px;bottom:20px;z-index:30;padding:15px 18px;background:var(--green);color:#fff;box-shadow:0 15px 40px rgba(0,0,0,.25);opacity:0;transform:translateY(24px);transition:.25s;pointer-events:none}.toast.show{opacity:1;transform:none}
+body>footer{background:#080908;color:#aeb6ad;padding:38px 0}.footer-row{display:flex;justify-content:space-between;align-items:center;gap:25px}.footer-row a{color:#fff;text-decoration:none;font-size:12px;font-weight:700}
+@media(max-width:900px){.links a:not(.nav-cta){display:none}.hero{background-position:65% center}.section-head,.story-grid,.award-grid,.contact-card{grid-template-columns:1fr}.service{grid-column:span 6}.story-panel{min-height:420px}.award-badge{width:200px;height:200px}.season-grid{grid-template-columns:1fr 1fr}.season-item:nth-child(2){border-right:0}.season-head{display:block}.season-head p{margin-top:20px}}
+@media(max-width:620px){.wrap{width:min(100% - 28px,1180px)}.nav{height:78px}.brand img{height:70px}.links{display:none}.hero{min-height:680px;background-position:70% center}.hero:before{background:linear-gradient(0deg,rgba(11,13,10,.99) 10%,rgba(15,19,14,.87) 66%,rgba(23,31,21,.2))}.hero-copy{padding:150px 0 70px}.hero h1{font-size:4.25rem}.fact-grid,.service-grid,.values,.season-grid,.review-grid,.form{grid-template-columns:1fr}.fact{border-right:0;border-bottom:1px solid rgba(255,255,255,.14)}.service{grid-column:auto}.season-grid{border-top:0;border-left:2px solid var(--black)}.season-item{border-right:0;border-bottom:1px solid #cbd3c7}.season-item:before{left:-8px;top:30px}.story-panel,.contact-copy,.form{padding:30px}section{padding:76px 0}.award-badge{margin:auto}.footer-row{display:block}.footer-row a{display:inline-block;margin-top:15px}.field.full,.form p,.form button{grid-column:auto}}
+</style>
 </head>
 <body>
-  <div class="preview"><strong>SiteReveal preview:</strong> This website concept was prepared for Yard King Lawn Care. <a href="../../index.html">Return to SiteReveal</a></div>
-  <header><div class="wrap nav">
-    <a class="brand" href="#top"><span class="crown">♛</span><span><strong>Yard King</strong><small>Coeur d'Alene, Idaho</small></span></a>
-    <nav class="links" aria-label="Primary navigation"><a href="#services">Services</a><a href="#about">About</a><a href="#reviews">Reviews</a><a class="nav-cta" href="#contact">Free estimate</a></nav>
-  </div></header>
-  <main id="top">
-    <section class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <div class="eyebrow">♛ A family tradition · North Idaho</div>
-          <h1>Treat your yard<br><em>like royalty.</em></h1>
-          <p>Weekly lawn maintenance, sprinkler repair &amp; installation, landscape installs, yard cleanups and snow removal — from a small, dedicated family business that treats your property like their own.</p>
-          <div class="actions">
-            <a class="btn btn-gold" href="#contact">Request a free estimate →</a>
-            <a class="btn btn-outline" href="#services">See our services</a>
-          </div>
-        </div>
-        <div class="crest-card">
-          <div class="crest"><span>YK</span></div>
-          <h2>Yard King Lawn Care</h2>
-          <p>Family-owned · Free estimates · North Idaho</p>
-        </div>
-      </div>
-      <div class="wrap facts">
-        <div class="fact-grid">
-          <div class="fact"><strong>2025</strong><span>Neighborhood Faves winner</span></div>
-          <div class="fact"><strong>5★</strong><span>Verified reviews</span></div>
-          <div class="fact"><strong>424+</strong><span>Neighbors following</span></div>
-          <div class="fact"><strong>Free</strong><span>Estimates, always</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="services" id="services"><div class="wrap">
-      <div class="section-head"><div><div class="eyebrow">Our craft</div><h2>Full-service <em>yard care</em></h2></div><p>From the first cut in spring to the last snow of winter — everything your yard needs, handled by people who treat it like their own.</p></div>
-      <div class="cards">
-        <article class="card"><div class="no">No. 01</div><h3>Weekly lawn maintenance</h3><p>Mowing, edging, trimming and tidying — done on schedule, done right, every week of the season.</p></article>
-        <article class="card"><div class="no">No. 02</div><h3>Sprinkler repair &amp; install</h3><p>Broken heads, leaking valves, low pressure or brand-new systems — diagnosed and repaired properly.</p></article>
-        <article class="card"><div class="no">No. 03</div><h3>Small landscape installs</h3><p>Beds, borders, rock work and planting — beautiful results that match your home and budget.</p></article>
-        <article class="card"><div class="no">No. 04</div><h3>Yard cleanups</h3><p>Spring and fall cleanups, leaf removal and debris hauling that get your property looking immaculate.</p></article>
-        <article class="card"><div class="no">No. 05</div><h3>Snow removal</h3><p>When Idaho winter hits, driveways, walkways and lots get cleared so you can come and go safely.</p></article>
-        <article class="card"><div class="no">No. 06</div><h3>Free estimates &amp; advice</h3><p>A walk of your property, honest recommendations, and no pressure — even when it costs us nothing.</p></article>
-      </div>
-    </div></section>
-
-    <section class="about" id="about"><div class="wrap about-grid">
-      <div>
-        <div class="eyebrow">Who we are</div>
-        <h2 style="font-family:Cinzel,serif;font-size:clamp(28px,4vw,38px);margin:12px 0 16px;font-weight:700">Small, dedicated, <em style="color:var(--forest);font-style:normal">family-run.</em></h2>
-        <p>Yard King is a small family business — and that's exactly what makes the difference. Not a giant crew rushing through twenty lawns a day, but the people who show up, take pride in the work, and don't leave until your property looks the way it should.</p>
-        <blockquote>"We love what we do and take pride in perfection."</blockquote>
-      </div>
-      <div class="values">
-        <div class="value"><strong>Pride in perfection</strong><span>Every cut, every edge, every detail — we don't cut corners.</span></div>
-        <div class="value"><strong>Trustworthy by reputation</strong><span>Neighbors trust us with gate codes and keys. That trust is earned.</span></div>
-        <div class="value"><strong>Honest, affordable pricing</strong><span>Free estimates, no pressure, and no upsells you don't need.</span></div>
-        <div class="value"><strong>A real family business</strong><span>Talk directly to the people doing the work — no call centers.</span></div>
-      </div>
-    </div></section>
-
-    <section class="award"><div class="wrap">
-      <div class="badge">2025</div>
-      <h2>Voted a <em>neighborhood fave</em><br>by the people who know us best.</h2>
-      <p>A 2025 Nextdoor Neighborhood Faves Winner — recognized by the neighbors served every day. This concept carries that recognition front and center, right where new customers will see it first.</p>
-    </div></section>
-
-    <section class="reviews" id="reviews"><div class="wrap">
-      <div class="section-head"><div><div class="eyebrow">What neighbors say</div><h2>Words from <em>our clients</em></h2></div><p>Public reviews from real customers in the community.</p></div>
-      <div class="review-grid">
-        <div class="review"><div class="stars">★★★★★</div><p>"We finally found a first-rate yard service, and we could not be more pleased. Exceptional, thorough and expedient. They even made landscaping recommendations that cost us nothing."</p><div class="review-author"><div class="avatar">DJ</div><div><strong style="font-size:14px">Douglas Johnson</strong><small>Verified neighbor · May 2025</small></div></div></div>
-        <div class="review"><div class="stars">★★★★★</div><p>"Excellent service, great quality. Honest, respectful and affordable. You can trust them with gate codes, keys, alarm codes. Very impressed and well pleased."</p><div class="review-author"><div class="avatar">TM</div><div><strong style="font-size:14px">Tim Munchalfen</strong><small>Verified neighbor · November 2024</small></div></div></div>
-      </div>
-    </div></section>
-
-    <section class="contact" id="contact"><div class="wrap contact-card">
-      <div class="contact-copy">
-        <div class="eyebrow" style="color:var(--gold-light)">Free estimate</div>
-        <h2>Ready to treat your yard right?</h2>
-        <p>Tell us about your property and the best way to reach you.</p>
-        <div class="info"><small>Service area</small><strong>Coeur d'Alene &amp; North Idaho</strong></div>
-        <div class="info"><small>Estimates</small><strong>Always free, no pressure</strong></div>
-      </div>
-      <form class="form" id="quoteForm">
-        <div class="field"><label for="name">Your name</label><input id="name" required autocomplete="name"></div>
-        <div class="field"><label for="phone">Phone number</label><input id="phone" required autocomplete="tel"></div>
-        <div class="field"><label for="service">Service needed</label><select id="service"><option>Weekly lawn maintenance</option><option>Sprinkler repair/install</option><option>Landscape install</option><option>Yard cleanup</option><option>Snow removal</option><option>Other</option></select></div>
-        <div class="field"><label for="address">Property address</label><input id="address" placeholder="Street, city, ZIP"></div>
-        <div class="field full"><label for="details">Yard details</label><textarea id="details" placeholder="Size of property, what you're hoping for, any specific concerns"></textarea></div>
-        <p>This is a SiteReveal website preview. The form will be connected to Yard King's preferred contact method when the site is claimed.</p>
-        <button class="btn btn-gold" type="submit">Prepare my estimate request</button>
-      </form>
-    </div></section>
-  </main>
-  <footer><div class="wrap footer-row"><span>© 2026 Yard King Lawn Care · Coeur d'Alene, Idaho</span><a href="../../index.html">Website preview by SiteReveal</a></div></footer>
-  <div class="toast" id="toast">Your request is ready.</div>
-  <script>document.getElementById("quoteForm").addEventListener("submit",function(e){e.preventDefault();const n=document.getElementById("name").value.trim();const t=document.getElementById("toast");t.textContent=`Thanks, ${n}. This preview form will be connected when Yard King claims the site.`;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),5000)});</script>
+<div class="preview"><strong>SiteReveal preview:</strong> An independent website concept prepared for Yard King Lawn Care. Business details must be approved before launch. <a href="../../index.html">Return to SiteReveal</a></div>
+<header><div class="wrap nav"><a class="brand" href="#top" aria-label="Yard King home"><img src="assets/yard-king-official-logo.jpg" alt="Yard King"></a><nav class="links" aria-label="Primary navigation"><a href="#services">Services</a><a href="#story">About</a><a href="#reviews">Reviews</a><a class="nav-cta" href="#contact">Free estimate</a></nav></div></header>
+<main id="top">
+<section class="hero"><div class="wrap"><div class="hero-copy"><div class="eyebrow">Family lawn care · Coeur d'Alene, Idaho</div><h1>Your property. <span>King-level care.</span></h1><p>Weekly lawn maintenance, sprinkler service, small landscape installs, seasonal cleanup and snow removal from a dedicated family business that takes pride in the finished result.</p><div class="actions"><a class="btn btn-primary" href="#contact">Request a free estimate</a><a class="btn btn-secondary" href="#services">Explore services</a></div></div></div></section>
+<div class="facts"><div class="wrap fact-grid"><div class="fact"><strong>2025 Neighborhood Fave</strong><span>Published local recognition at research time</span></div><div class="fact"><strong>Five-star reviews</strong><span>Strong public customer feedback</span></div><div class="fact"><strong>424+ neighbors</strong><span>Published following at research time</span></div><div class="fact"><strong>Free estimates</strong><span>Discuss the property without pressure</span></div></div></div>
+<section class="services" id="services"><div class="wrap"><div class="section-head"><div><div class="kicker">Year-round property care</div><h2>Every season. Every visible detail.</h2></div><p>Routine lawn work, irrigation help, practical landscape improvements and winter service coordinated around North Idaho properties.</p></div><div class="service-grid">
+<article class="service"><div class="service-no">01</div><h3>Weekly lawn maintenance</h3><p>Mowing, edging, trimming and property tidying completed on a dependable seasonal schedule.</p></article>
+<article class="service"><div class="service-no">02</div><h3>Sprinkler repair and installation</h3><p>Help with broken heads, leaking valves, pressure concerns, system repairs and new irrigation work.</p></article>
+<article class="service"><div class="service-no">03</div><h3>Small landscape installs</h3><p>Beds, borders, rock work and planting improvements planned around the home and available budget.</p></article>
+<article class="service"><div class="service-no">04</div><h3>Seasonal yard cleanups</h3><p>Spring and fall cleanup, leaf removal and debris hauling to reset the property between seasons.</p></article>
+<article class="service"><div class="service-no">05</div><h3>Snow removal</h3><p>Winter clearing for applicable driveways, walkways and lots when North Idaho weather arrives.</p></article>
+<article class="service"><div class="service-no">06</div><h3>Free estimates and advice</h3><p>A property walkthrough, practical recommendations and a clear conversation about the work requested.</p></article>
+</div></div></section>
+<section class="story" id="story"><div class="wrap story-grid"><div class="story-panel"><blockquote>“We love what we do and take pride in perfection.”</blockquote></div><div class="story-copy"><div class="kicker">A small family business</div><h2>The people you meet are the people doing the work.</h2><p>Yard King presents itself as a dedicated family operation—not a large service chain. That means direct communication, visible accountability and attention to how the property looks when the work is finished.</p><div class="values"><div class="value"><b>Pride in the details</b><small>Careful mowing, edging, cleanup and a finished appearance.</small></div><div class="value"><b>Trust earned locally</b><small>Customer comments emphasize honesty, respect and reliability.</small></div><div class="value"><b>Practical pricing</b><small>Free estimates and recommendations based on the property.</small></div><div class="value"><b>Family accountability</b><small>Speak with the people responsible for completing the work.</small></div></div></div></div></section>
+<section class="award"><div class="wrap award-grid"><div class="award-badge"><div>2025<small>NEIGHBORHOOD FAVE</small></div></div><div><div class="eyebrow">Local recognition</div><h2>Recognized by the neighbors they serve.</h2><p>Yard King was presented publicly as a 2025 Nextdoor Neighborhood Faves winner. That recognition supports the same qualities repeated in customer comments: thorough work, honest recommendations and respectful service.</p><p class="award-note">Recognition and platform details shown as published at research time and should be confirmed by the owner before launch.</p></div></div></section>
+<section class="season"><div class="wrap"><div class="season-head"><div><div class="kicker">North Idaho property cycle</div><h2>Service that follows the season.</h2></div><p>Ask which services are currently offered, when recurring routes begin and how early seasonal work should be scheduled.</p></div><div class="season-grid"><div class="season-item"><small>Spring</small><h3>Cleanup and irrigation</h3><p>Property reset, debris removal, sprinkler checks and early growth preparation.</p></div><div class="season-item"><small>Summer</small><h3>Weekly maintenance</h3><p>Mowing, edging, trimming and irrigation attention during peak growing months.</p></div><div class="season-item"><small>Fall</small><h3>Leaves and final cleanup</h3><p>Seasonal cleanup and property preparation as growth slows and leaves drop.</p></div><div class="season-item"><small>Winter</small><h3>Snow removal</h3><p>Confirm applicable routes, property types, timing and current availability.</p></div></div></div></section>
+<section class="reviews" id="reviews"><div class="wrap"><div class="section-head"><div><div class="kicker">Public customer feedback</div><h2>What local clients have said.</h2></div><p>Review excerpts retained from the existing Yard King website concept. The owner should approve names, wording and publication before launch.</p></div><div class="review-grid"><article class="review"><div class="stars">★★★★★</div><p>“We finally found a first-rate yard service, and we could not be more pleased. Exceptional, thorough and expedient. They even made landscaping recommendations that cost us nothing.”</p><footer><b>Douglas Johnson</b><small>Published neighbor review · May 2025</small></footer></article><article class="review"><div class="stars">★★★★★</div><p>“Excellent service, great quality. Honest, respectful and affordable. You can trust them with gate codes, keys, alarm codes. Very impressed and well pleased.”</p><footer><b>Tim Munchalfen</b><small>Published neighbor review · November 2024</small></footer></article></div></div></section>
+<section class="contact" id="contact"><div class="wrap contact-card"><div class="contact-copy"><div class="eyebrow">Free property estimate</div><h2>Tell Yard King what your property needs.</h2><p>Share the location, service requested, property details and your preferred way to be contacted.</p><div class="info"><small>Primary service area</small><strong>Coeur d'Alene and surrounding North Idaho areas</strong></div><div class="info"><small>Estimate policy</small><strong>Free estimates, with no-pressure recommendations</strong></div></div><form class="form" id="quoteForm"><div class="field"><label for="name">Your name *</label><input id="name" required autocomplete="name"></div><div class="field"><label for="phone">Phone number *</label><input id="phone" required type="tel" autocomplete="tel"></div><div class="field"><label for="service">Service needed</label><select id="service"><option>Weekly lawn maintenance</option><option>Sprinkler repair / installation</option><option>Small landscape install</option><option>Seasonal yard cleanup</option><option>Snow removal</option><option>Other</option></select></div><div class="field"><label for="address">Property address</label><input id="address" placeholder="Street, city, ZIP" autocomplete="street-address"></div><div class="field full"><label for="details">Property details</label><textarea id="details" placeholder="Property size, requested work, timing and any specific concerns"></textarea></div><p>This is a SiteReveal preview. The form will be connected to Yard King’s preferred contact method when the website is purchased. Confirm current contact details, services, pricing, service area, availability and warranty terms directly with the owner.</p><button class="btn btn-primary" type="submit">Prepare estimate request</button></form></div></section>
+</main>
+<footer><div class="wrap footer-row"><span>© 2026 Yard King Lawn Care · Coeur d'Alene, Idaho</span><a href="../../index.html">Website preview by SiteReveal</a></div></footer>
+<div class="toast" id="toast">Your request is ready.</div>
+<script>
+document.getElementById("quoteForm").addEventListener("submit",function(e){e.preventDefault();const n=document.getElementById("name").value.trim(),t=document.getElementById("toast");t.textContent=`Thanks, ${n}. This preview form will be connected when Yard King purchases the website.`;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),5000)});
+</script>
 </body>
 </html>
