@@ -43,15 +43,19 @@ grant usage on schema public to anon, authenticated;
 grant select on public.leads to anon;
 grant select, insert, update, delete on public.leads to authenticated;
 
--- Optional starter placeholders. Remove this block if you want an empty database.
-insert into public.leads
-  (business_name,slug,category,city,verification,stage,status,price,tagline,color,description,published)
-values
-  ('Wize Guyz Irrigation','wize-guyz-irrigation','irrigation','Post Falls, ID','Verified','Ready to Generate','available',399,'Irrigation done smart','#0f6e56','Residential and commercial irrigation systems',true),
-  ('Green Edge Landscaping','green-edge-landscaping','landscaping','Spokane Valley, WA','Needs Review','Research','available',399,'Landscapes that make an impression','#27500a','Full-service residential landscaping',true),
-  ('Crystal Clear Cleaning Co.','crystal-clear-cleaning','cleaning','Coeur d''Alene, ID','Verified','Site Review','available',399,'Spotless every time','#185fa5','Residential deep cleaning and recurring service',true),
-  ('Yard King Sprinklers','yard-king-sprinklers','irrigation','Coeur d''Alene, ID','Verified','Contacted','available',399,'Keep your yard thriving','#166534','Sprinkler installation and repair',true)
-on conflict (slug) do nothing;
+-- Remove retired demonstration records from earlier SiteReveal versions.
+delete from public.leads
+where slug in (
+  'spotless-solutions',
+  'green-edge-landscaping',
+  'crystal-clear-cleaning',
+  'yard-king-sprinklers',
+  'mm-property',
+  'demo-landscaping',
+  'demo-cleaning2',
+  'demo-hvac',
+  'cascade-hvac-services'
+);
 
 -- Safe upgrade for projects that created the leads table before site_path existed.
 alter table public.leads add column if not exists site_path text not null default '';

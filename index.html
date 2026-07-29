@@ -479,9 +479,9 @@
       onkeydown="if(event.key==='Enter') revealSite()"/>
     <button class="search-btn" onclick="revealSite()">Reveal my site →</button>
   </div>
-  <p class="search-hint">Try: "Wize Guyz Irrigation" · "Spotless Solutions" · "Yard King Sprinklers"</p>
+  <p class="search-hint">Try: "Bonasera Mobile Repair" · "Woof Pack Pet Spa" · "VN Nails"</p>
 </section>
-<p class="demo-notice">Current listings are demonstration placeholders while SiteReveal is being prepared for real businesses.</p>
+<p class="demo-notice">SiteReveal previews are independently created and are not official business websites unless purchased and approved by the owner. All business details must be confirmed before launch.</p>
 
 <!-- REVEAL STAGE -->
 <div class="reveal-stage" id="revealStage">
@@ -490,7 +490,7 @@
 
 <!-- GALLERY -->
 <section class="gallery-section" id="gallery">
-  <div class="section-label">Demonstration sites — not active offers</div>
+  <div class="section-label">Available SiteReveal previews</div>
 
   <div class="tabs-bar" id="tabsBar">
     <button class="tab-btn active" onclick="filterTab('all', this)">All <span class="tab-count" id="count-all">0</span></button>
@@ -520,13 +520,13 @@
     </div>
     <div class="how-card">
       <div class="how-num">3</div>
-      <div class="how-title">Claim or customize</div>
-      <div class="how-desc">Purchase the site for a flat fee, request a revised version, or ask us to handle hosting and domain.</div>
+      <div class="how-title">Purchase and personalize</div>
+      <div class="how-desc">Purchase for $399, then personalize the brand colors, typography, logo, up to six supplied photos, verified business details and visual accents.</div>
     </div>
     <div class="how-card">
       <div class="how-num">4</div>
-      <div class="how-title">Go live</div>
-      <div class="how-desc">We transfer the site to you with your own domain and hosting. Full ownership — yours forever.</div>
+      <div class="how-title">Approve and go live</div>
+      <div class="how-desc">One consolidated revision round is included. After approval, receive the website files; launch assistance and larger upgrades are available separately.</div>
     </div>
   </div>
 </section>
@@ -541,26 +541,26 @@
       <div class="option-card featured" onclick="choosePlan('buy')">
         <div class="option-icon" style="background:#e8f0fe;">💳</div>
         <div class="option-info">
-          <div class="option-title">Buy this site</div>
-          <div class="option-desc">One-time flat fee. Full ownership. We hand off all files immediately.</div>
+          <div class="option-title">Buy and personalize this site</div>
+          <div class="option-desc">Full ownership plus an included personalization package and one consolidated revision round.</div>
         </div>
         <div class="option-price" id="modalPrice">$399</div>
       </div>
-      <div class="option-card" onclick="choosePlan('mockup')">
-        <div class="option-icon" style="background:#fef9c3;">✏️</div>
+      <div class="option-card" onclick="choosePlan('details')">
+        <div class="option-icon" style="background:#fef9c3;">✓</div>
         <div class="option-info">
-          <div class="option-title">Request a different version</div>
-          <div class="option-desc">Want a different look? We'll build you an alternate mockup to compare.</div>
+          <div class="option-title">What personalization includes</div>
+          <div class="option-desc">Brand colors and typography, your logo, up to six supplied photos, verified content, visual accents, and one revision list of up to ten edits.</div>
         </div>
-        <div class="option-price">Free</div>
+        <div class="option-price">Included</div>
       </div>
-      <div class="option-card" onclick="choosePlan('launch')">
-        <div class="option-icon" style="background:#dcfce7;">🚀</div>
+      <div class="option-card" onclick="choosePlan('upgrade')">
+        <div class="option-icon" style="background:#dcfce7;">＋</div>
         <div class="option-info">
-          <div class="option-title">Buy + full launch</div>
-          <div class="option-desc">We handle domain purchase, hosting setup, and get you live. End-to-end.</div>
+          <div class="option-title">Additional upgrades</div>
+          <div class="option-desc">Extra pages, major layout changes, advanced forms, booking, integrations, copywriting, domain, hosting and launch help are quoted separately.</div>
         </div>
-        <div class="option-price">$499</div>
+        <div class="option-price">Request quote</div>
       </div>
     </div>
   </div>
@@ -576,18 +576,6 @@
 <script src="config.js"></script>
 <script>
 let SITES = [
-  {
-    id: 'spotless-solutions',
-    name: 'Spotless Solutions',
-    keywords: ['spotless', 'spotless solutions'],
-    category: 'cleaning',
-    city: "Coeur d'Alene, ID",
-    status: 'available',
-    price: 399,
-    tagline: 'House cleaning done right',
-    color: '#1a56db',
-    description: 'Professional residential cleaning services',
-  },
   {
     id: 'wize-guyz-irrigation',
     name: 'Wize Guyz Irrigation',
@@ -965,54 +953,6 @@ let SITES = [
     description: 'Boat, MerCruiser sterndrive, PWC, motorcycle and snowmobile service',
     sitePath: 'sites/bonasera-mobile-repair/index.html',
   },
-  {
-    id: 'mm-property',
-    name: 'M&M Property & Maintenance',
-    keywords: ['m&m', 'm&m property', 'mm property', 'colyer'],
-    category: 'trades',
-    city: 'Spokane Valley, WA',
-    status: 'sold',
-    price: 399,
-    tagline: 'Painting & drywall you can count on',
-    color: '#0f3460',
-    description: 'Interior painting, drywall, and property maintenance',
-  },
-  {
-    id: 'demo-landscaping',
-    name: 'Green Edge Landscaping',
-    keywords: ['green edge', 'green edge landscaping'],
-    category: 'landscaping',
-    city: 'Spokane Valley, WA',
-    status: 'available',
-    price: 399,
-    tagline: 'Landscapes that make an impression',
-    color: '#27500a',
-    description: 'Full-service residential landscaping',
-  },
-  {
-    id: 'demo-cleaning2',
-    name: 'Crystal Clear Cleaning Co.',
-    keywords: ['crystal clear', 'crystal clear cleaning'],
-    category: 'cleaning',
-    city: "Coeur d'Alene, ID",
-    status: 'available',
-    price: 399,
-    tagline: 'Spotless every time',
-    color: '#185fa5',
-    description: 'Residential deep cleaning and recurring service',
-  },
-  {
-    id: 'demo-hvac',
-    name: 'Cascade HVAC Services',
-    keywords: ['cascade hvac', 'cascade'],
-    category: 'trades',
-    city: 'Post Falls, ID',
-    status: 'pending',
-    price: 399,
-    tagline: 'Heating & cooling done right',
-    color: '#533f1e',
-    description: 'HVAC install, repair, and maintenance',
-  },
 ];
 
 let activeFilter = 'all';
@@ -1099,7 +1039,7 @@ function revealSite() {
     const actionArea = match.status === 'available' ? `
       ${previewAction}
       <button class="btn-primary" onclick="openModal('${match.id}')">Claim this site — $${match.price}</button>
-      <button class="btn-secondary" onclick="choosePlanDirect('mockup', '${match.id}')">Request a different version</button>
+      <button class="btn-secondary" onclick="choosePlanDirect('details', '${match.id}')">See included personalization</button>
       <div class="price-tag">$${match.price} <span>flat fee</span></div>
     ` : `<button class="btn-secondary" style="opacity:.5;cursor:default">This site has been claimed</button>`;
 
@@ -1172,12 +1112,20 @@ function closeModalDirect() {
 
 function choosePlan(plan) {
   closeModalDirect();
-  const msgs = {
-    buy: '💳 Purchase request received! We\'ll send payment link within 1 hour.',
-    mockup: '✏️ Mockup request sent! Alternate version coming within 48 hours.',
-    launch: '🚀 Full launch request received! We\'ll be in touch within 24 hours.',
-  };
-  showToast(msgs[plan] || 'Request received!');
+  if (!activeSite) return;
+  if (plan === 'details') {
+    showToast('Included: brand styling, your logo, up to 6 photos, verified content, visual accents and one list of up to 10 edits.');
+    return;
+  }
+  const isUpgrade = plan === 'upgrade';
+  const subject = isUpgrade
+    ? `SiteReveal upgrade question — ${activeSite.name}`
+    : `I want to purchase ${activeSite.name} for $399`;
+  const body = isUpgrade
+    ? `Hello SiteReveal,\n\nI would like to discuss additional upgrades for the ${activeSite.name} website preview.\n\nMy name:\nBest phone number:\nUpgrades I am interested in:\n`
+    : `Hello SiteReveal,\n\nI would like to purchase the ${activeSite.name} website preview for $399.\n\nI understand the purchase includes the website files, brand styling, my logo, up to six supplied photos, verified business-content updates, selected visual accents, and one consolidated revision list of up to ten edits.\n\nMy name:\nBest phone number:\n`;
+  window.location.href = `mailto:freesevenluck@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  showToast('Opening your email app to contact SiteReveal.');
 }
 
 function choosePlanDirect(plan, id) {
@@ -1188,8 +1136,10 @@ function choosePlanDirect(plan, id) {
 function submitNotify() {
   const email = document.getElementById('notifyEmail').value;
   if (!email) return;
-  showToast('✓ You\'re on the list! We\'ll email you when your site is ready.');
-  document.getElementById('notifyEmail').value = '';
+  const subject = 'Request a SiteReveal preview';
+  const body = `Hello SiteReveal,\n\nPlease consider building a website preview for my business.\n\nBusiness name:\nBusiness location:\nMy email: ${email}\nBest phone number:\n`;
+  window.location.href = `mailto:freesevenluck@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  showToast('Opening your email app to send the request.');
 }
 
 function showToast(msg) {
@@ -1237,7 +1187,7 @@ async function loadPublishedSites() {
     updateCounts();
     renderGrid(activeFilter);
   } catch (error) {
-    console.warn('Using bundled demonstration listings.', error);
+    console.warn('Using bundled published listings.', error);
   }
 }
 

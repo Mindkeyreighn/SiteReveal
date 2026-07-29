@@ -77,6 +77,20 @@ PRICING
 All sites are priced at $399 (flat fee). The admin panel defaults to $399
 for every new lead. The supabase-schema.sql seeds starter records at $399.
 
+PURCHASE AND PERSONALIZATION
+----------------------------
+The $399 purchase includes the website files, full ownership, one focused
+personalization package, and one consolidated revision round. Personalization
+includes one brand color/typography direction, the buyer's logo, up to six
+buyer-supplied photos, verified updates to the existing business details and
+services, selected visual accents, and one submitted list of up to ten edits.
+
+Extra pages, major layout changes, advanced forms, booking, integrations,
+new custom imagery, extensive copywriting, domain registration, hosting, and
+launch assistance are separate quoted upgrades. The public purchase buttons
+open a pre-addressed email to freesevenluck@gmail.com until online checkout is
+added.
+
 If you ran an earlier version of this schema (v1, which used $299), the
 SQL file now includes a correction UPDATE at the bottom. Run the full file
 again in Supabase SQL Editor — the on conflict clause skips re-inserting
