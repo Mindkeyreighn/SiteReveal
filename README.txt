@@ -93,3 +93,10 @@ later if you ever decide to move to another database provider.
 LATEST SITE
 -----------
 sites/dawns-purple-poodle/   Dawn's Purple Poodle
+sites/north-idaho-school-dog-obedience/   North Idaho School of Dog Obedience
+sites/angelheart-pet-salon/   Angelheart Pet Salon
+sites/i-spa-nails/   i Spa Nails
+sites/vn-nails/   VN Nails
+sites/the-beauty-lounge/   The Beauty Lounge
+sites/polished-by-idella/   Polished by Idella
+sites/jk-nails/             J K Nails

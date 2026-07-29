@@ -132,6 +132,78 @@ set site_path = excluded.site_path,
 insert into public.leads
   (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
 values
+  ('Polished by Idella','polished-by-idella','nail artist','Coeur d''Alene, ID','(208) 964-2117','Verified','Site Review','available',399,'Details make it personal.','#5e3040','Independent nail artistry, custom details and appointment planning','sites/polished-by-idella/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('The Beauty Lounge','the-beauty-lounge','beauty salon','Coeur d''Alene, ID','(208) 666-1770','Verified','Site Review','available',399,'Your beauty team, all in one place.','#272321','Full-service salon for hair, color, blonding, nails and waxing','sites/the-beauty-lounge/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('VN Nails','vn-nails','nail salon','Coeur d''Alene, ID','(208) 966-4308','Verified','Site Review','available',399,'Color looks good on you.','#522552','Manicures, full sets, fills, custom nail designs and spa pedicures','sites/vn-nails/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('i Spa Nails','i-spa-nails','nail salon','Coeur d''Alene, ID','(208) 667-1666','Verified','Site Review','available',399,'Your look. Polished.','#171515','Manicures, acrylics, fills, French tips, nail art and pedicures','sites/i-spa-nails/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Angelheart Pet Salon','angelheart-pet-salon','pet grooming','Coeur d''Alene, ID','(208) 667-8243','Verified','Site Review','available',399,'Care you can see in every detail.','#713f56','Established local pet grooming and attentive coat care','sites/angelheart-pet-salon/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('North Idaho School of Dog Obedience','north-idaho-school-dog-obedience','dog training','Hayden, ID','(208) 964-3638','Verified','Site Review','available',399,'Better manners begin together.','#102a43','Calm, clear, humane beginner obedience classes for dogs and owners','sites/north-idaho-school-dog-obedience/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
   ('Dawn''s Purple Poodle','dawns-purple-poodle','pet grooming','Coeur d''Alene, ID','(208) 704-4685','Verified','Site Review','available',399,'A fresh look with a gentle touch.','#4b2142','Caring local dog grooming, bathing, haircuts, nail trims and coat care','sites/dawns-purple-poodle/index.html',true)
 on conflict (slug) do update
 set site_path = excluded.site_path,
@@ -246,6 +318,19 @@ values
 on conflict (slug) do update
 set business_name = excluded.business_name,
     site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+-- Safe to run even if every record is already $399.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('J K Nails','jk-nails','nail salon','Post Falls, ID','(208) 981-0014','Verified','Site Review','available',399,'Polished with purpose.','#112747','Manicures, gel, dip powder, acrylic nails, nail art and pedicures','sites/jk-nails/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
     phone = excluded.phone,
     description = excluded.description,
     tagline = excluded.tagline,
