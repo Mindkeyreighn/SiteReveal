@@ -338,4 +338,43 @@ set site_path = excluded.site_path,
 
 -- Price correction for any earlier $299 or $349 records.
 -- Safe to run even if every record is already $399.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Bighouse Automotive','bighouse-automotive','mobile auto repair','Coeur d''Alene, ID','(208) 763-8426','Verified','Site Review','available',399,'The shop comes to you.','#111213','Mobile diagnostics, brakes, maintenance, electrical, engines, transmissions and roadside help','sites/bighouse-automotive/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+-- Safe to run even if every record is already $399.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Hanley''s Mobile Mechanics','hanleys-mobile-mechanics','mobile auto repair','Hayden, ID','(208) 620-9465','Verified','Site Review','available',399,'Good diagnosis comes first.','#173b31','Mobile diagnostics, repairs, used-vehicle inspections, diesel trucks and classic vehicles','sites/hanleys-mobile-mechanics/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+-- Safe to run even if every record is already $399.
+insert into public.leads
+  (business_name,slug,category,city,phone,verification,stage,status,price,tagline,color,description,site_path,published)
+values
+  ('Bonasera Mobile Repair LLC','bonasera-mobile-repair','boat & powersports repair','Hayden, ID','(208) 699-0121','Verified','Site Review','available',399,'Keep the season moving.','#0b2638','Boat, MerCruiser sterndrive, PWC, motorcycle and snowmobile service','sites/bonasera-mobile-repair/index.html',true)
+on conflict (slug) do update
+set site_path = excluded.site_path,
+    phone = excluded.phone,
+    description = excluded.description,
+    tagline = excluded.tagline,
+    price = 399;
+
+-- Price correction for any earlier $299 or $349 records.
+-- Safe to run even if every record is already $399.
 UPDATE public.leads SET price = 399 WHERE price <> 399;

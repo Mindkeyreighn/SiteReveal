@@ -100,3 +100,6 @@ sites/vn-nails/   VN Nails
 sites/the-beauty-lounge/   The Beauty Lounge
 sites/polished-by-idella/   Polished by Idella
 sites/jk-nails/             J K Nails
+sites/bighouse-automotive/  Bighouse Automotive
+sites/hanleys-mobile-mechanics/   Hanley's Mobile Mechanics
+sites/bonasera-mobile-repair/   Bonasera Mobile Repair LLC
