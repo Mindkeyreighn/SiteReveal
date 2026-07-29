@@ -10,8 +10,8 @@ window.SITE_REVEAL_CONFIG = {
 
   /*
     Public Stripe-hosted checkout URL. This is not an API key.
-    Replace this one value with the live Payment Link after testing.
+    Live SiteReveal Payment Link.
   */
-  stripePaymentLink: "https://buy.stripe.com/test_bJedRbcw37H48mpfMw0Fi00",
-  stripeMode: "sandbox"
+  stripePaymentLink: "https://buy.stripe.com/8x2eVdaW15wT3Xn7iZ2oE01",
+  stripeMode: "live"
 };

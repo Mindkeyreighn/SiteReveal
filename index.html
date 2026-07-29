@@ -566,7 +566,6 @@
     <p style="font-size:.76rem;line-height:1.55;color:#77736b;margin:18px 4px 0">
       Secure checkout is processed by Stripe. By continuing, you agree to the
       <a href="terms.html" target="_blank" rel="noopener" style="color:#1a56db;font-weight:700">SiteReveal Purchase Terms</a>.
-      <span id="sandboxCheckoutNotice" style="display:none;color:#9a6700;font-weight:700">Sandbox checkout only—no real money will be charged.</span>
     </p>
   </div>
 </div>
@@ -1108,13 +1107,6 @@ function openModal(id, e) {
   document.getElementById('modalBizName').textContent = 'Claim — ' + site.name;
   document.getElementById('modalSubtitle').textContent = 'Choose how you want to move forward with your SiteReveal preview.';
   document.getElementById('modalPrice').textContent = '$' + site.price;
-  const sandboxNotice = document.getElementById('sandboxCheckoutNotice');
-  if (sandboxNotice) {
-    sandboxNotice.style.display =
-      window.SITE_REVEAL_CONFIG && window.SITE_REVEAL_CONFIG.stripeMode === 'sandbox'
-        ? 'inline'
-        : 'none';
-  }
   document.getElementById('modalOverlay').classList.add('open');
 }
 

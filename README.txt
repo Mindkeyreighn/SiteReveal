@@ -88,28 +88,28 @@ services, selected visual accents, and one submitted list of up to ten edits.
 Extra pages, major layout changes, advanced forms, booking, integrations,
 new custom imagery, extensive copywriting, domain registration, hosting, and
 launch assistance are separate quoted upgrades. The public purchase buttons
-now open Stripe-hosted Checkout. The sandbox URL is stored once in config.js.
+open the live Stripe-hosted Checkout. The Payment Link is stored once in config.js.
 Every checkout includes the selected site's slug as Stripe's
 client_reference_id for reconciliation. The buyer must still type the
 business/site name into the required Stripe field.
 
-STRIPE SANDBOX
---------------
-Current test checkout:
-  https://buy.stripe.com/test_bJedRbcw37H48mpfMw0Fi00
+STRIPE LIVE CHECKOUT
+--------------------
+Current live checkout:
+  https://buy.stripe.com/8x2eVdaW15wT3Xn7iZ2oE01
 
-No Stripe secret key is stored in this project. Test payments are processed on
-Stripe's hosted sandbox page and do not move real money.
+No Stripe secret key is stored in this project. Payments are processed securely
+on Stripe's hosted checkout page. The live link collects the buyer's name,
+business name, phone number, selected website, and optional initial
+customization requests.
 
-Before accepting real payments:
-1. Activate and verify the SiteReveal Stripe live account.
-2. Copy or recreate the $399 product and Payment Link in live mode.
-3. Confirm the live link collects name, business name, phone, selected website,
-   and optional initial customization requests.
-4. Set Stripe Checkout policy links to this site's terms.html and privacy.html.
-5. Replace only stripePaymentLink in config.js with the live buy.stripe.com URL.
-6. Change stripeMode in config.js from "sandbox" to "live".
-7. Run one live verification before outreach begins.
+Before outreach begins:
+1. Confirm Stripe branding and public support information.
+2. Confirm successful-payment and refund receipt emails are enabled.
+3. Set Stripe Checkout policy links to this site's terms.html and privacy.html.
+4. Confirm the statement descriptor identifies SiteReveal.
+5. Open the live checkout from SiteReveal and verify the selected-site reference
+   appears in the checkout URL. Do not complete a real charge unless intended.
 
 If you ran an earlier version of this schema (v1, which used $299), the
 SQL file now includes a correction UPDATE at the bottom. Run the full file
