@@ -541,7 +541,7 @@
       <div class="option-card featured" onclick="choosePlan('buy')">
         <div class="option-icon" style="background:#e8f0fe;">💳</div>
         <div class="option-info">
-          <div class="option-title">Buy and personalize this site</div>
+          <div class="option-title">Buy this website securely</div>
           <div class="option-desc">Full ownership plus an included personalization package and one consolidated revision round.</div>
         </div>
         <div class="option-price" id="modalPrice">$399</div>
@@ -563,11 +563,19 @@
         <div class="option-price">Request quote</div>
       </div>
     </div>
+    <p style="font-size:.76rem;line-height:1.55;color:#77736b;margin:18px 4px 0">
+      Secure checkout is processed by Stripe. By continuing, you agree to the
+      <a href="terms.html" target="_blank" rel="noopener" style="color:#1a56db;font-weight:700">SiteReveal Purchase Terms</a>.
+      <span id="sandboxCheckoutNotice" style="display:none;color:#9a6700;font-weight:700">Sandbox checkout only—no real money will be charged.</span>
+    </p>
   </div>
 </div>
 
 <footer>
-  © 2026 SiteReveal · Coeur d'Alene, ID &amp; Spokane Valley, WA · Built for local businesses · <a href="admin.html" style="color:inherit">Admin</a>
+  © 2026 SiteReveal · Coeur d'Alene, ID &amp; Spokane Valley, WA · Built for local businesses ·
+  <a href="terms.html" style="color:inherit">Purchase Terms</a> ·
+  <a href="privacy.html" style="color:inherit">Privacy</a> ·
+  <a href="admin.html" style="color:inherit">Admin</a>
 </footer>
 
 <div class="toast" id="toast"></div>
@@ -1100,6 +1108,13 @@ function openModal(id, e) {
   document.getElementById('modalBizName').textContent = 'Claim — ' + site.name;
   document.getElementById('modalSubtitle').textContent = 'Choose how you want to move forward with your SiteReveal preview.';
   document.getElementById('modalPrice').textContent = '$' + site.price;
+  const sandboxNotice = document.getElementById('sandboxCheckoutNotice');
+  if (sandboxNotice) {
+    sandboxNotice.style.display =
+      window.SITE_REVEAL_CONFIG && window.SITE_REVEAL_CONFIG.stripeMode === 'sandbox'
+        ? 'inline'
+        : 'none';
+  }
   document.getElementById('modalOverlay').classList.add('open');
 }
 
@@ -1115,6 +1130,20 @@ function choosePlan(plan) {
   if (!activeSite) return;
   if (plan === 'details') {
     showToast('Included: brand styling, your logo, up to 6 photos, verified content, visual accents and one list of up to 10 edits.');
+    return;
+  }
+  if (plan === 'buy') {
+    const config = window.SITE_REVEAL_CONFIG || {};
+    const baseUrl = String(config.stripePaymentLink || '').trim();
+    if (!baseUrl) {
+      showToast('Secure checkout is being prepared. Please contact SiteReveal.');
+      return;
+    }
+    const separator = baseUrl.includes('?') ? '&' : '?';
+    const siteId = encodeURIComponent(activeSite.id);
+    window.location.href =
+      `${baseUrl}${separator}client_reference_id=${siteId}` +
+      `&utm_source=sitereveal&utm_medium=website&utm_campaign=site_purchase&utm_content=${siteId}`;
     return;
   }
   const isUpgrade = plan === 'upgrade';

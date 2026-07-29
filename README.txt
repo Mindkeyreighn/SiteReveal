@@ -7,7 +7,7 @@ FILES
 -----
 index.html            Public SiteReveal website
 admin.html            Private owner login and lead manager
-config.js             Your Supabase public connection settings
+config.js             Your Supabase public settings and Stripe Payment Link
 supabase-schema.sql   Tables and security rules for Supabase
 sites/                Complete business websites shown by SiteReveal
 
@@ -88,8 +88,28 @@ services, selected visual accents, and one submitted list of up to ten edits.
 Extra pages, major layout changes, advanced forms, booking, integrations,
 new custom imagery, extensive copywriting, domain registration, hosting, and
 launch assistance are separate quoted upgrades. The public purchase buttons
-open a pre-addressed email to freesevenluck@gmail.com until online checkout is
-added.
+now open Stripe-hosted Checkout. The sandbox URL is stored once in config.js.
+Every checkout includes the selected site's slug as Stripe's
+client_reference_id for reconciliation. The buyer must still type the
+business/site name into the required Stripe field.
+
+STRIPE SANDBOX
+--------------
+Current test checkout:
+  https://buy.stripe.com/test_bJedRbcw37H48mpfMw0Fi00
+
+No Stripe secret key is stored in this project. Test payments are processed on
+Stripe's hosted sandbox page and do not move real money.
+
+Before accepting real payments:
+1. Activate and verify the SiteReveal Stripe live account.
+2. Copy or recreate the $399 product and Payment Link in live mode.
+3. Confirm the live link collects name, business name, phone, selected website,
+   and optional initial customization requests.
+4. Set Stripe Checkout policy links to this site's terms.html and privacy.html.
+5. Replace only stripePaymentLink in config.js with the live buy.stripe.com URL.
+6. Change stripeMode in config.js from "sandbox" to "live".
+7. Run one live verification before outreach begins.
 
 If you ran an earlier version of this schema (v1, which used $299), the
 SQL file now includes a correction UPDATE at the bottom. Run the full file
