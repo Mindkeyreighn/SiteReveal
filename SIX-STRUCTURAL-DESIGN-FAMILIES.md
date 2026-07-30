@@ -19,12 +19,12 @@ These are structural systems, not color themes. Future previews should be assign
    - Friendly organic hero, welcoming location card, irregular service cluster, customer journey, postcard contact experience.
 
 5. **Technical/trades authority**
-   - Reference: Wize Guyz Irrigation
+   - Reference: Reserved for a future business whose brand naturally supports a technical systems presentation
    - Blueprint/grid visual language, system readouts, technical service rows, diagnostic console, seasonal operating cycle.
 
-6. **Modern local storefront**
+6. **Landscape-led local service**
    - Reference: Quality Care Landscaping
-   - Modular storefront hero, owner and phone tiles, scannable service inventory, seasonal calendar, direct quote counter.
+   - Outdoor-property photography, lawn-first hero, grounded service presentation, seasonal care calendar, local-owner story, direct quote flow.
 
 ## Locked rules
 
@@ -34,4 +34,3 @@ These are structural systems, not color themes. Future previews should be assign
 - Use the business’s existing official logo when one is available.
 - Every preview remains responsive and retains the SiteReveal preview disclaimer where applicable.
 - Each initial preview stays efficient; deeper personalization follows purchase.
-
