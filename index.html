@@ -328,6 +328,101 @@
     padding:.62rem .9rem; font:600 .76rem 'Inter',sans-serif; cursor:pointer;
   }
 
+  /* WHY A WEBSITE MATTERS */
+  .benefits-section { max-width:1180px; margin:0 auto; padding:4.5rem 2rem 1rem; }
+  .benefits-intro {
+    display:grid; grid-template-columns:1.1fr .9fr;
+    gap:3rem; align-items:end; margin-bottom:1.75rem;
+  }
+  .benefits-intro h2 {
+    font-family:'Syne',sans-serif; font-weight:800;
+    font-size:clamp(1.9rem,4vw,3.25rem); line-height:1.02;
+    letter-spacing:-.05em; max-width:680px;
+  }
+  .benefits-intro p { color:var(--mid); font-size:.92rem; line-height:1.7; max-width:470px; }
+  .benefits-grid {
+    display:grid; grid-template-columns:repeat(5,1fr);
+    background:#fff; border:1px solid var(--border);
+    border-radius:18px; overflow:hidden;
+    box-shadow:0 10px 30px rgba(13,13,13,.045);
+  }
+  .benefit-card {
+    min-height:190px; padding:1.35rem;
+    border-right:1px solid var(--border);
+  }
+  .benefit-card:last-child { border-right:0; }
+  .benefit-mark {
+    width:30px; height:30px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--accent-light); color:var(--accent);
+    font-weight:800; font-size:.78rem; margin-bottom:2.2rem;
+  }
+  .benefit-card h3 {
+    font-family:'Syne',sans-serif; font-size:.9rem;
+    line-height:1.2; margin-bottom:.45rem;
+  }
+  .benefit-card p { color:var(--mid); font-size:.76rem; line-height:1.55; }
+  .benefits-note {
+    margin-top:1.15rem; padding-left:1rem;
+    border-left:3px solid var(--accent);
+    color:#54524c; font-size:.82rem; line-height:1.55;
+  }
+
+  /* THE DIFFICULT PART IS DONE */
+  .done-section { max-width:1180px; margin:0 auto; padding:4.75rem 2rem 1rem; }
+  .done-panel {
+    position:relative; overflow:hidden;
+    background:#0d0d0d; color:#fff;
+    border-radius:22px; padding:2.75rem;
+    box-shadow:0 18px 46px rgba(13,13,13,.13);
+  }
+  .done-panel::before {
+    content:""; position:absolute; width:430px; height:430px;
+    right:-160px; top:-180px; border-radius:50%;
+    background:radial-gradient(circle,rgba(26,86,219,.48),transparent 68%);
+    pointer-events:none;
+  }
+  .done-heading { position:relative; max-width:720px; margin-bottom:2rem; }
+  .done-heading .section-label { color:#8db0ff; }
+  .done-heading h2 {
+    font-family:'Syne',sans-serif; font-size:clamp(2rem,4vw,3.4rem);
+    line-height:1.02; letter-spacing:-.05em; margin-bottom:.8rem;
+  }
+  .done-heading p { color:#b9b9b3; line-height:1.65; font-size:.9rem; }
+  .process-compare {
+    position:relative; display:grid; grid-template-columns:.9fr 1.1fr;
+    gap:1rem;
+  }
+  .process-lane {
+    border-radius:16px; padding:1.35rem;
+    border:1px solid rgba(255,255,255,.12);
+  }
+  .process-lane.old { background:rgba(255,255,255,.045); }
+  .process-lane.reveal {
+    background:var(--accent);
+    border-color:rgba(255,255,255,.22);
+  }
+  .lane-label {
+    font-size:.67rem; font-weight:800; letter-spacing:.1em;
+    text-transform:uppercase; margin-bottom:1rem;
+    color:#aaa9a4;
+  }
+  .process-lane.reveal .lane-label { color:#d9e5ff; }
+  .process-steps { display:flex; flex-wrap:wrap; align-items:center; gap:.45rem; }
+  .process-step {
+    background:rgba(255,255,255,.09); border-radius:999px;
+    padding:.48rem .67rem; font-size:.72rem; color:#d2d1cc;
+  }
+  .process-lane.reveal .process-step { background:#fff; color:#111; font-weight:700; }
+  .step-arrow { color:#767570; font-size:.72rem; }
+  .process-lane.reveal .step-arrow { color:#c8d8ff; }
+  .done-close {
+    position:relative; margin-top:1.6rem;
+    font-family:'Syne',sans-serif; font-size:1.08rem;
+    font-weight:700; color:#fff;
+  }
+  .done-close span { color:#8db0ff; }
+
   /* GALLERY SECTION */
   .gallery-section {
     max-width: 1180px; margin: 0 auto;
@@ -602,17 +697,34 @@
   }
   .toast.show { opacity: 1; transform: translateY(0); }
 
+  @media (min-width:601px) and (max-width:900px) {
+    .benefits-grid { grid-template-columns:repeat(2,1fr); }
+    .benefit-card { border-bottom:1px solid var(--border); }
+    .benefit-card:nth-child(2n) { border-right:0; }
+    .benefit-card:last-child { grid-column:1 / -1; border-bottom:0; }
+    .benefits-intro, .process-compare { grid-template-columns:1fr; gap:1.25rem; }
+  }
+
   @media (max-width: 600px) {
     .hero { padding: 3rem 1rem 2rem; }
     .reveal-actions { flex-direction: column; }
     .price-tag { margin-left: 0; }
     nav { padding: 0 1rem; }
-    .gallery-section, .featured-section, .trust-section, .contact-section { padding-left:1rem; padding-right:1rem; }
+    .gallery-section, .featured-section, .benefits-section, .done-section, .trust-section, .contact-section { padding-left:1rem; padding-right:1rem; }
     .value-strip { padding:0 1rem; }
     .value-strip-inner { grid-template-columns:repeat(2,1fr); }
     .value-item:nth-child(2) { border-right:0; }
     .value-item:nth-child(-n+2) { border-bottom:1px solid rgba(255,255,255,.14); }
     .featured-grid, .how-grid, .trust-panel { grid-template-columns:1fr; }
+    .benefits-intro, .process-compare { grid-template-columns:1fr; gap:1.25rem; }
+    .benefits-grid { grid-template-columns:1fr; }
+    .benefit-card {
+      min-height:auto; border-right:0; border-bottom:1px solid var(--border);
+      display:grid; grid-template-columns:36px 1fr; column-gap:.8rem;
+    }
+    .benefit-card:last-child { border-bottom:0; }
+    .benefit-mark { margin-bottom:0; grid-row:1 / span 2; }
+    .done-panel { padding:2rem 1.25rem; }
     .featured-card { min-height:330px; }
     .section-heading-row { display:block; }
     .section-copy { margin-top:.65rem; }
@@ -676,6 +788,82 @@
     <p class="section-copy">Every preview is built around the business—not just a logo dropped into the same layout.</p>
   </div>
   <div class="featured-grid" id="featuredGrid"></div>
+</section>
+
+<!-- WHY A WEBSITE MATTERS -->
+<section class="benefits-section">
+  <div class="benefits-intro">
+    <div>
+      <div class="section-label">Why your website matters</div>
+      <h2>Your business should keep working—even when you aren’t.</h2>
+    </div>
+    <p>A website gives customers one dependable place to understand your business, trust what they find, and take the next step whenever they are ready.</p>
+  </div>
+
+  <div class="benefits-grid">
+    <article class="benefit-card">
+      <div class="benefit-mark">01</div>
+      <h3>Build confidence</h3>
+      <p>A professional home for your business helps customers feel that it is established and ready to serve them.</p>
+    </article>
+    <article class="benefit-card">
+      <div class="benefit-mark">02</div>
+      <h3>Explain what you do</h3>
+      <p>Your services, service area, hours, and contact information remain clear and available in one place.</p>
+    </article>
+    <article class="benefit-card">
+      <div class="benefit-mark">03</div>
+      <h3>Stay available</h3>
+      <p>Customers can learn about your business outside normal hours—even when you cannot answer immediately.</p>
+    </article>
+    <article class="benefit-card">
+      <div class="benefit-mark">04</div>
+      <h3>Make action easier</h3>
+      <p>Calls, texts, quote requests, and directions become easier to find instead of being scattered across the internet.</p>
+    </article>
+    <article class="benefit-card">
+      <div class="benefit-mark">05</div>
+      <h3>Give sharing a destination</h3>
+      <p>Customers, friends, and social pages have one permanent link they can confidently send to other people.</p>
+    </article>
+  </div>
+  <p class="benefits-note">Social media can help people discover you. Your website gives your business a permanent place to send them.</p>
+</section>
+
+<!-- THE DIFFICULT PART IS ALREADY DONE -->
+<section class="done-section">
+  <div class="done-panel">
+    <div class="done-heading">
+      <div class="section-label">The SiteReveal difference</div>
+      <h2>The difficult part is already done.</h2>
+      <p>You do not have to begin with a blank page, explain a design you cannot see, or pay while hoping the finished website feels right.</p>
+    </div>
+
+    <div class="process-compare">
+      <div class="process-lane old">
+        <div class="lane-label">The traditional process</div>
+        <div class="process-steps">
+          <span class="process-step">Request quotes</span><span class="step-arrow">→</span>
+          <span class="process-step">Choose a designer</span><span class="step-arrow">→</span>
+          <span class="process-step">Explain your vision</span><span class="step-arrow">→</span>
+          <span class="process-step">Wait for a draft</span><span class="step-arrow">→</span>
+          <span class="process-step">Hope it works</span>
+        </div>
+      </div>
+
+      <div class="process-lane reveal">
+        <div class="lane-label">The SiteReveal process</div>
+        <div class="process-steps">
+          <span class="process-step">Find your business</span><span class="step-arrow">→</span>
+          <span class="process-step">Inspect the finished preview</span><span class="step-arrow">→</span>
+          <span class="process-step">Claim and personalize</span><span class="step-arrow">→</span>
+          <span class="process-step">Approve and receive it</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="done-close">The website you have been meaning to create may already be <span>waiting for you.</span></p>
+  </div>
 </section>
 
 <!-- GALLERY -->
