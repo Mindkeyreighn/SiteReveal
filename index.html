@@ -63,6 +63,12 @@
   }
   .nav-cta:hover { opacity: 0.85; }
   .nav-actions { display:flex; align-items:center; gap:10px; }
+  .admin-link {
+    color:var(--ink); font-size:.78rem; font-weight:600;
+    text-decoration:none; padding:8px 10px; border-radius:7px;
+    transition:background .15s,color .15s;
+  }
+  .admin-link:hover { background:#fff; color:var(--accent); }
   .demo-notice { max-width:820px; margin:1.25rem auto 0; padding:0 2rem; text-align:center; color:#77746c; font-size:.78rem; line-height:1.55; }
 
   /* HERO */
@@ -746,6 +752,7 @@
   </div>
   <div class="nav-actions">
     <button class="nav-cta" onclick="scrollToGallery()">View available sites</button>
+    <a class="admin-link" href="admin.html">Admin login</a>
   </div>
 </nav>
 
