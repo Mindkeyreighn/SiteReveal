@@ -1,0 +1,27 @@
+SITEREVEAL — SPOKANE BUSINESS SITES UPDATE
+July 30, 2026
+
+This package is an overlay update for the existing SiteReveal repository.
+
+1. Open the SiteReveal repository in GitHub.
+2. Upload everything inside this package at the repository root.
+3. Allow GitHub to replace index.html and admin.html.
+4. Keep all other existing repository files and folders.
+5. Commit the upload and let the connected Vercel project deploy it.
+
+The package adds:
+
+- sites/above-and-beyond-moving/
+- sites/summit-trucking-logistics/
+- sites/dougs-hauling-services/
+
+It also updates:
+
+- index.html — adds Moving, Hauling, and Logistics category filters.
+- admin.html — adds moving, hauling, and logistics to the lead category menu.
+
+Shield Transportation is intentionally excluded.
+
+After deployment, add the approved businesses through the SiteReveal admin using
+the values in PIPELINE-ENTRY-GUIDE.md. Doug's Hauling should remain unpublished
+until current operation and business details are confirmed.

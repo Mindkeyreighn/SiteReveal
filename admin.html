@@ -99,7 +99,7 @@
         <input id="leadId" type="hidden">
         <div class="field"><label>Business name *</label><input id="businessName" required></div>
         <div class="field"><label>Slug *</label><input id="slug" required pattern="[a-z0-9-]+"></div>
-        <div class="field"><label>Category</label><select id="category"><option>cleaning</option><option>irrigation</option><option>landscaping</option><option>trades</option></select></div>
+        <div class="field"><label>Category</label><select id="category"><option>cleaning</option><option>irrigation</option><option>landscaping</option><option>trades</option><option>moving</option><option>hauling</option><option>logistics</option></select></div>
         <div class="field"><label>City</label><input id="city"></div>
         <div class="field"><label>Phone</label><input id="phone"></div>
         <div class="field"><label>Email</label><input id="leadEmail" type="email"></div>
@@ -191,27 +191,7 @@
     };
 
     const existingPlaceIds=()=>new Set(leads.map(l=>l.google_place_id).filter(Boolean));
-    const normalizeBusinessName=name=>String(name||'')
-      .toLowerCase()
-      .normalize('NFKD')
-      .replace(/['’]/g,'')
-      .replace(/&/g,' and ')
-      .replace(/\b(?:llc|inc|incorporated|company|co|corp|corporation)\b/g,' ')
-      .replace(/[^a-z0-9]+/g,' ')
-      .trim()
-      .replace(/\s+/g,' ');
-    function existingLeadMatch(place){
-      if(existingPlaceIds().has(place.placeId))return true;
-      const candidate=normalizeBusinessName(place.businessName);
-      if(!candidate)return false;
-      return leads.some(lead=>{
-        const existing=normalizeBusinessName(lead.business_name);
-        if(!existing)return false;
-        if(candidate===existing)return true;
-        return Math.min(candidate.length,existing.length)>=8&&
-          (candidate.includes(existing)||existing.includes(candidate));
-      });
-    }
+    const existingSlugs=()=>new Set(leads.map(l=>l.slug));
     function candidateScore(place){
       let score=30;
       if(place.phone)score+=20;
@@ -221,8 +201,9 @@
       return Math.min(score,100);
     }
     function renderFinder(){
+      const placeIds=existingPlaceIds(),slugs=existingSlugs();
       $('finderResults').innerHTML=finderResults.map((place,index)=>{
-        const duplicate=existingLeadMatch(place);
+        const duplicate=placeIds.has(place.placeId)||slugs.has(slugify(place.businessName));
         const added=place.added||duplicate;
         return `<article class="candidate">
           <div>
