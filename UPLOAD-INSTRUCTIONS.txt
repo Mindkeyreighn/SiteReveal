@@ -1,10 +1,11 @@
-SITEREVEAL — HEADING PUNCTUATION UPDATE
+SITEREVEAL — GLOBAL POSITIONING + STRIPE BRANDING UPDATE
 July 30, 2026
 
 This package contains:
 
 - index.html
 - assets/sitereveal-logo.png
+- assets/stripe-checkout-logo.png
 
 UPLOAD
 
@@ -31,6 +32,17 @@ unchanged.
 The “Your business should keep working” heading now uses a comma instead of
 an em dash, removing the distracting horizontal-bar effect while preserving
 the original message and layout.
+
+The “North Idaho & Spokane Valley” hero label has been removed so SiteReveal
+does not appear limited to those two markets.
+
+STRIPE BRANDING
+
+The Stripe-ready horizontal logo is:
+assets/stripe-checkout-logo.png
+
+In Stripe Dashboard, open Settings > Branding, upload this file as the Logo,
+preview the customer-facing checkout appearance, and save the changes.
 
 No Supabase, database, admin, checkout, or Vercel environment-variable change
 is required.
