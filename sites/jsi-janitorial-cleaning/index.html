@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>JSI Janitorial Cleaning | Spokane, WA</title>
+  <meta name="description" content="A SiteReveal preview for JSI Janitorial Cleaning in Spokane, Washington. Confirm current services and availability directly with the business.">
+  <style>
+    :root{
+      --ink:#101b1d;--deep:#143c3f;--teal:#177a78;--mint:#9dd8c8;
+      --ice:#e9f3f0;--paper:#f8f7f2;--white:#fff;--amber:#efb84a;
+      --muted:#617174;--line:#c8d6d3
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 Arial,sans-serif}
+    a{color:inherit}
+    .wrap{width:min(1180px,calc(100% - 42px));margin:auto}
+    .preview{background:var(--amber);padding:11px 20px;text-align:center;font-size:.72rem;font-weight:900;letter-spacing:.075em;text-transform:uppercase}
+    header{position:absolute;z-index:5;left:0;right:0;top:39px;color:#fff}
+    .nav{height:88px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff52}
+    .brand{display:flex;align-items:center;gap:13px;text-decoration:none}
+    .brand-mark{width:48px;height:48px;border:2px solid var(--mint);display:grid;place-items:center;font-weight:950;letter-spacing:-.08em;position:relative}
+    .brand-mark:after{content:"";position:absolute;width:8px;height:8px;border:2px solid var(--amber);border-radius:50%;right:-7px;top:-7px;background:var(--deep)}
+    .brand b{display:block;font-size:1rem;letter-spacing:.025em}
+    .brand small{display:block;color:#bcd3ce;font-size:.58rem;letter-spacing:.19em;text-transform:uppercase;margin-top:3px}
+    .links{display:flex;align-items:center;gap:27px}
+    .links a{text-decoration:none;font-size:.76rem;font-weight:900;text-transform:uppercase;letter-spacing:.055em}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border:0;background:var(--amber);color:var(--ink);padding:15px 21px;text-decoration:none;font-weight:950;cursor:pointer}
+    .btn.teal{background:var(--teal);color:#fff}.btn.light{background:#fff;color:var(--ink)}
+    .hero{min-height:890px;color:#fff;display:flex;align-items:end;background:
+      linear-gradient(90deg,rgba(9,28,30,.98) 0%,rgba(12,42,44,.90) 39%,rgba(12,42,44,.14) 70%),
+      url('assets/jsi-janitorial-hero.png') 57% center/cover}
+    .hero-grid{display:grid;grid-template-columns:1fr .75fr;gap:60px;align-items:end;padding:190px 0 82px}
+    .kicker{text-transform:uppercase;letter-spacing:.22em;font-size:.66rem;font-weight:950;color:var(--mint)}
+    h1{font-size:clamp(4.6rem,9vw,9.3rem);line-height:.79;letter-spacing:-.078em;text-transform:uppercase;margin:26px 0 31px}
+    .hero-copy p{max-width:590px;color:#d4e2df;font-size:1.1rem}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+    .listing{background:#0f292bd9;border:1px solid #ffffff55;padding:29px;backdrop-filter:blur(8px)}
+    .listing-head{font-size:.66rem;text-transform:uppercase;letter-spacing:.17em;color:#a9c4bf;border-bottom:1px solid #ffffff31;padding-bottom:15px}
+    .reading{display:grid;grid-template-columns:115px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid #ffffff24}
+    .reading:last-child{border:0}.reading span{color:#9fb9b5;font-size:.67rem;text-transform:uppercase;letter-spacing:.06em}.reading b{font-size:.83rem}
+    .signal{background:var(--mint)}
+    .signal-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+    .signal-grid div{padding:24px;border-right:1px solid #173b3a33}.signal-grid div:last-child{border:0}
+    .signal b{display:block;text-transform:uppercase;font-size:.73rem}.signal small{display:block;margin-top:3px;color:#304d4c}
+    .intro{padding:105px 0;display:grid;grid-template-columns:.72fr 1.28fr;gap:95px}
+    .eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.66rem;font-weight:950;color:var(--teal)}
+    h2{font-size:clamp(3rem,5.7vw,5.9rem);line-height:.88;letter-spacing:-.065em;text-transform:uppercase;margin:17px 0}
+    .intro-copy{padding-top:31px;color:var(--muted);font-size:1.08rem}
+    .verify{border-left:5px solid var(--amber);background:#fff2cc;padding:18px;margin-top:28px;font-size:.85rem;color:#554923}
+    .scope{background:var(--deep);color:#fff;padding:105px 0}
+    .scope-head{display:grid;grid-template-columns:.7fr 1.3fr;gap:80px;align-items:end;margin-bottom:42px}
+    .scope-head p{color:#bfd1cd;font-size:1.05rem}
+    .scope-board{display:grid;grid-template-columns:1.1fr .9fr;background:#0d292b;border:1px solid #517473}
+    .floorplan{display:grid;grid-template-columns:1.2fr .8fr;grid-template-rows:repeat(2,190px);gap:8px;padding:8px}
+    .zone{border:1px solid #597a78;padding:24px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+    .zone:after{content:"";position:absolute;width:80px;height:80px;border:1px solid #9dd8c877;border-radius:50%;right:-25px;bottom:-25px}
+    .zone:nth-child(1){grid-row:span 2;background:#17474a}.zone:nth-child(3){background:#126a69}
+    .zone span{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:#9dd8c8}.zone b{font-size:1.35rem;text-transform:uppercase}
+    .scope-form{padding:34px;background:#f5f7f4;color:var(--ink)}
+    .scope-form h3{text-transform:uppercase;font-size:1.35rem;margin:0 0 8px}.scope-form p{color:var(--muted);font-size:.87rem}
+    label{display:block;text-transform:uppercase;letter-spacing:.08em;font-size:.63rem;font-weight:900;margin:15px 0 5px}
+    input,select,textarea{width:100%;border:0;border-bottom:1px solid #91a5a1;background:transparent;padding:10px 0;font:inherit}
+    textarea{min-height:75px;resize:vertical}.form-note{font-size:.75rem!important;margin-top:16px}
+    .facts{padding:105px 0}.facts-head{display:flex;justify-content:space-between;gap:40px;align-items:end;margin-bottom:45px}.facts-head h2{max-width:720px}.facts-head p{max-width:390px;color:var(--muted)}
+    .fact-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+    .fact{padding:29px 28px 35px 0;border-bottom:1px solid var(--line);margin-right:25px}.fact span{display:block;color:var(--teal);font-weight:950;font-size:.72rem;letter-spacing:.12em}.fact h3{text-transform:uppercase;margin:18px 0 9px}.fact p{color:var(--muted);font-size:.87rem}
+    .contact{display:grid;grid-template-columns:.92fr 1.08fr}
+    .contact-copy{background:var(--amber);padding:92px max(40px,7vw)}
+    .contact-copy h2{max-width:540px}.maps-link{display:inline-block;font-size:1.15rem;font-weight:950;margin-top:25px}
+    .contact-panel{background:var(--ink);color:#fff;padding:92px max(40px,7vw);display:flex;flex-direction:column;justify-content:center}
+    .contact-panel p{color:#bdceca;max-width:570px}.contact-panel .btn{align-self:flex-start;margin-top:22px}
+    footer{background:#091315;color:#aebfbc;padding:29px}.footer{display:flex;justify-content:space-between;gap:25px}
+    @media(max-width:900px){
+      .links a:not(.btn){display:none}.hero{min-height:820px;background:linear-gradient(0deg,rgba(9,28,30,.98),rgba(9,28,30,.33)),url('assets/jsi-janitorial-hero.png') 68% center/cover}
+      .hero-grid,.intro,.scope-head,.scope-board,.contact{grid-template-columns:1fr}.listing{display:none}.hero-grid{padding:180px 0 70px}
+      .signal-grid{grid-template-columns:1fr 1fr}.signal-grid div:nth-child(2){border-right:0}.signal-grid div{border-bottom:1px solid #173b3a33}
+      .intro{gap:20px;padding:75px 0}.floorplan{grid-template-rows:repeat(2,145px)}.facts-head{display:block}.fact-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:580px){
+      .wrap{width:min(100% - 28px,1180px)}.brand small{display:none}.nav{height:75px}.links{gap:10px}.links .btn{padding:12px}
+      h1{font-size:4.15rem}.signal-grid,.floorplan,.fact-grid{grid-template-columns:1fr}.floorplan{grid-template-rows:auto}.zone{min-height:150px}.zone:nth-child(1){grid-row:auto}
+      .facts,.scope{padding:75px 0}.footer{display:block}
+    }
+  </style>
+</head>
+<body>
+  <div class="preview">SiteReveal preview · Business details must be approved before launch</div>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="JSI Janitorial Cleaning home">
+        <span class="brand-mark">JSI</span>
+        <span><b>JSI Janitorial Cleaning</b><small>Spokane · Washington</small></span>
+      </a>
+      <nav class="links" aria-label="Primary navigation">
+        <a href="#scope">Plan the space</a><a href="#facts">Before booking</a>
+        <a class="btn" href="#contact">View contact options</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <div class="kicker">Janitorial cleaning · Spokane, Washington</div>
+          <h1>A clear start for every space.</h1>
+          <p>JSI Janitorial Cleaning is publicly listed as a cleaning business in Spokane. Use this preview to organize the space and cleaning priorities, then confirm current services and availability directly.</p>
+          <div class="actions"><a class="btn" href="#scope">Plan the cleaning</a><a class="btn light" href="#contact">Open Google listing</a></div>
+        </div>
+        <aside class="listing" aria-label="Public listing snapshot">
+          <div class="listing-head">Public listing snapshot</div>
+          <div class="reading"><span>Business</span><b>JSI Janitorial Cleaning</b></div>
+          <div class="reading"><span>Location</span><b>Spokane, Washington</b></div>
+          <div class="reading"><span>Category</span><b>Cleaning service</b></div>
+          <div class="reading"><span>Website</span><b>No standalone site found at research time</b></div>
+          <div class="reading"><span>Details</span><b>Confirm directly before scheduling</b></div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="signal">
+      <div class="wrap signal-grid">
+        <div><b>01 · Identify</b><small>Which spaces need attention?</small></div>
+        <div><b>02 · Describe</b><small>What condition are they in?</small></div>
+        <div><b>03 · Schedule</b><small>When can work happen?</small></div>
+        <div><b>04 · Confirm</b><small>Verify scope and price directly.</small></div>
+      </div>
+    </div>
+
+    <section class="wrap intro">
+      <div>
+        <div class="eyebrow">Cleaning begins with a useful walkthrough</div>
+        <h2>Define the space before defining the work.</h2>
+      </div>
+      <div class="intro-copy">
+        <p>A janitorial inquiry is clearer when the business knows the type of property, the rooms or zones involved, access conditions, scheduling needs, and the areas that matter most.</p>
+        <p>This preview intentionally avoids promising particular services. JSI should confirm what it currently handles, where it works, and what information is needed for a quote.</p>
+        <div class="verify"><strong>Verification note:</strong> Do not rely on information belonging to similarly named companies outside Spokane. Confirm the local phone number, service list, hours, coverage area, insurance, and pricing with this Spokane business.</div>
+      </div>
+    </section>
+
+    <section class="scope" id="scope">
+      <div class="wrap">
+        <div class="scope-head">
+          <div><div class="kicker">Signature module · Clean-space scope builder</div><h2>Map the cleaning conversation.</h2></div>
+          <p>Choose the areas involved and prepare a short brief. The form remains on your device and does not send information to JSI or SiteReveal.</p>
+        </div>
+        <div class="scope-board">
+          <div class="floorplan" aria-hidden="true">
+            <div class="zone"><span>Zone A</span><b>Primary work area</b></div>
+            <div class="zone"><span>Zone B</span><b>Entry & shared space</b></div>
+            <div class="zone"><span>Zone C</span><b>Priority area</b></div>
+          </div>
+          <form class="scope-form" id="scopeForm">
+            <h3>Prepare a scope note</h3>
+            <p>Use general details only. Confirm the actual service directly.</p>
+            <label for="property">Property type</label>
+            <select id="property"><option>Home</option><option>Office or workplace</option><option>Rental or move-related space</option><option>Other / confirm with business</option></select>
+            <label for="areas">Areas involved</label>
+            <input id="areas" placeholder="Example: entry, floors, shared rooms">
+            <label for="priority">Main priority</label>
+            <textarea id="priority" placeholder="Condition, access, preferred timing, and questions"></textarea>
+            <button class="btn teal" type="submit">Prepare my note</button>
+            <p class="form-note" id="formNote">Nothing is transmitted. Submit to format a note you can copy before contacting the business.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap facts" id="facts">
+      <div class="facts-head">
+        <div><div class="eyebrow">Questions worth confirming</div><h2>Good information prevents mismatched expectations.</h2></div>
+        <p>These are conversation prompts—not claims about what JSI offers.</p>
+      </div>
+      <div class="fact-grid">
+        <article class="fact"><span>01</span><h3>Service fit</h3><p>Ask whether the business handles your property type and the exact cleaning work you need.</p></article>
+        <article class="fact"><span>02</span><h3>Location</h3><p>Confirm that your address falls within the business’s current service area.</p></article>
+        <article class="fact"><span>03</span><h3>Scheduling</h3><p>Discuss preferred timing, access, occupants, pets, parking, keys, and any site restrictions.</p></article>
+        <article class="fact"><span>04</span><h3>Supplies</h3><p>Ask who provides products and equipment and whether any material sensitivities should be discussed.</p></article>
+        <article class="fact"><span>05</span><h3>Quote details</h3><p>Confirm what is included, what costs extra, and whether the quote is based on time, size, or scope.</p></article>
+        <article class="fact"><span>06</span><h3>Business details</h3><p>Verify the current phone, hours, insurance, policies, and payment arrangements directly.</p></article>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="contact-copy">
+        <div class="eyebrow">JSI Janitorial Cleaning</div>
+        <h2>Continue with the verified public listing.</h2>
+        <p>Spokane, Washington</p>
+        <a class="maps-link" href="https://www.google.com/maps/place/JSI+Janitorial+Cleaning/@47.6955994,-117.4628073,17z/data=!3m1!4b1!4m6!3m5!1s0x8d07b376e86092e7:0x13e5a4be0d581031!8m2!3d47.6955994!4d-117.4628073!16s%2Fg%2F11sz5pcfmf" target="_blank" rel="noopener">Open JSI on Google Maps →</a>
+      </div>
+      <div class="contact-panel">
+        <div class="kicker">Important before contacting</div>
+        <h2>Use the local listing—not a same-name company.</h2>
+        <p>Online search results mix this Spokane listing with an unrelated janitorial company in Ohio. Use the linked Spokane Google Maps profile and verify the local contact information there before outreach.</p>
+        <a class="btn" href="https://www.google.com/maps/place/JSI+Janitorial+Cleaning/@47.6955994,-117.4628073,17z/data=!3m1!4b1!4m6!3m5!1s0x8d07b376e86092e7:0x13e5a4be0d581031!8m2!3d47.6955994!4d-117.4628073!16s%2Fg%2F11sz5pcfmf" target="_blank" rel="noopener">Verify contact details</a>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap footer"><span>JSI Janitorial Cleaning · Spokane, WA</span><span>SiteReveal preview · Details require business approval</span></div></footer>
+  <script>
+    document.getElementById('scopeForm').addEventListener('submit',function(event){
+      event.preventDefault();
+      const type=document.getElementById('property').value;
+      const areas=document.getElementById('areas').value.trim()||'Areas to be discussed';
+      const priority=document.getElementById('priority').value.trim()||'Priorities and timing to be discussed';
+      document.getElementById('formNote').textContent='Prepared note: '+type+' — '+areas+'. '+priority+'. Confirm service fit, schedule, scope, and price directly with JSI.';
+    });
+  </script>
+</body>
+</html>

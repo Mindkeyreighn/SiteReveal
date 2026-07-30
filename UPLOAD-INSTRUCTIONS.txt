@@ -1,27 +1,17 @@
-SITEREVEAL — SPOKANE BUSINESS SITES UPDATE
-July 30, 2026
+SITE REVEAL — JSI JANITORIAL CLEANING UPDATE
 
-This package is an overlay update for the existing SiteReveal repository.
+1. In the GitHub SiteReveal repository, open the existing "sites" folder.
+2. Upload the complete "jsi-janitorial-cleaning" folder from this package.
+3. Preserve the folder structure exactly:
 
-1. Open the SiteReveal repository in GitHub.
-2. Upload everything inside this package at the repository root.
-3. Allow GitHub to replace index.html and admin.html.
-4. Keep all other existing repository files and folders.
-5. Commit the upload and let the connected Vercel project deploy it.
+   sites/jsi-janitorial-cleaning/index.html
+   sites/jsi-janitorial-cleaning/assets/jsi-janitorial-hero.png
 
-The package adds:
+4. Wait for the connected Vercel project to redeploy.
+5. Test:
 
-- sites/above-and-beyond-moving/
-- sites/summit-trucking-logistics/
-- sites/dougs-hauling-services/
+   https://site-reveal-nine.vercel.app/sites/jsi-janitorial-cleaning/index.html
 
-It also updates:
-
-- index.html — adds Moving, Hauling, and Logistics category filters.
-- admin.html — adds moving, hauling, and logistics to the lead category menu.
-
-Shield Transportation is intentionally excluded.
-
-After deployment, add the approved businesses through the SiteReveal admin using
-the values in PIPELINE-ENTRY-GUIDE.md. Doug's Hauling should remain unpublished
-until current operation and business details are confirmed.
+6. Add the business through admin.html using PIPELINE-ENTRY-GUIDE.md.
+7. Confirm the Spokane phone number and current operation from Google Maps
+   before checking "Show this business on the public SiteReveal page."
