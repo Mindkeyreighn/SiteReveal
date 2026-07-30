@@ -1,4 +1,4 @@
-SITEREVEAL — CLEAN HEADING TYPOGRAPHY UPDATE
+SITEREVEAL — HEADING PUNCTUATION UPDATE
 July 30, 2026
 
 This package contains:
@@ -27,6 +27,10 @@ The four primary storefront headings now use the clean Inter type family:
 
 Their established sizes, colors, positions, and responsive behavior remain
 unchanged.
+
+The “Your business should keep working” heading now uses a comma instead of
+an em dash, removing the distracting horizontal-bar effect while preserving
+the original message and layout.
 
 No Supabase, database, admin, checkout, or Vercel environment-variable change
 is required.
