@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="North Idaho Mobile Mechanics provides mobile mechanical service for vehicles and heavy equipment from Rathdrum, Idaho.">
+  <title>North Idaho Mobile Mechanics | Rathdrum, Idaho</title>
+  <style>
+    :root{--pine:#122a24;--forest:#1d4438;--amber:#d89a2b;--steel:#9aa5a3;--fog:#eef0ea;--paper:#faf9f3;--ink:#17201d;--muted:#5d6964;--line:#d7d9d1}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.68 Arial,sans-serif}a{color:inherit}.wrap{width:min(1180px,calc(100% - 40px));margin:auto}
+    header{position:fixed;z-index:10;inset:0 0 auto;background:rgba(18,42,36,.97);color:#fff;border-bottom:1px solid rgba(255,255,255,.13);box-shadow:0 8px 26px rgba(9,23,19,.22)}
+    nav{height:90px;display:flex;align-items:center;justify-content:space-between;gap:28px}.brand{text-decoration:none;display:flex;align-items:center;gap:14px}.brand-mark{width:50px;height:50px;border:3px solid var(--amber);display:grid;place-items:center;font-weight:950;font-size:1.08rem;transform:rotate(45deg)}.brand-mark span{transform:rotate(-45deg)}.brand-name{font-weight:950;letter-spacing:.02em;line-height:1.05}.brand-name small{display:block;color:#b9c7c1;font-size:.62rem;letter-spacing:.2em;margin-top:6px}
+    .nav{display:flex;align-items:center;gap:25px}.nav a{text-decoration:none;font-weight:800}.btn{display:inline-block;padding:13px 22px;border:0;background:var(--amber);color:#152019;text-decoration:none;font-weight:950;cursor:pointer}.btn.light{background:#fff;color:var(--pine)}.btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.7)}
+    .hero{min-height:820px;display:grid;align-items:center;padding:135px 0 70px;color:#fff;background:linear-gradient(90deg,rgba(9,24,20,.99) 0%,rgba(9,24,20,.92) 39%,rgba(9,24,20,.25) 67%,rgba(9,24,20,.05) 100%),url('assets/north-idaho-mobile-mechanics-hero.png') center/cover}.hero-copy{max-width:650px}.eyebrow{text-transform:uppercase;letter-spacing:.19em;font-size:.72rem;font-weight:950;color:#f3b94e}h1,h2,h3{line-height:1.04;margin-top:0}h1{font-size:clamp(4rem,7.8vw,7.2rem);letter-spacing:-.065em;margin:18px 0 22px;text-transform:uppercase;font-weight:950}h2{font-size:clamp(2.45rem,5vw,4.35rem);letter-spacing:-.05em;text-transform:uppercase}.lead{font-size:1.2rem;color:#e0e7e3;max-width:590px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+    .proof{background:var(--amber);color:#14201a}.proofgrid{display:grid;grid-template-columns:repeat(3,1fr)}.proofitem{padding:25px 28px;border-right:1px solid rgba(20,32,26,.3)}.proofitem:last-child{border:0}.proofitem strong{display:block;font-size:1.15rem}.proofitem small{color:#4b4939}
+    section{padding:92px 0}.intro{display:grid;grid-template-columns:.85fr 1.15fr;gap:80px;align-items:start}.intro p{font-size:1.16rem;color:var(--muted)}.services{background:#fff}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{padding:30px;background:var(--fog);border-top:5px solid var(--forest);min-height:250px}.number{font-weight:950;font-size:1.8rem;color:var(--amber)}.card h3{font-size:1.4rem;text-transform:uppercase;margin:32px 0 10px}.card p{color:var(--muted)}
+    .field{background:var(--pine);color:#fff}.fieldgrid{display:grid;grid-template-columns:1fr 1fr;gap:72px}.field p{color:#cbd7d2}.steps{display:grid;gap:12px}.step{display:grid;grid-template-columns:48px 1fr;gap:15px;align-items:start;padding:18px;border:1px solid #3f5d53;background:#18382f}.step span{display:grid;place-items:center;width:42px;height:42px;background:var(--amber);color:#152019;font-weight:950}.step b{display:block}.step small{color:#c4d1cc}
+    .contact-section{background:#d9ded8}.contactgrid{display:grid;grid-template-columns:.82fr 1.18fr;gap:70px}.contact a.big{display:block;font-size:clamp(2rem,4vw,3.5rem);font-weight:950;text-decoration:none;letter-spacing:-.05em;color:var(--pine)}.contact p{color:#48534e}
+    form{background:var(--paper);padding:34px;border:1px solid #bdc5c0}.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{font-size:.75rem;text-transform:uppercase;font-weight:900;letter-spacing:.08em}input,select,textarea{width:100%;padding:13px;margin-top:5px;border:1px solid #9ca6a1;background:#fff;font:inherit}textarea{min-height:110px}.full{grid-column:1/-1}.form-note{font-size:.8rem;color:var(--muted)}
+    footer{background:#091a15;color:#c4d0cb;padding:34px 0}.footer{display:flex;justify-content:space-between;gap:20px}
+    @media(max-width:820px){nav{height:80px}.brand-mark{width:42px;height:42px}.brand-name{font-size:.82rem}.nav a:not(.btn){display:none}.nav .btn{padding:11px 13px}.hero{min-height:740px;align-items:end;background:linear-gradient(0deg,rgba(9,24,20,.99) 0%,rgba(9,24,20,.76) 50%,rgba(9,24,20,.16) 100%),url('assets/north-idaho-mobile-mechanics-hero.png') 65% center/cover}.proofgrid,.cards{grid-template-columns:1fr}.proofitem{border-right:0;border-bottom:1px solid rgba(20,32,26,.28)}.intro,.fieldgrid,.contactgrid{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.full{grid-column:auto}.footer{display:block}section{padding:64px 0}h1{font-size:3.55rem}}
+  </style>
+</head>
+<body>
+  <header><nav class="wrap">
+    <a class="brand" href="#" aria-label="North Idaho Mobile Mechanics home"><span class="brand-mark"><span>NIM</span></span><span class="brand-name">NORTH IDAHO<br>MOBILE MECHANICS<small>FIELD SERVICE</small></span></a>
+    <div class="nav"><a href="#capabilities">Capabilities</a><a href="#prepare">Before the call</a><a class="btn" href="#request">Call now</a></div>
+  </nav></header>
+  <main>
+    <section class="hero"><div class="wrap"><div class="hero-copy">
+      <div class="eyebrow">Mobile mechanic · Rathdrum, Idaho</div>
+      <h1>Repairs where the work is.</h1>
+      <p class="lead">Mobile mechanical support for vehicles and heavy equipment across the region—at the shop or where the machine sits.</p>
+      <div class="actions"><a class="btn light" href="tel:+12086206891">Call or text (208) 620-6891</a><a class="btn ghost" href="#capabilities">View capabilities</a></div>
+    </div></div></section>
+    <div class="proof"><div class="wrap proofgrid">
+      <div class="proofitem"><strong>5.0 from about 77 reviews</strong><small>Published Google rating at research time</small></div>
+      <div class="proofitem"><strong>Mobile or shop service</strong><small>Call to arrange the practical repair location</small></div>
+      <div class="proofitem"><strong>Vehicles &amp; heavy equipment</strong><small>Mechanical support for demanding work</small></div>
+    </div></div>
+    <section><div class="wrap intro">
+      <div><div class="eyebrow" style="color:#a66b00">Built for field problems</div><h2>Keep machines moving.</h2></div>
+      <div><p>North Idaho Mobile Mechanics provides mechanical help from Rathdrum for customers who need more than a traditional passenger-car shop. Public business information describes service for automotive needs and heavy equipment, with mobile availability across Idaho, Washington, and Montana.</p><p>Every machine and repair is different. Call or text with the equipment type, year, make, model, exact location, symptoms, and whether it can move safely. The business can then confirm current availability, travel range, and whether the work belongs in the field or at the shop.</p></div>
+    </div></section>
+    <section class="services" id="capabilities"><div class="wrap">
+      <div class="eyebrow" style="color:#a66b00">Mechanical capabilities</div><h2>Support for the road, yard, and jobsite.</h2>
+      <div class="cards">
+        <article class="card"><div class="number">01</div><h3>Mobile diagnosis</h3><p>Troubleshooting for no-starts, warning signs, unusual operation, leaks, and mechanical concerns at the equipment’s location.</p></article>
+        <article class="card"><div class="number">02</div><h3>Automotive repair</h3><p>Mechanical service for cars and trucks when the requested work is suitable for the available location and equipment.</p></article>
+        <article class="card"><div class="number">03</div><h3>Heavy equipment</h3><p>Field-service support for heavy equipment. Share the machine model, serial information, symptoms, and access conditions when calling.</p></article>
+        <article class="card"><div class="number">04</div><h3>Maintenance</h3><p>Practical inspection and maintenance support intended to address wear before it becomes expensive downtime.</p></article>
+        <article class="card"><div class="number">05</div><h3>Shop service</h3><p>Some repairs are better completed at the Rathdrum shop. Call first to confirm intake, timing, and transportation arrangements.</p></article>
+        <article class="card"><div class="number">06</div><h3>Regional service</h3><p>Public business information references Idaho, Washington, and Montana. Exact mobile range and travel charges must be confirmed directly.</p></article>
+      </div>
+    </div></section>
+    <section class="field" id="prepare"><div class="wrap fieldgrid">
+      <div><div class="eyebrow">Make the first call count</div><h2>Bring the machine details.</h2><p>Good information helps determine service suitability, required tools, parts planning, and whether the equipment can be repaired safely where it sits.</p></div>
+      <div class="steps">
+        <div class="step"><span>1</span><div><b>Identify it</b><small>Year, make, model, engine, serial number, and equipment type.</small></div></div>
+        <div class="step"><span>2</span><div><b>Describe the problem</b><small>Warning lights, sounds, leaks, recent work, and when the issue began.</small></div></div>
+        <div class="step"><span>3</span><div><b>Explain the location</b><small>Address, access, surface conditions, and whether the machine can move safely.</small></div></div>
+        <div class="step"><span>4</span><div><b>Confirm the plan</b><small>Availability, travel, diagnostic charges, parts, timing, payment, and warranty terms.</small></div></div>
+      </div>
+    </div></section>
+    <section class="contact-section" id="request"><div class="wrap contactgrid">
+      <div class="contact"><div class="eyebrow" style="color:#946000">Contact North Idaho Mobile Mechanics</div><h2>Tell us what stopped working.</h2><a class="big" href="tel:+12086206891">(208) 620-6891</a><p>19978 N Roundy Rd<br>Rathdrum, Idaho 83858<br><small>Call or text to confirm current hours, service area, availability, accepted equipment, pricing, travel charges, and warranty terms.</small></p></div>
+      <form id="serviceForm"><div class="fields">
+        <label>Your name<input required></label><label>Phone<input required type="tel"></label>
+        <label>Vehicle or equipment<input placeholder="Car, truck, excavator…"></label><label>Year, make, and model<input></label>
+        <label>Current location<input></label><label>Can it move safely?<select><option>No / not sure</option><option>Yes</option></select></label>
+        <label class="full">Symptoms, warning lights, leaks, recent repairs, and access details<textarea></textarea></label>
+      </div><button class="btn" type="submit">Preview service request</button><p class="form-note" id="formNote">Preview form—live delivery will be connected when the website is claimed.</p></form>
+    </div></section>
+  </main>
+  <footer><div class="wrap footer"><strong>NORTH IDAHO MOBILE MECHANICS</strong><span>Mobile mechanical field service · Rathdrum, Idaho</span></div></footer>
+  <script>document.getElementById('serviceForm').addEventListener('submit',e=>{e.preventDefault();document.getElementById('formNote').textContent='This demonstrates the service-request flow. Live delivery will be activated when the website is claimed.'})</script>
+</body>
+</html>
