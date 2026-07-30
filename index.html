@@ -47,12 +47,16 @@
     height: 64px;
   }
   .logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: 1.2rem;
-    color: var(--ink); letter-spacing: -0.5px;
-    display: flex; align-items: center; gap: 8px;
+    display:flex; align-items:center;
+    text-decoration:none;
+    line-height:0;
   }
-  .logo-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+  .logo img {
+    display:block;
+    width:auto;
+    height:38px;
+    object-fit:contain;
+  }
   .nav-cta {
     font-size: 0.8rem; font-weight: 500;
     padding: 7px 16px;
@@ -768,6 +772,10 @@
     .reveal-actions { flex-direction: column; }
     .price-tag { margin-left: 0; }
     nav { padding: 0 1rem; }
+    .logo img { height:31px; }
+    .nav-actions { gap:4px; }
+    .admin-link { padding:7px 5px; font-size:.7rem; }
+    .nav-cta { padding:7px 8px; font-size:.7rem; }
     .gallery-section, .featured-section, .benefits-section, .done-section, .trust-section, .contact-section { padding-left:1rem; padding-right:1rem; }
     .value-strip { padding:0 1rem; }
     .value-strip-inner { grid-template-columns:repeat(2,1fr); }
@@ -798,10 +806,9 @@
 <body>
 
 <nav>
-  <div class="logo">
-    <div class="logo-dot"></div>
-    SiteReveal
-  </div>
+  <a class="logo" href="index.html" aria-label="SiteReveal home">
+    <img src="assets/sitereveal-logo.png" alt="SiteReveal"/>
+  </a>
   <div class="nav-actions">
     <button class="nav-cta" onclick="scrollToGallery()">View available sites</button>
     <a class="admin-link" href="admin.html">Admin login</a>

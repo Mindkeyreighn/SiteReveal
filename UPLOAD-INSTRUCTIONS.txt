@@ -1,15 +1,26 @@
-Upload each complete business folder into the existing GitHub "sites" folder:
+SITEREVEAL — OFFICIAL LOGO WEBSITE UPDATE
+July 30, 2026
 
-sites/abbies-clean-method/
-sites/northmen-mobile-welding/
-sites/j-b-welding/
+This package contains:
 
-Do not upload the outer SiteReveal_Abbies_Northmen_JB_Update folder into "sites".
-Keep every business's assets folder beside its index.html.
+- index.html
+- assets/sitereveal-logo.png
 
-After Vercel redeploys, test:
-/sites/abbies-clean-method/index.html
-/sites/northmen-mobile-welding/index.html
-/sites/j-b-welding/index.html
+UPLOAD
 
-Then add each lead using PIPELINE-ENTRY-GUIDE.md.
+1. Open the existing SiteReveal GitHub repository.
+2. Upload everything inside this package at the repository root.
+3. Allow GitHub to replace the existing index.html.
+4. Preserve the assets folder structure so the logo remains located at:
+   assets/sitereveal-logo.png
+5. Commit the upload and allow the connected Vercel project to redeploy.
+
+This version includes every previous SiteReveal storefront, Admin-link,
+“Already Done,” and Website at Work improvement. The temporary text-and-dot
+header branding is replaced with the official integrated SiteReveal logo.
+
+The logo includes a real transparent background and is responsive in the
+desktop and mobile navigation header.
+
+No Supabase, database, admin, checkout, or Vercel environment-variable change
+is required.
