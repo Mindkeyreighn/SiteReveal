@@ -191,7 +191,27 @@
     };
 
     const existingPlaceIds=()=>new Set(leads.map(l=>l.google_place_id).filter(Boolean));
-    const existingSlugs=()=>new Set(leads.map(l=>l.slug));
+    const normalizeBusinessName=name=>String(name||'')
+      .toLowerCase()
+      .normalize('NFKD')
+      .replace(/['’]/g,'')
+      .replace(/&/g,' and ')
+      .replace(/\b(?:llc|inc|incorporated|company|co|corp|corporation)\b/g,' ')
+      .replace(/[^a-z0-9]+/g,' ')
+      .trim()
+      .replace(/\s+/g,' ');
+    function existingLeadMatch(place){
+      if(existingPlaceIds().has(place.placeId))return true;
+      const candidate=normalizeBusinessName(place.businessName);
+      if(!candidate)return false;
+      return leads.some(lead=>{
+        const existing=normalizeBusinessName(lead.business_name);
+        if(!existing)return false;
+        if(candidate===existing)return true;
+        return Math.min(candidate.length,existing.length)>=8&&
+          (candidate.includes(existing)||existing.includes(candidate));
+      });
+    }
     function candidateScore(place){
       let score=30;
       if(place.phone)score+=20;
@@ -201,9 +221,8 @@
       return Math.min(score,100);
     }
     function renderFinder(){
-      const placeIds=existingPlaceIds(),slugs=existingSlugs();
       $('finderResults').innerHTML=finderResults.map((place,index)=>{
-        const duplicate=placeIds.has(place.placeId)||slugs.has(slugify(place.businessName));
+        const duplicate=existingLeadMatch(place);
         const added=place.added||duplicate;
         return `<article class="candidate">
           <div>
