@@ -25,8 +25,10 @@
     .biz strong{display:block;font-size:14px}.biz span{color:var(--muted);font-size:12px}.pill{display:inline-block;padding:5px 9px;border-radius:18px;background:#e8f1fb;color:#24517b;font-size:10px;font-weight:700}.pill.verified,.pill.sold{background:#e5f5ee;color:#176a51}.pill.research{background:#fff4d8;color:#805700}
     dialog{border:0;border-radius:15px;width:min(680px,calc(100% - 30px));padding:0;box-shadow:0 30px 100px #001b153b}dialog::backdrop{background:#061f1a99}.modal-head{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.modal-head h2{margin:0}.close{border:0;background:none;font-size:24px;cursor:pointer}.form-grid{padding:22px 24px;display:grid;grid-template-columns:1fr 1fr;gap:13px}.wide{grid-column:1/-1}.check{display:flex;align-items:center;gap:9px}.check input{width:auto}.actions{padding:18px 24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}.danger{border:1px solid #f1b9b4;background:#fff;color:#b42318;border-radius:9px;padding:10px 13px;cursor:pointer}
     .empty{padding:45px;text-align:center;color:var(--muted)}.notice{background:#fff8df;color:#725300;border:1px solid #eadba6;padding:12px 16px;border-radius:9px;margin:20px 0;font-size:13px}
+    .automation-card{grid-column:1/-1;border:1px solid #bfd8ff;background:#f2f7ff;border-radius:12px;padding:16px}.automation-card strong{display:block;margin-bottom:5px}.automation-card p{margin:0;color:#4c6075;font-size:12px}.automation-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:13px}.automation-state{font-size:12px;font-weight:700;color:#24517b}
+    .generation-dialog{width:min(1120px,calc(100% - 30px))}.generation-body{padding:20px 24px;display:grid;grid-template-columns:360px 1fr;gap:20px}.generation-summary{display:grid;align-content:start;gap:14px}.generation-summary h3{margin:0}.generation-meta{border:1px solid var(--line);border-radius:11px;padding:14px;background:#fbfcfc}.generation-meta span{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}.qa-list{display:grid;gap:8px}.qa-item{border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:12px}.qa-item.pass{border-color:#b9e2d2;background:#f0faf6}.qa-item.fail{border-color:#efc3bf;background:#fff6f5}.qa-item strong{display:block;margin-bottom:3px}.preview-frame{width:100%;min-height:690px;border:1px solid var(--line);border-radius:11px;background:#fff}.generation-error{color:#b42318;font-size:13px;white-space:pre-wrap}
     .finder-form{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;padding:20px;align-items:end}.finder-form .field{margin:0}.finder-summary{padding:0 20px 18px;color:var(--muted);font-size:13px}.finder-results{display:grid;gap:12px;padding:0 20px 20px}.candidate{border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}.candidate h3{margin:0 0 5px;font-size:17px}.candidate p{margin:3px 0;color:var(--muted);font-size:13px}.candidate-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.candidate-actions{display:grid;gap:8px;min-width:150px}.candidate-actions a{text-align:center;color:var(--green);font-size:12px}.secondary{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:9px;padding:11px 14px;font-weight:700;cursor:pointer}.secondary:disabled,.primary:disabled{opacity:.55;cursor:not-allowed}.finder-error{color:#b42318;padding:0 20px 18px;font-size:13px}.setup-card{margin:0 20px 20px;padding:18px;border:1px solid #eadba6;background:#fff8df;border-radius:11px;color:#725300;font-size:13px;line-height:1.6}.view-heading{margin-bottom:24px}
-    @media(max-width:1000px){.metrics{grid-template-columns:repeat(2,1fr)}.app{grid-template-columns:1fr}.side{height:auto;position:static}.nav{display:flex;flex-wrap:wrap;margin-top:20px}.owner{margin-top:20px}main{padding:22px}.table-wrap{overflow:auto}}
+    @media(max-width:1000px){.metrics{grid-template-columns:repeat(2,1fr)}.app{grid-template-columns:1fr}.side{height:auto;position:static}.nav{display:flex;flex-wrap:wrap;margin-top:20px}.owner{margin-top:20px}main{padding:22px}.table-wrap{overflow:auto}.generation-body{grid-template-columns:1fr}.preview-frame{min-height:560px}}
     @media(max-width:700px){.finder-form{grid-template-columns:1fr}.candidate{grid-template-columns:1fr}.candidate-actions{grid-template-columns:1fr 1fr}}
     @media(max-width:620px){.metrics{grid-template-columns:1fr 1fr}.top{display:block}.top .primary{margin-top:18px}.form-grid{grid-template-columns:1fr}.wide{grid-column:auto}}
   </style>
@@ -112,9 +114,41 @@
         <div class="field wide"><label>Website folder path</label><input id="sitePath" placeholder="sites/business-slug/index.html"></div>
         <div class="field wide"><label>Description</label><textarea id="description"></textarea></div>
         <label class="check wide"><input id="published" type="checkbox"> Show this business on the public SiteReveal page</label>
+        <section id="automationCard" class="automation-card hidden">
+          <strong>OpenAI draft generation</strong>
+          <p>A verified, unpublished lead can be converted into a private review draft. OpenAI prepares a structured SiteSpec; SiteReveal renders and checks the HTML. Nothing is published automatically.</p>
+          <div class="automation-actions">
+            <button id="generateDraft" class="primary" type="button">Generate review draft</button>
+            <button id="openLatestDraft" class="secondary hidden" type="button">Open latest draft</button>
+            <span id="generationState" class="automation-state">Not generated</span>
+          </div>
+          <div id="generationError" class="generation-error"></div>
+        </section>
       </div>
       <div class="actions"><button id="deleteLead" class="danger hidden" type="button">Delete lead</button><div style="margin-left:auto;display:flex;gap:9px"><button class="ghost" style="color:#334;border-color:#ccd" type="button" id="cancelDialog">Cancel</button><button class="primary" type="submit">Save lead</button></div></div>
     </form>
+  </dialog>
+
+  <dialog id="generationDialog" class="generation-dialog">
+    <div class="modal-head"><h2>Generated website review</h2><button type="button" class="close" id="closeGeneration">×</button></div>
+    <div class="generation-body">
+      <aside class="generation-summary">
+        <div class="generation-meta"><span>BUSINESS</span><strong id="generationBusiness">—</strong></div>
+        <div class="generation-meta"><span>DESIGN FAMILY</span><strong id="generationFamily">—</strong></div>
+        <div class="generation-meta"><span>JOB / MODEL</span><strong id="generationJob">—</strong></div>
+        <div>
+          <h3>Automated QA</h3>
+          <p id="qaSummary" class="sub">Waiting for a draft.</p>
+          <div id="qaList" class="qa-list"></div>
+        </div>
+        <div class="notice" style="margin:0">Publication is blocked. Review the complete draft, verify every fact, then download it for the normal GitHub/Vercel deployment flow.</div>
+      </aside>
+      <iframe id="generationPreview" class="preview-frame" title="Generated website preview" sandbox></iframe>
+    </div>
+    <div class="actions">
+      <button id="downloadDraft" class="secondary" type="button">Download index.html</button>
+      <button id="closeGenerationBottom" class="primary" type="button">Close review</button>
+    </div>
   </dialog>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -127,6 +161,7 @@
     let finderResults=[];
     let finderNextPageToken='';
     let lastFinderSearch={category:'',location:''};
+    let generatedDraft={html:'',slug:'',jobId:''};
     const fields=['businessName','slug','category','city','phone','leadEmail','verification','stage','status','price','tagline','color','sitePath','description','published'];
     const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const slugify=s=>s.toLowerCase().trim().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -172,10 +207,21 @@
     $('search').oninput=render;$('stageFilter').onchange=render;
     $('businessName').oninput=()=>{if(!$('leadId').value)$('slug').value=slugify($('businessName').value)};
     function openLead(l){
-      $('leadForm').reset();$('leadId').value=l?.id||'';$('dialogTitle').textContent=l?'Edit lead':'Add lead';$('deleteLead').classList.toggle('hidden',!l);
+      $('leadForm').reset();$('leadId').value=l?.id||'';$('dialogTitle').textContent=l?'Edit lead':'Add lead';$('deleteLead').classList.toggle('hidden',!l);$('automationCard').classList.toggle('hidden',!l);$('generationError').textContent='';
       const map={businessName:'business_name',leadEmail:'email',sitePath:'site_path'};
       fields.forEach(id=>{const el=$(id),key=map[id]||id;if(el.type==='checkbox')el.checked=!!l?.[key];else if(l?.[key]!=null)el.value=l[key]});
-      if(!l){$('price').value=399;$('color').value='#1a56db'}$('leadDialog').showModal();
+      if(l){
+        const state=(l.generation_status||'not_started').replaceAll('_',' ');
+        $('generationState').textContent=state.charAt(0).toUpperCase()+state.slice(1);
+        $('openLatestDraft').classList.toggle('hidden',!l.latest_generation_id||l.generation_status!=='review_ready');
+        updateGenerateButton(l);
+      }else{$('price').value=399;$('color').value='#1a56db';$('openLatestDraft').classList.add('hidden')}
+      $('leadDialog').showModal();
+    }
+    function updateGenerateButton(l){
+      const reason=l.verification!=='Verified'?'Verify lead first':l.published?'Unpublish before regenerating':'Generate review draft';
+      $('generateDraft').disabled=l.verification!=='Verified'||!!l.published;
+      $('generateDraft').textContent=reason;
     }
     $('addLead').onclick=()=>openLead(null);
     ['closeDialog','cancelDialog'].forEach(id=>$(id).onclick=()=>$('leadDialog').close());
@@ -188,6 +234,72 @@
     $('deleteLead').onclick=async()=>{
       const id=$('leadId').value;if(!id||!confirm('Delete this lead permanently?'))return;
       const {error}=await db.from('leads').delete().eq('id',id);if(error){alert(error.message);return}$('leadDialog').close();await loadLeads();
+    };
+
+    async function generateDraft(){
+      const lead=leads.find(item=>item.id===$('leadId').value);
+      if(!lead)return;
+      const {data:{session}}=await db.auth.getSession();
+      if(!session){$('generationError').textContent='Your admin session expired. Please sign in again.';return}
+      $('generateDraft').disabled=true;$('generateDraft').textContent='Generating…';$('generationState').textContent='Generating';$('generationError').textContent='';
+      try{
+        const response=await fetch('/api/generate-site',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Authorization':`Bearer ${session.access_token}`},
+          body:JSON.stringify({leadId:lead.id})
+        });
+        const data=await response.json();
+        if(!response.ok){
+          const missing=data.missing?.length?` Missing: ${data.missing.join(', ')}.`:'';
+          throw new Error((data.error||'The draft could not be generated.')+missing);
+        }
+        generatedDraft={html:data.html,slug:lead.slug,jobId:data.job.id};
+        $('generationBusiness').textContent=lead.business_name;
+        $('generationFamily').textContent=data.job.designFamily;
+        $('generationJob').textContent=`${data.job.id.slice(0,8)} · ${data.job.model}`;
+        $('qaSummary').textContent=`${data.qa.passedCount} of ${data.qa.totalCount} checks passed${data.qa.passed?' — ready for human review.':' — fix failed checks before use.'}`;
+        $('qaList').innerHTML=data.qa.checks.map(check=>`<div class="qa-item ${check.passed?'pass':'fail'}"><strong>${check.passed?'✓':'×'} ${esc(check.label)}</strong>${esc(check.detail)}</div>`).join('');
+        $('generationPreview').srcdoc=data.html;
+        $('generationState').textContent='Review ready';
+        $('leadDialog').close();
+        $('generationDialog').showModal();
+        await loadLeads();
+      }catch(error){
+        $('generationState').textContent='Generation failed';
+        $('generationError').textContent=error.message;
+        updateGenerateButton(lead);
+      }
+    }
+    $('generateDraft').onclick=generateDraft;
+    async function openLatestDraft(){
+      const lead=leads.find(item=>item.id===$('leadId').value);
+      if(!lead?.latest_generation_id)return;
+      $('generationError').textContent='Loading latest draft…';
+      const {data,error}=await db.from('generation_jobs').select('*').eq('id',lead.latest_generation_id).single();
+      if(error){$('generationError').textContent='Could not load the latest draft: '+error.message;return}
+      generatedDraft={html:data.generated_html||'',slug:lead.slug,jobId:data.id};
+      $('generationBusiness').textContent=lead.business_name;
+      $('generationFamily').textContent=data.design_family||'—';
+      $('generationJob').textContent=`${data.id.slice(0,8)} · ${data.model||'model not recorded'}`;
+      const qa=data.qa_results||{passedCount:0,totalCount:0,checks:[]};
+      $('qaSummary').textContent=`${qa.passedCount||0} of ${qa.totalCount||0} checks passed${qa.passed?' — ready for human review.':' — review required.'}`;
+      $('qaList').innerHTML=(qa.checks||[]).map(check=>`<div class="qa-item ${check.passed?'pass':'fail'}"><strong>${check.passed?'✓':'×'} ${esc(check.label)}</strong>${esc(check.detail)}</div>`).join('');
+      $('generationPreview').srcdoc=generatedDraft.html;
+      $('generationError').textContent='';
+      $('leadDialog').close();
+      $('generationDialog').showModal();
+    }
+    $('openLatestDraft').onclick=openLatestDraft;
+    function closeGeneration(){$('generationDialog').close();$('generationPreview').srcdoc=''}
+    $('closeGeneration').onclick=closeGeneration;
+    $('closeGenerationBottom').onclick=closeGeneration;
+    $('downloadDraft').onclick=()=>{
+      if(!generatedDraft.html)return;
+      const blob=new Blob([generatedDraft.html],{type:'text/html;charset=utf-8'});
+      const url=URL.createObjectURL(blob);
+      const link=document.createElement('a');
+      link.href=url;link.download=`${generatedDraft.slug}-index.html`;link.click();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
     };
 
     const existingPlaceIds=()=>new Set(leads.map(l=>l.google_place_id).filter(Boolean));
