@@ -1,17 +1,15 @@
-SITE REVEAL — JSI JANITORIAL CLEANING UPDATE
+Upload each complete business folder into the existing GitHub "sites" folder:
 
-1. In the GitHub SiteReveal repository, open the existing "sites" folder.
-2. Upload the complete "jsi-janitorial-cleaning" folder from this package.
-3. Preserve the folder structure exactly:
+sites/abbies-clean-method/
+sites/northmen-mobile-welding/
+sites/j-b-welding/
 
-   sites/jsi-janitorial-cleaning/index.html
-   sites/jsi-janitorial-cleaning/assets/jsi-janitorial-hero.png
+Do not upload the outer SiteReveal_Abbies_Northmen_JB_Update folder into "sites".
+Keep every business's assets folder beside its index.html.
 
-4. Wait for the connected Vercel project to redeploy.
-5. Test:
+After Vercel redeploys, test:
+/sites/abbies-clean-method/index.html
+/sites/northmen-mobile-welding/index.html
+/sites/j-b-welding/index.html
 
-   https://site-reveal-nine.vercel.app/sites/jsi-janitorial-cleaning/index.html
-
-6. Add the business through admin.html using PIPELINE-ENTRY-GUIDE.md.
-7. Confirm the Spokane phone number and current operation from Google Maps
-   before checking "Show this business on the public SiteReveal page."
+Then add each lead using PIPELINE-ENTRY-GUIDE.md.
