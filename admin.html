@@ -16,7 +16,7 @@
     input,select,textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:11px 12px;background:#fff;color:var(--ink)}textarea{min-height:82px;resize:vertical}
     .primary{border:0;border-radius:9px;background:var(--green);color:#fff;padding:12px 16px;font-weight:700;cursor:pointer}.login-card .primary{width:100%;margin-top:10px}.error{color:#b42318;font-size:13px;min-height:20px;margin-top:12px}
     .app{min-height:100vh;display:grid;grid-template-columns:245px 1fr}.side{background:var(--navy);color:#d5eee7;padding:26px 20px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
-    .side .brand{color:#fff}.side .brand span{color:#8ee0c8}.side small{color:#85afa4;letter-spacing:.15em}.nav{margin-top:36px;display:grid;gap:8px}.nav a{color:#b9d8d0;text-decoration:none;padding:12px;border-radius:9px}.nav a.active{background:#174a40;color:#fff}
+    .side .brand{color:#fff}.side .brand span{color:#8ee0c8}.side small{color:#85afa4;letter-spacing:.15em}.nav{margin-top:36px;display:grid;gap:8px}.nav button,.nav a{color:#b9d8d0;text-decoration:none;padding:12px;border-radius:9px;border:0;background:transparent;text-align:left;cursor:pointer;font:inherit}.nav button.active{background:#174a40;color:#fff}
     .owner{margin-top:auto;border-top:1px solid #285247;padding-top:18px;font-size:13px}.owner strong{display:block;color:#fff}.ghost{margin-top:13px;width:100%;border:1px solid #37675c;color:#cbe4dd;background:transparent;border-radius:8px;padding:9px;cursor:pointer}
     main{padding:38px;min-width:0}.top{display:flex;justify-content:space-between;align-items:start;gap:20px}.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--green);font-weight:700}.top h1{font-size:33px;margin:10px 0 6px}.top p{color:var(--muted);margin:0}
     .metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin:32px 0 22px}.metric{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px}.metric span{font-size:12px;color:var(--muted)}.metric strong{display:block;font-size:28px;margin:12px 0 2px}
@@ -25,7 +25,9 @@
     .biz strong{display:block;font-size:14px}.biz span{color:var(--muted);font-size:12px}.pill{display:inline-block;padding:5px 9px;border-radius:18px;background:#e8f1fb;color:#24517b;font-size:10px;font-weight:700}.pill.verified,.pill.sold{background:#e5f5ee;color:#176a51}.pill.research{background:#fff4d8;color:#805700}
     dialog{border:0;border-radius:15px;width:min(680px,calc(100% - 30px));padding:0;box-shadow:0 30px 100px #001b153b}dialog::backdrop{background:#061f1a99}.modal-head{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}.modal-head h2{margin:0}.close{border:0;background:none;font-size:24px;cursor:pointer}.form-grid{padding:22px 24px;display:grid;grid-template-columns:1fr 1fr;gap:13px}.wide{grid-column:1/-1}.check{display:flex;align-items:center;gap:9px}.check input{width:auto}.actions{padding:18px 24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}.danger{border:1px solid #f1b9b4;background:#fff;color:#b42318;border-radius:9px;padding:10px 13px;cursor:pointer}
     .empty{padding:45px;text-align:center;color:var(--muted)}.notice{background:#fff8df;color:#725300;border:1px solid #eadba6;padding:12px 16px;border-radius:9px;margin:20px 0;font-size:13px}
-    @media(max-width:1000px){.metrics{grid-template-columns:repeat(2,1fr)}.app{grid-template-columns:1fr}.side{height:auto;position:static}.nav{display:none}.owner{margin-top:20px}main{padding:22px}.table-wrap{overflow:auto}}
+    .finder-form{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;padding:20px;align-items:end}.finder-form .field{margin:0}.finder-summary{padding:0 20px 18px;color:var(--muted);font-size:13px}.finder-results{display:grid;gap:12px;padding:0 20px 20px}.candidate{border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}.candidate h3{margin:0 0 5px;font-size:17px}.candidate p{margin:3px 0;color:var(--muted);font-size:13px}.candidate-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.candidate-actions{display:grid;gap:8px;min-width:150px}.candidate-actions a{text-align:center;color:var(--green);font-size:12px}.secondary{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:9px;padding:11px 14px;font-weight:700;cursor:pointer}.secondary:disabled,.primary:disabled{opacity:.55;cursor:not-allowed}.finder-error{color:#b42318;padding:0 20px 18px;font-size:13px}.setup-card{margin:0 20px 20px;padding:18px;border:1px solid #eadba6;background:#fff8df;border-radius:11px;color:#725300;font-size:13px;line-height:1.6}.view-heading{margin-bottom:24px}
+    @media(max-width:1000px){.metrics{grid-template-columns:repeat(2,1fr)}.app{grid-template-columns:1fr}.side{height:auto;position:static}.nav{display:flex;flex-wrap:wrap;margin-top:20px}.owner{margin-top:20px}main{padding:22px}.table-wrap{overflow:auto}}
+    @media(max-width:700px){.finder-form{grid-template-columns:1fr}.candidate{grid-template-columns:1fr}.candidate-actions{grid-template-columns:1fr 1fr}}
     @media(max-width:620px){.metrics{grid-template-columns:1fr 1fr}.top{display:block}.top .primary{margin-top:18px}.form-grid{grid-template-columns:1fr}.wide{grid-column:auto}}
   </style>
 </head>
@@ -46,10 +48,14 @@
   <section id="adminView" class="app hidden">
     <aside class="side">
       <div class="brand">Site<span>Reveal</span></div><small>OPERATIONS</small>
-      <nav class="nav"><a class="active" href="#">⌂ &nbsp; Lead pipeline</a><a href="index.html">↗ &nbsp; Public website</a></nav>
+      <nav class="nav">
+        <button id="showPipeline" class="active" type="button">⌂ &nbsp; Lead pipeline</button>
+        <button id="showFinder" type="button">⌕ &nbsp; Find businesses</button>
+        <a href="index.html">↗ &nbsp; Public website</a>
+      </nav>
       <div class="owner"><strong id="ownerEmail"></strong><span>Workspace owner</span><button id="logout" class="ghost">Sign out</button></div>
     </aside>
-    <main>
+    <main id="pipelineView">
       <div class="top">
         <div><div class="eyebrow">SITEREVEAL COMMAND CENTER</div><h1>Lead pipeline</h1><p>Manage businesses from discovery through reveal and sale.</p></div>
         <button id="addLead" class="primary">+ Add lead</button>
@@ -65,6 +71,23 @@
       <section class="panel">
         <div class="toolbar"><input id="search" placeholder="Search businesses, services, or city"><select id="stageFilter"><option value="">All stages</option><option>Research</option><option>Ready to Generate</option><option>Site Review</option><option>Contacted</option><option>Sold</option></select></div>
         <div class="table-wrap"><table><thead><tr><th>BUSINESS</th><th>VERIFICATION</th><th>STAGE</th><th>STATUS</th><th>PUBLIC</th></tr></thead><tbody id="leadRows"></tbody></table><div id="empty" class="empty hidden">No leads found. Add your first business.</div></div>
+      </section>
+    </main>
+    <main id="finderView" class="hidden">
+      <div class="top view-heading">
+        <div><div class="eyebrow">SITEREVEAL LEAD FINDER</div><h1>Find businesses</h1><p>Find local businesses that do not have a website listed on Google.</p></div>
+      </div>
+      <section class="panel">
+        <form id="finderForm" class="finder-form">
+          <div class="field"><label for="finderCategory">Business category</label><input id="finderCategory" placeholder="Example: mobile mechanic" required></div>
+          <div class="field"><label for="finderLocation">City or area</label><input id="finderLocation" value="Coeur d'Alene, ID" required></div>
+          <button id="findBusinesses" class="primary" type="submit">Find businesses</button>
+        </form>
+        <div id="finderError" class="finder-error"></div>
+        <div id="finderSetup" class="setup-card hidden">Google Places is not configured yet. Add the four Lead Finder environment variables in Vercel, enable Places API (New), and redeploy SiteReveal.</div>
+        <div id="finderSummary" class="finder-summary">Enter a category and location to search for new candidates.</div>
+        <div id="finderResults" class="finder-results"></div>
+        <div style="padding:0 20px 20px"><button id="loadMore" class="secondary hidden" type="button">Search next page</button></div>
       </section>
     </main>
   </section>
@@ -101,6 +124,9 @@
     const db=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey);
     const $=id=>document.getElementById(id);
     let leads=[];
+    let finderResults=[];
+    let finderNextPageToken='';
+    let lastFinderSearch={category:'',location:''};
     const fields=['businessName','slug','category','city','phone','leadEmail','verification','stage','status','price','tagline','color','sitePath','description','published'];
     const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const slugify=s=>s.toLowerCase().trim().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -121,6 +147,15 @@
       $('loginError').textContent=error?error.message:'';
     });
     $('logout').onclick=()=>db.auth.signOut();
+    function showAdminView(view){
+      const finder=view==='finder';
+      $('pipelineView').classList.toggle('hidden',finder);
+      $('finderView').classList.toggle('hidden',!finder);
+      $('showPipeline').classList.toggle('active',!finder);
+      $('showFinder').classList.toggle('active',finder);
+    }
+    $('showPipeline').onclick=()=>showAdminView('pipeline');
+    $('showFinder').onclick=()=>showAdminView('finder');
 
     async function loadLeads(){
       const {data,error}=await db.from('leads').select('*').order('created_at',{ascending:false});
@@ -154,6 +189,107 @@
       const id=$('leadId').value;if(!id||!confirm('Delete this lead permanently?'))return;
       const {error}=await db.from('leads').delete().eq('id',id);if(error){alert(error.message);return}$('leadDialog').close();await loadLeads();
     };
+
+    const existingPlaceIds=()=>new Set(leads.map(l=>l.google_place_id).filter(Boolean));
+    const existingSlugs=()=>new Set(leads.map(l=>l.slug));
+    function candidateScore(place){
+      let score=30;
+      if(place.phone)score+=20;
+      if(place.reviewCount>=5)score+=15;
+      if(place.reviewCount>=10&&place.reviewCount<=150)score+=10;
+      if(place.rating>=4.2)score+=10;
+      return Math.min(score,100);
+    }
+    function renderFinder(){
+      const placeIds=existingPlaceIds(),slugs=existingSlugs();
+      $('finderResults').innerHTML=finderResults.map((place,index)=>{
+        const duplicate=placeIds.has(place.placeId)||slugs.has(slugify(place.businessName));
+        const added=place.added||duplicate;
+        return `<article class="candidate">
+          <div>
+            <h3>${esc(place.businessName)}</h3>
+            <p>${esc(place.category||lastFinderSearch.category)} · ${esc(place.address)}</p>
+            <p>${esc(place.phone||'No phone listed')}</p>
+            <div class="candidate-meta">
+              <span class="pill verified">No website listed</span>
+              <span class="pill">${place.rating?`${esc(place.rating)} ★ · ${esc(place.reviewCount)} reviews`:'No rating'}</span>
+              <span class="pill ${candidateScore(place)>=70?'verified':''}">Lead score ${candidateScore(place)}</span>
+              ${duplicate?'<span class="pill research">Already in pipeline</span>':''}
+            </div>
+          </div>
+          <div class="candidate-actions">
+            <button class="primary" type="button" data-add-candidate="${index}" ${added?'disabled':''}>${added?'Added':'Add to pipeline'}</button>
+            ${place.googleMapsUrl?`<a href="${esc(place.googleMapsUrl)}" target="_blank" rel="noopener">Verify on Google Maps ↗</a>`:''}
+          </div>
+        </article>`;
+      }).join('');
+      document.querySelectorAll('[data-add-candidate]').forEach(button=>{
+        button.onclick=()=>addCandidate(Number(button.dataset.addCandidate));
+      });
+      $('loadMore').classList.toggle('hidden',!finderNextPageToken);
+    }
+    async function runFinder(append=false){
+      const category=$('finderCategory').value.trim(),location=$('finderLocation').value.trim();
+      if(!category||!location)return;
+      const {data:{session}}=await db.auth.getSession();
+      if(!session){$('finderError').textContent='Your admin session expired. Please sign in again.';return}
+      $('findBusinesses').disabled=true;$('loadMore').disabled=true;
+      $('finderError').textContent='';$('finderSetup').classList.add('hidden');
+      $('finderSummary').textContent='Searching Google Places…';
+      try{
+        const response=await fetch('/api/places-search',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Authorization':`Bearer ${session.access_token}`},
+          body:JSON.stringify({category,location,pageToken:append?finderNextPageToken:''})
+        });
+        const data=await response.json();
+        if(!response.ok){
+          if(data.setupRequired)$('finderSetup').classList.remove('hidden');
+          throw new Error(data.error||'The search could not be completed.');
+        }
+        lastFinderSearch={category,location};
+        finderResults=append?[...finderResults,...data.candidates]:data.candidates;
+        finderNextPageToken=data.nextPageToken||'';
+        $('finderSummary').textContent=`${data.candidates.length} businesses without a listed website found. ${data.excludedWithWebsite} results with websites were removed. Verify each candidate before creating its preview.`;
+        renderFinder();
+      }catch(error){
+        $('finderError').textContent=error.message;
+        if(!finderResults.length)$('finderSummary').textContent='No candidates are displayed.';
+      }finally{
+        $('findBusinesses').disabled=false;$('loadMore').disabled=false;
+      }
+    }
+    $('finderForm').addEventListener('submit',e=>{e.preventDefault();finderNextPageToken='';runFinder(false)});
+    $('loadMore').onclick=()=>runFinder(true);
+    async function addCandidate(index){
+      const place=finderResults[index];if(!place||place.added)return;
+      const row={
+        business_name:place.businessName,
+        slug:slugify(place.businessName),
+        category:(place.category||lastFinderSearch.category).toLowerCase(),
+        city:place.address,
+        phone:place.phone,
+        email:null,
+        verification:'Needs Review',
+        stage:'Research',
+        status:'available',
+        price:399,
+        tagline:'',
+        color:'#1a56db',
+        site_path:'',
+        description:'',
+        published:false,
+        google_place_id:place.placeId,
+        google_maps_url:place.googleMapsUrl,
+        source:'google_places',
+        source_rating:place.rating||null,
+        source_review_count:place.reviewCount||null,
+        updated_at:new Date().toISOString()
+      };
+      const {error}=await db.from('leads').insert(row);
+      if(error){alert(error.code==='23505'?'This business is already in the pipeline.':'Could not add lead: '+error.message);return}
+      place.added=true;await loadLeads();renderFinder();
+    }
     start();
   </script>
 </body>

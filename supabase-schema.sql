@@ -24,6 +24,17 @@ create table if not exists public.leads (
   updated_at timestamptz not null default now()
 );
 
+-- Lead Finder fields. Place IDs provide dependable duplicate detection.
+alter table public.leads add column if not exists google_place_id text;
+alter table public.leads add column if not exists google_maps_url text not null default '';
+alter table public.leads add column if not exists source text not null default 'manual';
+alter table public.leads add column if not exists source_rating numeric(2,1);
+alter table public.leads add column if not exists source_review_count integer;
+
+create unique index if not exists leads_google_place_id_unique
+on public.leads (google_place_id)
+where google_place_id is not null and google_place_id <> '';
+
 alter table public.leads enable row level security;
 
 drop policy if exists "Public can view published leads" on public.leads;

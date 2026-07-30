@@ -72,6 +72,26 @@ protects the records. Never put a service_role key in any HTML or JavaScript.
 Only the authenticated account freesevenluck@gmail.com is allowed to create,
 edit, or delete leads. Public visitors can only read published listings.
 
+LEAD FINDER SETUP
+-----------------
+The private Admin > Find Businesses screen uses Google Places API (New) through
+a Vercel serverless function. The Google API key is never placed in admin.html
+or config.js.
+
+In Vercel, open SiteReveal > Settings > Environment Variables and add:
+
+  GOOGLE_PLACES_API_KEY   Your restricted Google Places API key
+  SUPABASE_URL            https://vlpfbnsxcqsswatstdqq.supabase.co
+  SUPABASE_ANON_KEY       The same browser-safe anon key used in config.js
+  ADMIN_EMAIL             freesevenluck@gmail.com
+
+Enable Places API (New) in the Google Cloud project. Restrict the key to Places
+API (New), set a conservative quota and budget alert, and redeploy SiteReveal.
+
+Run the latest supabase-schema.sql in Supabase SQL Editor once. It safely adds
+the Google Place ID, Maps URL, source rating, and review-count fields. Existing
+leads and websites are preserved.
+
 PRICING
 -------
 All sites are priced at $399 (flat fee). The admin panel defaults to $399
