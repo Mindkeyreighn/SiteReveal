@@ -1,4 +1,4 @@
-SITEREVEAL — OFFICIAL LOGO WEBSITE UPDATE
+SITEREVEAL — CLEAN HEADING TYPOGRAPHY UPDATE
 July 30, 2026
 
 This package contains:
@@ -16,11 +16,17 @@ UPLOAD
 5. Commit the upload and allow the connected Vercel project to redeploy.
 
 This version includes every previous SiteReveal storefront, Admin-link,
-“Already Done,” and Website at Work improvement. The temporary text-and-dot
-header branding is replaced with the official integrated SiteReveal logo.
+“Already Done,” Website at Work, and official-logo improvement.
 
-The logo includes a real transparent background and is responsive in the
-desktop and mobile navigation header.
+The four primary storefront headings now use the clean Inter type family:
+
+- Your website is already built.
+- Real sites. Different industries.
+- Your business should keep working—even when you aren’t.
+- Browse available websites.
+
+Their established sizes, colors, positions, and responsive behavior remain
+unchanged.
 
 No Supabase, database, admin, checkout, or Vercel environment-variable change
 is required.
