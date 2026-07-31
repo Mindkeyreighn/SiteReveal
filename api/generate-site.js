@@ -29,6 +29,7 @@ module.exports = async function handler(req, res) {
 
     const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
     const leadId = String(body.leadId || '').trim();
+    const reviewNotes = String(body.reviewNotes || '').trim().slice(0, 600);
     if (!/^[0-9a-f-]{36}$/i.test(leadId)) {
       return sendJson(res, 400, { error: 'A valid lead ID is required.' });
     }
@@ -55,7 +56,7 @@ module.exports = async function handler(req, res) {
       latest_generation_id: job.id
     });
 
-    const { spec, model, responseId } = await createSiteSpec(lead);
+    const { spec, model, responseId } = await createSiteSpec(lead, reviewNotes);
     const html = renderSite(lead, spec);
     const qa = runQa(lead, spec, html);
 
@@ -63,7 +64,7 @@ module.exports = async function handler(req, res) {
       status: 'review_ready',
       model,
       design_family: spec.designFamily,
-      site_spec: { ...spec, openaiResponseId: responseId },
+      site_spec: { ...spec, openaiResponseId: responseId, reviewRequestNotes: reviewNotes },
       generated_html: html,
       qa_results: qa,
       error_message: null
