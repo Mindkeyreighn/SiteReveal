@@ -22,6 +22,7 @@ const SPEC_SCHEMA = {
     'ctaLabel',
     'services',
     'trustPoints',
+    'visualMotif',
     'signatureModuleTitle',
     'signatureModuleItems',
     'factsUsed',
@@ -39,14 +40,31 @@ const SPEC_SCHEMA = {
       type: 'array',
       minItems: 3,
       maxItems: 6,
-      items: { type: 'string', minLength: 2, maxLength: 60 }
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['name', 'summary'],
+        properties: {
+          name: { type: 'string', minLength: 3, maxLength: 60 },
+          summary: { type: 'string', minLength: 18, maxLength: 150 }
+        }
+      }
     },
     trustPoints: {
       type: 'array',
       minItems: 3,
       maxItems: 3,
-      items: { type: 'string', minLength: 3, maxLength: 90 }
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['title', 'detail'],
+        properties: {
+          title: { type: 'string', minLength: 3, maxLength: 60 },
+          detail: { type: 'string', minLength: 18, maxLength: 140 }
+        }
+      }
     },
+    visualMotif: { type: 'string', minLength: 12, maxLength: 100 },
     signatureModuleTitle: { type: 'string', minLength: 4, maxLength: 70 },
     signatureModuleItems: {
       type: 'array',
@@ -71,30 +89,60 @@ function clean(value, max = 500) {
   return String(value || '').trim().slice(0, max);
 }
 
+function normalizeLocation(value) {
+  const raw = clean(value, 220);
+  const parts = raw.split(',').map(part => part.trim()).filter(Boolean);
+  if (parts.length >= 3) {
+    const country = /^(usa|united states)$/i.test(parts.at(-1)) ? parts.pop() : '';
+    const regionMatch = (parts.at(-1) || '').match(/^([A-Z]{2})(?:\s+\d{5}(?:-\d{4})?)?$/i);
+    if (regionMatch) {
+      const region = regionMatch[1].toUpperCase();
+      const locality = parts.at(-2) || '';
+      return { raw, locality, region, label: [locality, region].filter(Boolean).join(', '), country };
+    }
+  }
+  if (parts.length === 2 && /^[A-Z]{2}$/i.test(parts[1])) {
+    return { raw, locality: parts[0], region: parts[1].toUpperCase(), label: `${parts[0]}, ${parts[1].toUpperCase()}`, country: '' };
+  }
+  return { raw, locality: raw, region: '', label: raw, country: '' };
+}
+
 function leadFacts(lead) {
+  const location = normalizeLocation(lead.city);
   return {
     businessName: clean(lead.business_name, 140),
     category: clean(lead.category, 100),
-    city: clean(lead.city, 180),
+    address: location.raw,
+    locality: location.locality,
+    region: location.region,
+    locationLabel: location.label,
     phone: clean(lead.phone, 40),
     email: clean(lead.email, 180),
     suppliedTagline: clean(lead.tagline, 140),
     suppliedDescription: clean(lead.description, 800),
     suppliedAccentColor: /^#[0-9a-fA-F]{6}$/.test(lead.color || '') ? lead.color : '#1a56db',
-    googleMapsUrl: clean(lead.google_maps_url, 800)
+    googleMapsUrl: clean(lead.google_maps_url, 800),
+    googleRating: Number(lead.source_rating) || null,
+    googleReviewCount: Number(lead.source_review_count) || null,
+    discoveryQuery: clean(lead.source_search_query, 180)
   };
 }
 
-function buildPrompt(lead) {
+function buildPrompt(lead, reviewNotes = '') {
   const facts = leadFacts(lead);
   return [
     'Create a concise SiteSpec for a SiteReveal preview website.',
     'Use only the supplied facts. Never invent an owner name, years in business, credentials, license, guarantee, price, rating, review quote, service area, availability, or exact service that is not explicitly supplied.',
-    'If the supplied description is sparse, keep wording general to the category and list unknown details under factsNeedingConfirmation.',
+    'If the supplied description is sparse, use industry knowledge only to organize likely customer questions and neutral category-level topics. Do not present those topics as confirmed offerings.',
     'The site is an independent preview, not the official business website.',
     'Choose exactly one locked structural family and create one business-specific signature module.',
-    'Services must be grounded in suppliedDescription. If none are supplied, use cautious category-level labels such as "Service details to confirm".',
+    'Create 3–6 distinct service-topic cards. Each needs a different useful name and summary. Do not repeat "to confirm", "details and availability", or the business name across cards. Put uncertainty in factsNeedingConfirmation instead.',
+    'Write three distinct trust points with practical customer benefits. Do not reuse service copy.',
+    'Choose a visualMotif that is unmistakably relevant to the category, described as an abstract composition without inventing a business photo.',
+    'Avoid generic filler such as dependable place to start, quality service, your trusted partner, or take the next step unless supplied.',
+    'Use locationLabel for display copy. Treat address as a full address, not a city name.',
     'Keep the language practical, local, and professional. Avoid hype and unverifiable superiority claims.',
+    reviewNotes ? `HUMAN REVIEW NOTES (follow these unless they conflict with factual-safety rules):\n${clean(reviewNotes, 600)}` : '',
     `LOCKED FAMILIES: ${DESIGN_FAMILIES.join('; ')}`,
     `VERIFIED/SUPPLIED LEAD DATA:\n${JSON.stringify(facts, null, 2)}`
   ].join('\n\n');
@@ -110,7 +158,7 @@ function extractOutputText(data) {
   return '';
 }
 
-async function createSiteSpec(lead) {
+async function createSiteSpec(lead, reviewNotes = '') {
   const apiKey = process.env.OPENAI_API_KEY;
   const model = process.env.OPENAI_MODEL || 'gpt-5.6';
   if (!apiKey) throw new Error('OPENAI_API_KEY is not configured.');
@@ -123,7 +171,7 @@ async function createSiteSpec(lead) {
     },
     body: JSON.stringify({
       model,
-      input: buildPrompt(lead),
+      input: buildPrompt(lead, reviewNotes),
       text: {
         format: {
           type: 'json_schema',
@@ -217,7 +265,7 @@ function renderSite(lead, spec) {
   <main class="wrap">
     <div class="hero">
       <div class="hero-copy">
-        <div class="eyebrow">${escapeHtml(facts.category)} · ${escapeHtml(facts.city || 'Location to confirm')}</div>
+        <div class="eyebrow">${escapeHtml(facts.category)} · ${escapeHtml(facts.locationLabel || 'Location to confirm')}</div>
         <h1>${escapeHtml(spec.headline)}</h1>
         <p class="lede">${escapeHtml(spec.description)}</p>
         <div class="actions">
@@ -226,12 +274,12 @@ function renderSite(lead, spec) {
         </div>
       </div>
       <div class="visual">
-        <div class="visual-card"><span>${escapeHtml(spec.designFamily)}</span><strong>${escapeHtml(spec.tagline)}</strong></div>
+        <div class="visual-card"><span>${escapeHtml(spec.designFamily)}</span><strong>${escapeHtml(spec.visualMotif)}</strong></div>
       </div>
     </div>
     <section id="services">
-      <div class="section-head"><div><div class="eyebrow">What we can present</div><h2>Services, clearly organized.</h2></div><p>Every service shown in this preview comes from the supplied lead information and must be confirmed before launch.</p></div>
-      <div class="cards">${spec.services.map((service, index) => `<article class="card"><span>0${index + 1}</span><h3>${escapeHtml(service)}</h3><p>Details and availability to be confirmed with ${escapeHtml(facts.businessName)}.</p></article>`).join('')}</div>
+      <div class="section-head"><div><div class="eyebrow">What customers may need</div><h2>Useful information, organized clearly.</h2></div><p>This independent preview uses supplied lead details and industry-relevant structure. Specific offerings must be confirmed before launch.</p></div>
+      <div class="cards">${spec.services.map((service, index) => `<article class="card"><span>0${index + 1}</span><h3>${escapeHtml(service.name)}</h3><p>${escapeHtml(service.summary)}</p></article>`).join('')}</div>
     </section>
     <section id="about">
       <div class="signature">
@@ -241,7 +289,7 @@ function renderSite(lead, spec) {
     </section>
     <section>
       <div class="section-head"><div><div class="eyebrow">Why this preview works</div><h2>A dependable place to start.</h2></div><p>${escapeHtml(spec.tagline)}</p></div>
-      <div class="cards">${spec.trustPoints.map((point, index) => `<article class="card"><span>0${index + 1}</span><h3>${escapeHtml(point)}</h3></article>`).join('')}</div>
+      <div class="cards">${spec.trustPoints.map((point, index) => `<article class="card"><span>0${index + 1}</span><h3>${escapeHtml(point.title)}</h3><p>${escapeHtml(point.detail)}</p></article>`).join('')}</div>
     </section>
     <section id="contact">
       <div class="contact">
@@ -270,17 +318,39 @@ function runQa(lead, spec, html) {
   add('contact', 'At least one verified contact route or explicit confirmation notice', Boolean(lead.phone || lead.email || html.includes('Contact details must be confirmed')), lead.phone || lead.email || 'Contact confirmation notice included.');
   add('facts', 'Fact ledger produced', Array.isArray(spec.factsUsed) && Array.isArray(spec.factsNeedingConfirmation), `${spec.factsUsed?.length || 0} used, ${spec.factsNeedingConfirmation?.length || 0} to confirm.`);
   add('no_scripts', 'Generated draft contains no executable scripts', !/<script[\s>]/i.test(html), 'Renderer does not emit scripts.');
+  const serviceNames = (spec.services || []).map(item => String(item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim());
+  const serviceCopy = (spec.services || []).map(item => `${item.name || ''} ${item.summary || ''}`.toLowerCase());
+  add('distinct_services', 'Service topics are distinct', new Set(serviceNames).size === serviceNames.length, `${new Set(serviceNames).size} unique names across ${serviceNames.length} cards.`);
+  const placeholderCount = serviceCopy.filter(text => /to confirm|details and availability|service details/i.test(text)).length;
+  add('low_placeholder_density', 'Placeholder language is consolidated', placeholderCount <= 1, `${placeholderCount} service cards contain repetitive confirmation wording.`);
+  const location = normalizeLocation(lead.city);
+  add('normalized_location', 'Location is normalized for display', !location.label.match(/^\d+\s/) && location.label.length > 1, `Display location: ${location.label || 'missing'}`);
+  const paletteDistinct = String(spec.primaryColor || '').toLowerCase() !== String(spec.secondaryColor || '').toLowerCase();
+  add('distinct_palette', 'Primary and secondary colors are distinct', paletteDistinct, `${spec.primaryColor} / ${spec.secondaryColor}`);
+  const safetyIds = new Set(['verified', 'not_published', 'preview_notice', 'contact', 'facts', 'no_scripts']);
+  const contentIds = new Set(['distinct_services', 'low_placeholder_density', 'normalized_location']);
+  const score = ids => {
+    const group = checks.filter(check => ids.has(check.id));
+    return group.length ? Math.round(group.filter(check => check.passed).length / group.length * 100) : 0;
+  };
   return {
     passed: checks.every(check => check.passed),
     passedCount: checks.filter(check => check.passed).length,
     totalCount: checks.length,
-    checks
+    checks,
+    scores: {
+      safety: score(safetyIds),
+      content: score(contentIds),
+      design: score(new Set(['family', 'distinct_palette'])),
+      responsive: score(new Set(['responsive']))
+    }
   };
 }
 
 module.exports = {
   DESIGN_FAMILIES,
   SPEC_SCHEMA,
+  normalizeLocation,
   buildPrompt,
   createSiteSpec,
   renderSite,
