@@ -68,6 +68,27 @@ After uploading this project to GitHub and adding the variables, redeploy the la
 
 If you reload the admin, reopen the lead and select **Open latest draft**.
 
+## Stage 1.1 quality review
+
+The generation panel now accepts optional human review notes. Use these to correct
+the next draft without editing prompts or code. For example:
+
+> Make the copy more specific to painting decisions. Avoid repeating confirmation
+> language. Use a warmer, craft-focused visual direction without claiming services
+> that have not been verified.
+
+Stage 1.1 also:
+
+- normalizes a full street address into a clean locality label,
+- requires distinct service topics and trust points,
+- requires an industry-relevant visual motif,
+- rejects repeated placeholder language,
+- scores safety, content, design, and responsive behavior,
+- blocks downloading a draft until every automated QA check passes.
+
+These checks improve draft quality but do not verify business claims. The complete
+draft and every fact still require human review.
+
 ## Current safety gates
 
 - Only the configured admin can call the generation endpoint.
@@ -75,6 +96,9 @@ If you reload the admin, reopen the lead and select **Open latest draft**.
 - Public leads are rejected.
 - The model never writes raw HTML.
 - Generated HTML contains no scripts.
+- Repetitive or duplicate service cards fail QA.
+- Full addresses are not presented as city names.
+- Draft download is disabled when any QA check fails.
 - The preview disclaimer is mandatory.
 - Drafts remain private in Supabase.
 - Publication is blocked until manual review and deployment.
