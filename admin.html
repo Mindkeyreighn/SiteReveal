@@ -101,7 +101,7 @@
         <input id="leadId" type="hidden">
         <div class="field"><label>Business name *</label><input id="businessName" required></div>
         <div class="field"><label>Slug *</label><input id="slug" required pattern="[a-z0-9-]+"></div>
-        <div class="field"><label>Category</label><select id="category"><option>cleaning</option><option>irrigation</option><option>landscaping</option><option>trades</option><option>moving</option><option>hauling</option><option>logistics</option></select></div>
+        <div class="field"><label>Category</label><select id="category"><option>cleaning</option><option>irrigation</option><option>landscaping</option><option>trades</option><option>painting</option><option>moving</option><option>hauling</option><option>logistics</option></select></div>
         <div class="field"><label>City</label><input id="city"></div>
         <div class="field"><label>Phone</label><input id="phone"></div>
         <div class="field"><label>Email</label><input id="leadEmail" type="email"></div>
@@ -143,6 +143,7 @@
           <div id="qaScores" class="generation-meta hidden"></div>
           <div id="qaList" class="qa-list"></div>
         </div>
+        <div id="visualReviewNotice" class="notice hidden" style="margin:0 0 10px;background:#fff6e6;border-color:#f0c36d"></div>
         <div class="notice" style="margin:0">Publication is blocked. Review the complete draft, verify every fact, then download it for the normal GitHub/Vercel deployment flow.</div>
       </aside>
       <iframe id="generationPreview" class="preview-frame" title="Generated website preview" sandbox></iframe>
@@ -263,6 +264,8 @@
         $('qaSummary').textContent=`${data.qa.passedCount} of ${data.qa.totalCount} automated checks passed${data.qa.passed?' — ready for human catalog review. This is not publish-approval.':' — fix failed checks before requesting catalog review.'}`;
         renderQaScores(data.qa);
         $('qaList').innerHTML=data.qa.checks.map(check=>`<div class="qa-item ${check.passed?'pass':'fail'}"><strong>${check.passed?'✓':'×'} ${esc(check.label)}</strong>${esc(check.detail)}</div>`).join('');
+        $('visualReviewNotice').classList.toggle('hidden',!data.qa.requiresVisualReview);
+        if(data.qa.requiresVisualReview) $('visualReviewNotice').textContent='⚠ '+data.qa.visualReviewNote;
         setDownloadGate(data.qa);
         $('generationPreview').srcdoc=data.html;
         $('generationState').textContent='Review ready';
@@ -290,6 +293,8 @@
       $('qaSummary').textContent=`${qa.passedCount||0} of ${qa.totalCount||0} automated checks passed${qa.passed?' — ready for human catalog review. This is not publish-approval.':' — review required.'}`;
       renderQaScores(qa);
       $('qaList').innerHTML=(qa.checks||[]).map(check=>`<div class="qa-item ${check.passed?'pass':'fail'}"><strong>${check.passed?'✓':'×'} ${esc(check.label)}</strong>${esc(check.detail)}</div>`).join('');
+      $('visualReviewNotice').classList.toggle('hidden',!qa.requiresVisualReview);
+      if(qa.requiresVisualReview) $('visualReviewNotice').textContent='⚠ '+qa.visualReviewNote;
       setDownloadGate(qa);
       $('generationPreview').srcdoc=generatedDraft.html;
       $('generationError').textContent='';
