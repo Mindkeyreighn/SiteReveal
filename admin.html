@@ -260,7 +260,7 @@
         $('generationBusiness').textContent=lead.business_name;
         $('generationFamily').textContent=data.job.designFamily;
         $('generationJob').textContent=`${data.job.id.slice(0,8)} · ${data.job.model}`;
-        $('qaSummary').textContent=`${data.qa.passedCount} of ${data.qa.totalCount} checks passed${data.qa.passed?' — ready for human review.':' — fix failed checks before use.'}`;
+        $('qaSummary').textContent=`${data.qa.passedCount} of ${data.qa.totalCount} automated checks passed${data.qa.passed?' — ready for human catalog review. This is not publish-approval.':' — fix failed checks before requesting catalog review.'}`;
         renderQaScores(data.qa);
         $('qaList').innerHTML=data.qa.checks.map(check=>`<div class="qa-item ${check.passed?'pass':'fail'}"><strong>${check.passed?'✓':'×'} ${esc(check.label)}</strong>${esc(check.detail)}</div>`).join('');
         setDownloadGate(data.qa);
@@ -287,7 +287,7 @@
       $('generationBusiness').textContent=lead.business_name;
       $('generationFamily').textContent=data.design_family||'—';
       $('generationJob').textContent=`${data.id.slice(0,8)} · ${data.model||'model not recorded'}`;
-      $('qaSummary').textContent=`${qa.passedCount||0} of ${qa.totalCount||0} checks passed${qa.passed?' — ready for human review.':' — review required.'}`;
+      $('qaSummary').textContent=`${qa.passedCount||0} of ${qa.totalCount||0} automated checks passed${qa.passed?' — ready for human catalog review. This is not publish-approval.':' — review required.'}`;
       renderQaScores(qa);
       $('qaList').innerHTML=(qa.checks||[]).map(check=>`<div class="qa-item ${check.passed?'pass':'fail'}"><strong>${check.passed?'✓':'×'} ${esc(check.label)}</strong>${esc(check.detail)}</div>`).join('');
       setDownloadGate(qa);
@@ -305,7 +305,7 @@
     }
     function setDownloadGate(qa){
       $('downloadDraft').disabled=!qa.passed;
-      $('downloadDraft').title=qa.passed?'Download the private draft.':'Regenerate until every automated QA check passes.';
+      $('downloadDraft').title=qa.passed?'Download the private draft for human catalog review. Publishing still requires the Published checkbox to be set manually.':'Regenerate until every automated QA check passes.';
     }
     function closeGeneration(){$('generationDialog').close();$('generationPreview').srcdoc=''}
     $('closeGeneration').onclick=closeGeneration;
