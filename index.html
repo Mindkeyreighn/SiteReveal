@@ -40,8 +40,10 @@
   /* NAV */
   nav {
     position: sticky; top: 0; z-index: 100;
-    background: var(--paper);
-    border-bottom: 1px solid var(--border);
+    background: rgba(245,244,240,0.72);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border-bottom: 1px solid rgba(226,224,218,0.7);
     padding: 0 2rem;
     display: flex; align-items: center; justify-content: space-between;
     height: 64px;
@@ -148,18 +150,23 @@
   /* SEARCH BOX */
   .search-wrap {
     background: #fff;
-    border: 1.5px solid var(--border);
-    border-radius: 14px;
-    padding: 6px 6px 6px 20px;
+    border: 1px solid rgba(226,224,218,0.6);
+    border-radius: 16px;
+    padding: 8px 8px 8px 22px;
     display: flex; align-items: center; gap: 8px;
     max-width: 540px; margin: 0 auto;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 24px 48px -18px rgba(15,20,40,0.22), 0 6px 18px rgba(15,20,40,0.06);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     animation:revealRise .7s .32s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .search-wrap:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 30px 54px -16px rgba(15,20,40,0.26), 0 8px 20px rgba(15,20,40,0.08);
   }
   .search-wrap:focus-within {
     border-color: var(--accent);
-    box-shadow: 0 0 0 4px rgba(26,86,219,0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 30px 54px -16px rgba(15,20,40,0.24), 0 0 0 4px rgba(26,86,219,0.1);
   }
   .search-wrap input {
     flex: 1; border: none; outline: none;
@@ -185,17 +192,30 @@
   /* VALUE STRIP */
   .value-strip { max-width:1120px; margin:0 auto; padding:0 2rem; }
   .value-strip-inner {
-    background:var(--ink); color:#fff; border-radius:16px;
-    display:grid; grid-template-columns:repeat(4,1fr); overflow:hidden;
-    box-shadow:0 12px 34px rgba(13,13,13,.12);
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1rem;
   }
-  .value-item { padding:1.15rem 1.25rem; border-right:1px solid rgba(255,255,255,.14); }
-  .value-item:last-child { border-right:none; }
+  .value-item {
+    background:#fff; border:1px solid var(--border); border-radius:16px;
+    padding:1.5rem 1.35rem;
+    display:flex; flex-direction:column; gap:.7rem;
+    box-shadow:0 10px 28px rgba(13,13,13,.05);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .value-item:hover {
+    transform:translateY(-3px);
+    box-shadow:0 16px 36px rgba(13,13,13,.09);
+  }
+  .value-icon {
+    width:40px; height:40px; border-radius:11px;
+    background:var(--accent-light); color:var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.15rem;
+  }
   .value-kicker {
-    color:#8db0ff; font-size:.67rem; font-weight:700;
-    letter-spacing:.1em; text-transform:uppercase; margin-bottom:.32rem;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:.95rem;
+    color:var(--ink); letter-spacing:-.01em;
   }
-  .value-title { font-family:'Syne',sans-serif; font-weight:700; font-size:.9rem; }
+  .value-title { font-size:.82rem; color:var(--mid); line-height:1.45; }
 
   /* REVEAL ANIMATION */
   .reveal-stage {
@@ -778,9 +798,7 @@
     .nav-cta { padding:7px 8px; font-size:.7rem; }
     .gallery-section, .featured-section, .benefits-section, .done-section, .trust-section, .contact-section { padding-left:1rem; padding-right:1rem; }
     .value-strip { padding:0 1rem; }
-    .value-strip-inner { grid-template-columns:repeat(2,1fr); }
-    .value-item:nth-child(2) { border-right:0; }
-    .value-item:nth-child(-n+2) { border-bottom:1px solid rgba(255,255,255,.14); }
+    .value-strip-inner { grid-template-columns:repeat(2,1fr); gap:.75rem; }
     .featured-grid, .how-grid, .trust-panel { grid-template-columns:1fr; }
     .benefits-intro, .process-compare { grid-template-columns:1fr; gap:1.25rem; }
     .benefits-grid { grid-template-columns:1fr; }
@@ -830,10 +848,10 @@
 
 <section class="value-strip" aria-label="SiteReveal purchase benefits">
   <div class="value-strip-inner">
-    <div class="value-item"><div class="value-kicker">See it first</div><div class="value-title">Preview before paying</div></div>
-    <div class="value-item"><div class="value-kicker">Simple price</div><div class="value-title">$399 once. No subscription.</div></div>
-    <div class="value-item"><div class="value-kicker">Make it yours</div><div class="value-title">Personalization included</div></div>
-    <div class="value-item"><div class="value-kicker">No lock-in</div><div class="value-title">Website files are yours</div></div>
+    <div class="value-item"><div class="value-icon">👁</div><div class="value-kicker">Preview before paying</div></div>
+    <div class="value-item"><div class="value-icon">$</div><div class="value-kicker">Simple Price</div><div class="value-title">$399 once. No subscription.</div></div>
+    <div class="value-item"><div class="value-icon">🎨</div><div class="value-kicker">Make it yours</div><div class="value-title">Personalization included</div></div>
+    <div class="value-item"><div class="value-icon">🛡</div><div class="value-kicker">No lock-in</div><div class="value-title">Website files are yours</div></div>
   </div>
 </section>
 <p class="demo-notice">SiteReveal previews are independently created and are not official business websites unless purchased and approved by the owner. All business details must be confirmed before launch.</p>
