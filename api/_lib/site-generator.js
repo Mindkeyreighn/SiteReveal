@@ -9,6 +9,17 @@ const DESIGN_FAMILIES = [
   'Landscape-led local service'
 ];
 
+const IMAGE_CATEGORY_GUIDANCE = [
+  { match: /paint|painter|painting/, positive: 'Show unmistakable professional painting work: a paint roller or brush applying paint, masking tape, drop cloths, a paint tray, surface preparation, or a freshly painted wall or exterior.', negative: 'Do not show pipe wrenches, plumbing, automotive tools, mechanical repair, electrical work, generic construction repair, or a worker merely kneeling beside a building.' },
+  { match: /landscap|lawn|yard|irrigat|sprinkler/, positive: 'Show unmistakable lawn, landscape, irrigation, or sprinkler work with healthy outdoor grounds and category-appropriate hand tools or equipment.', negative: 'Do not show indoor cleaning, construction repair, plumbing fixtures, automotive work, or unrelated trade tools.' },
+  { match: /clean|janitorial|maid/, positive: 'Show unmistakable professional residential or commercial cleaning with tidy surfaces and appropriate cleaning tools.', negative: 'Do not show construction, painting, plumbing, landscaping, automotive work, hazardous conditions, or unrelated trade tools.' },
+  { match: /mechanic|automotive|auto repair|vehicle repair/, positive: 'Show unmistakable professional vehicle diagnosis or repair with a vehicle and appropriate automotive tools.', negative: 'Do not show plumbing, house painting, landscaping, boat work, or generic building construction.' },
+  { match: /detail|ceramic coating/, positive: 'Show unmistakable professional vehicle detailing or finish care with a clean vehicle and category-appropriate detailing tools.', negative: 'Do not show mechanical repair, plumbing, house painting, landscaping, or unrelated construction tools.' },
+  { match: /nail|salon|beauty|groom/, positive: 'Show an unmistakable, polished appointment-service setting appropriate to the exact category, with clean tools and a welcoming environment.', negative: 'Do not show construction, mechanical repair, outdoor trade work, medical procedures, logos, or unrelated services.' },
+  { match: /weld|fabricat|metal/, positive: 'Show unmistakable professional welding or metal fabrication with appropriate protective gear and category-specific equipment.', negative: 'Do not show plumbing repair, house painting, automotive detailing, landscaping, or unrelated tools.' },
+  { match: /moving|hauling|trucking|logistics/, positive: 'Show an unmistakable moving, hauling, trucking, or logistics scene appropriate to the exact category, with safe handling and orderly equipment.', negative: 'Do not show mechanical repair, plumbing, painting, landscaping, or unrelated trade work.' }
+];
+
 // Purely decorative, hand-authored SVG artwork keyed by verified lead category.
 // These are static markup only — never populated from AI output — so there is
 // no way for generated text (a prompt, a motif description, an internal label)
@@ -28,8 +39,20 @@ const CATEGORY_VISUALS = {
 
 function pickCategoryVisual(category) {
   const key = String(category || '').toLowerCase().trim();
-  const known = Object.prototype.hasOwnProperty.call(CATEGORY_VISUALS, key) && key !== 'default';
-  return { key: known ? key : 'default', svg: known ? CATEGORY_VISUALS[key] : CATEGORY_VISUALS.default };
+  const aliases = [
+    [/paint|painter/, 'painting'],
+    [/clean|janitorial|maid/, 'cleaning'],
+    [/irrigat|sprinkler/, 'irrigation'],
+    [/landscap|lawn|yard/, 'landscaping'],
+    [/moving|mover/, 'moving'],
+    [/haul/, 'hauling'],
+    [/logistic|trucking|transport/, 'logistics'],
+    [/weld|fabricat|trade|mechanic|repair|contractor/, 'trades']
+  ];
+  const resolved = Object.prototype.hasOwnProperty.call(CATEGORY_VISUALS, key) && key !== 'default'
+    ? key
+    : aliases.find(([pattern]) => pattern.test(key))?.[1];
+  return { key: resolved || 'default', svg: CATEGORY_VISUALS[resolved] || CATEGORY_VISUALS.default };
 }
 
 const SPEC_SCHEMA = {
@@ -38,6 +61,8 @@ const SPEC_SCHEMA = {
   required: [
     'designFamily',
     'headline',
+    'serviceSectionTitle',
+    'trustSectionTitle',
     'tagline',
     'description',
     'primaryColor',
@@ -53,7 +78,9 @@ const SPEC_SCHEMA = {
   ],
   properties: {
     designFamily: { type: 'string', enum: DESIGN_FAMILIES },
-    headline: { type: 'string', minLength: 8, maxLength: 80 },
+    headline: { type: 'string', minLength: 8, maxLength: 58 },
+    serviceSectionTitle: { type: 'string', minLength: 8, maxLength: 62 },
+    trustSectionTitle: { type: 'string', minLength: 8, maxLength: 62 },
     tagline: { type: 'string', minLength: 4, maxLength: 90 },
     description: { type: 'string', minLength: 20, maxLength: 320 },
     primaryColor: { type: 'string', pattern: '^#[0-9a-fA-F]{6}$' },
@@ -156,13 +183,15 @@ function buildPrompt(lead, reviewNotes = '') {
   return [
     'Create a concise SiteSpec for a SiteReveal preview website.',
     'Use only the supplied facts. Never invent an owner name, years in business, credentials, license, guarantee, price, rating, review quote, service area, availability, or exact service that is not explicitly supplied.',
-    'If the supplied description is sparse, use industry knowledge only to organize likely customer questions and neutral category-level topics. Do not present those topics as confirmed offerings.',
+    'If the supplied description is sparse, use industry knowledge only to organize useful category-level project considerations. Do not present them as confirmed offerings and do not turn the entire website into a list of questions.',
     'The site is an independent preview, not the official business website.',
     'Choose exactly one locked structural family and create one business-specific signature module.',
-    'Create 3–6 distinct service-topic cards. Each needs a different useful name and summary. Do not repeat "to confirm", "details and availability", or the business name across cards. Put uncertainty in factsNeedingConfirmation instead.',
+    'Create 3–6 distinct category-topic cards. Each needs a different useful name and customer-focused summary. Do not repeat "to confirm", "details and availability", "customers may ask", or the business name across cards. Put uncertainty in factsNeedingConfirmation instead.',
     'Write three distinct trust points with practical customer benefits. Do not reuse service copy.',
     'Choose a visualMotif that is unmistakably relevant to the category, described as an abstract composition without inventing a business photo.',
-    'Avoid generic filler such as dependable place to start, quality service, your trusted partner, or take the next step unless supplied.',
+    'Write a concise headline of no more than 8 words that will fit in 2–3 desktop lines. Write specific serviceSectionTitle and trustSectionTitle headings for this business category.',
+    'Avoid generic filler such as dependable place to start, useful information organized clearly, quality service, your trusted partner, or take the next step unless supplied.',
+    'Customer-facing fields must not mention the generation process. Do not use supplied lead details, supplied phone number, independent preview, industry-relevant structure, details must be confirmed, or similar behind-the-scenes language. The renderer supplies the required legal preview disclaimer separately.',
     'Use locationLabel for display copy. Treat address as a full address, not a city name.',
     'Keep the language practical, local, and professional. Avoid hype and unverifiable superiority claims.',
     reviewNotes ? `HUMAN REVIEW NOTES (follow these unless they conflict with factual-safety rules):\n${clean(reviewNotes, 600)}` : '',
@@ -236,10 +265,15 @@ async function generateHeroImage(lead, spec) {
   if (!apiKey) return null;
   const imageModel = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1';
   const facts = leadFacts(lead);
+  const categoryText = `${facts.category} ${facts.suppliedDescription} ${facts.discoveryQuery}`.toLowerCase();
+  const categoryGuidance = IMAGE_CATEGORY_GUIDANCE.find(item => item.match.test(categoryText));
+  if (!categoryGuidance) return null;
 
   const prompt = [
     `A professional, photorealistic marketing photograph representing a ${facts.category || 'local service'} business in ${facts.locationLabel || 'a US city'}.`,
-    'Depict a realistic, relevant scene for this category (appropriate setting, tools, or environment) with natural lighting and a candid, editorial feel, in the manner of real small-business marketing photography.',
+    categoryGuidance.positive,
+    categoryGuidance.negative,
+    'The category must be visually obvious from the activity and tools alone. Use natural lighting and a candid editorial feel suitable for real small-business marketing photography.',
     'Absolutely no text, words, letters, numbers, logos, signage, labels, price tags, or writing of any kind may appear anywhere in the image, on any surface, sign, vehicle, clothing, or object.',
     'Do not depict any real, identifiable brand, logo, or trademark.',
     'If a person appears, keep them secondary and not identifiable (from behind, at a distance, or with their face not in sharp focus).'
@@ -286,6 +320,29 @@ function renderList(items, className) {
   return items.map(item => `<li class="${className}">${escapeHtml(item)}</li>`).join('');
 }
 
+function hexToRgb(hex) {
+  const match = String(hex || '').match(/^#([0-9a-f]{6})$/i);
+  if (!match) return null;
+  const value = Number.parseInt(match[1], 16);
+  return { r: value >> 16, g: (value >> 8) & 255, b: value & 255 };
+}
+
+function relativeLuminance(hex) {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return 0;
+  const channels = [rgb.r, rgb.g, rgb.b].map(value => {
+    const normalized = value / 255;
+    return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+}
+
+function contrastRatio(first, second) {
+  const a = relativeLuminance(first);
+  const b = relativeLuminance(second);
+  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+}
+
 function renderSite(lead, spec, heroImage = null) {
   const facts = leadFacts(lead);
   const initials = facts.businessName.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join('').toUpperCase();
@@ -308,13 +365,13 @@ function renderSite(lead, spec, heroImage = null) {
   <style>
     :root{--ink:#0d1714;--paper:#f7f5ef;--primary:${escapeHtml(spec.primaryColor)};--secondary:${escapeHtml(spec.secondaryColor)};--line:#d9dedb;--white:#fff}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--paper);font:16px/1.55 Arial,sans-serif}
-    a{color:inherit}.preview{padding:9px 18px;text-align:center;background:var(--secondary);color:#fff;font-size:12px;font-weight:800;letter-spacing:.08em}
+    a{color:inherit}.preview{padding:9px 18px;text-align:center;background:#0d1714;color:#fff;font-size:12px;font-weight:800;letter-spacing:.08em}
     .wrap{width:min(1160px,calc(100% - 36px));margin:auto}.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0}
     .brand{display:flex;align-items:center;gap:12px;font-weight:900}.mark{width:46px;height:46px;display:grid;place-items:center;background:var(--primary);color:#fff;border-radius:12px}
     .navlinks{display:flex;gap:18px;align-items:center}.button{display:inline-block;text-decoration:none;border:1px solid var(--ink);background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font-weight:800}
     .hero{min-height:620px;display:grid;grid-template-columns:1.12fr .88fr;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:#fff}
     .hero-copy{padding:clamp(42px,7vw,90px);display:flex;flex-direction:column;justify-content:center}.eyebrow{color:var(--primary);font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
-    h1{font-size:clamp(48px,7vw,96px);line-height:.92;letter-spacing:-.055em;margin:22px 0}.lede{font-size:clamp(18px,2vw,24px);max-width:650px;color:#4f5c57}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+    h1{font-size:clamp(44px,5.5vw,76px);line-height:.98;letter-spacing:-.045em;margin:22px 0;max-width:14ch}.lede{font-size:clamp(18px,2vw,24px);max-width:650px;color:#4f5c57}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
     .outline{background:transparent;color:var(--ink)}.visual{position:relative;min-height:430px;overflow:hidden;background:linear-gradient(145deg,var(--primary),var(--secondary))}
     .visual:before,.visual:after{content:"";position:absolute;border:1px solid #ffffff66;border-radius:50%}.visual:before{width:420px;height:420px;right:-100px;top:-70px}.visual:after{width:250px;height:250px;left:-80px;bottom:-40px}
     .visual svg{position:absolute;inset:0;width:100%;height:100%;opacity:.6}
@@ -323,14 +380,14 @@ function renderSite(lead, spec, heroImage = null) {
     .signature{background:#0c1512;color:#fff;border-radius:28px;padding:clamp(36px,6vw,76px);display:grid;grid-template-columns:.8fr 1.2fr;gap:45px}.signature ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}.signature li{padding:16px 18px;border:1px solid #ffffff2e;border-radius:12px;background:#ffffff0a}
     .contact{display:grid;grid-template-columns:1fr auto;gap:35px;align-items:center;background:var(--primary);color:#fff;border-radius:28px;padding:clamp(35px,6vw,70px)}footer{padding:40px 0;color:#5d6965;font-size:13px}
     .family-1 .hero{grid-template-columns:.9fr 1.1fr}.family-2 .hero{border-radius:4px}.family-3 .hero-copy{text-align:center}.family-3 .actions{justify-content:center}.family-4 .hero{border-radius:46px}.family-5 .visual{background-color:#07141d;background-image:linear-gradient(#ffffff12 1px,transparent 1px),linear-gradient(90deg,#ffffff12 1px,transparent 1px);background-size:34px 34px}.family-6 .visual{background:linear-gradient(150deg,#173e2b,var(--primary))}
-    @media(max-width:800px){.navlinks a:not(.button){display:none}.hero,.section-head,.signature,.contact{grid-template-columns:1fr}.visual{order:-1}.cards{grid-template-columns:1fr}section{padding:62px 0}h1{font-size:52px}}
+    @media(max-width:800px){.navlinks a:not(.button){display:none}.hero,.section-head,.signature,.contact{grid-template-columns:1fr}.visual{order:-1}.cards{grid-template-columns:1fr}section{padding:62px 0}h1{font-size:clamp(40px,13vw,56px);max-width:100%}}
   </style>
 </head>
 <body class="${familyClass}">
   <div class="preview">SITEREVEAL PREVIEW · BUSINESS DETAILS MUST BE APPROVED BEFORE LAUNCH</div>
   <header class="wrap nav">
     <div class="brand"><span class="mark">${escapeHtml(initials || 'SR')}</span><span>${escapeHtml(facts.businessName)}</span></div>
-    <nav class="navlinks"><a href="#services">Services</a><a href="#about">About</a><a class="button" href="#contact">${escapeHtml(spec.ctaLabel)}</a></nav>
+    <nav class="navlinks"><a href="#services">Project details</a><a href="#about">Planning guide</a><a class="button" href="${safeHref(phoneHref)}">${escapeHtml(facts.phone ? `Call ${facts.phone}` : spec.ctaLabel)}</a></nav>
   </header>
   <main class="wrap">
     <div class="hero">
@@ -340,13 +397,13 @@ function renderSite(lead, spec, heroImage = null) {
         <p class="lede">${escapeHtml(spec.description)}</p>
         <div class="actions">
           <a class="button" href="${safeHref(phoneHref)}">${escapeHtml(facts.phone ? `Call ${facts.phone}` : spec.ctaLabel)}</a>
-          <a class="button outline" href="#services">Explore services</a>
+          <a class="button outline" href="#services">Explore project details</a>
         </div>
       </div>
       <div class="visual" data-visual="${artwork.key}"${heroImage?.dataUrl ? ` data-hero-image="ai-generated" style="background-image:url('${heroImage.dataUrl}');background-size:cover;background-position:center"` : ''}>${heroImage?.dataUrl ? '' : artwork.svg}</div>
     </div>
     <section id="services">
-      <div class="section-head"><div><div class="eyebrow">What customers may need</div><h2>Useful information, organized clearly.</h2></div><p>This independent preview uses supplied lead details and industry-relevant structure. Specific offerings must be confirmed before launch.</p></div>
+      <div class="section-head"><div><div class="eyebrow">Project considerations</div><h2>${escapeHtml(spec.serviceSectionTitle)}</h2></div><p>Helpful topics to consider when discussing the project directly with ${escapeHtml(facts.businessName)}.</p></div>
       <div class="cards">${spec.services.map((service, index) => `<article class="card"><span>0${index + 1}</span><h3>${escapeHtml(service.name)}</h3><p>${escapeHtml(service.summary)}</p></article>`).join('')}</div>
     </section>
     <section id="about">
@@ -356,12 +413,12 @@ function renderSite(lead, spec, heroImage = null) {
       </div>
     </section>
     <section>
-      <div class="section-head"><div><div class="eyebrow">Why this preview works</div><h2>A dependable place to start.</h2></div><p>${escapeHtml(spec.tagline)}</p></div>
+      <div class="section-head"><div><div class="eyebrow">Business information</div><h2>${escapeHtml(spec.trustSectionTitle)}</h2></div><p>${escapeHtml(spec.tagline)}</p></div>
       <div class="cards">${spec.trustPoints.map((point, index) => `<article class="card"><span>0${index + 1}</span><h3>${escapeHtml(point.title)}</h3><p>${escapeHtml(point.detail)}</p></article>`).join('')}</div>
     </section>
     <section id="contact">
       <div class="contact">
-        <div><div class="eyebrow" style="color:#fff">Contact</div><h2>Take the next step.</h2><p>${escapeHtml(contactNote)}</p></div>
+        <div><div class="eyebrow" style="color:#fff">Contact</div><h2>Contact ${escapeHtml(facts.businessName)}</h2><p>${escapeHtml(contactNote)}</p></div>
         <div class="actions">
           ${facts.phone ? `<a class="button" href="${safeHref(phoneHref)}">Call ${escapeHtml(facts.phone)}</a>` : ''}
           ${facts.email ? `<a class="button" href="${safeHref(emailHref)}">Email business</a>` : ''}
@@ -392,13 +449,21 @@ function runQa(lead, spec, html, heroImage = null) {
   add('no_motif_leak', 'AI visual-direction text is not rendered as visible copy', !motifLeaked, motifLeaked ? 'The visualMotif field appears verbatim in the rendered HTML.' : 'visualMotif was not found in visible output.');
   const promptLanguagePattern = /\b(abstract composition|digital art|illustration of|photo of|photograph of|rendered in the style of|image of|depicting|art direction|visual motif)\b/i;
   const copyFields = [
-    spec.headline, spec.tagline, spec.description, spec.signatureModuleTitle,
+    spec.headline, spec.serviceSectionTitle, spec.trustSectionTitle, spec.tagline, spec.description, spec.signatureModuleTitle,
     ...(spec.services || []).flatMap(s => [s.name, s.summary]),
     ...(spec.trustPoints || []).flatMap(t => [t.title, t.detail]),
     ...(spec.signatureModuleItems || [])
   ].filter(Boolean);
   const promptLeakField = copyFields.find(text => promptLanguagePattern.test(text));
   add('no_prompt_language', 'Customer-facing copy contains no AI art-direction phrasing', !promptLeakField, promptLeakField ? `Found art-direction language in copy: "${promptLeakField}"` : 'No art-direction phrasing detected in copy fields.');
+  const processLanguagePattern = /\b(supplied lead|supplied phone|supplied details|independent preview|industry-relevant structure|details must be confirmed|specific offerings must be confirmed)\b/i;
+  const processLeakField = copyFields.find(text => processLanguagePattern.test(text));
+  add('no_process_language', 'Customer copy does not expose the generation process', !processLeakField, processLeakField ? `Found process language: "${processLeakField}"` : 'No behind-the-scenes generation language detected.');
+  const genericFillerPattern = /\b(dependable place to start|useful information,? organized clearly|quality service|trusted partner|take the next step)\b/i;
+  const genericField = copyFields.find(text => genericFillerPattern.test(text));
+  add('no_generic_filler', 'Generic template filler is absent', !genericField, genericField ? `Found generic wording: "${genericField}"` : 'No blocked generic filler detected.');
+  const headlineWords = String(spec.headline || '').trim().split(/\s+/).filter(Boolean).length;
+  add('concise_headline', 'Headline is concise enough for the layout', String(spec.headline || '').length <= 58 && headlineWords <= 8, `${String(spec.headline || '').length} characters, ${headlineWords} words.`);
   const artworkRendered = /data-visual="[a-z]+"/.test(html) && (/<svg[\s>]/i.test(html) || /data-hero-image="ai-generated"/.test(html));
   add('category_artwork_rendered', 'Hero visual rendered successfully (artwork or photo)', artworkRendered, artworkRendered ? 'Hero artwork present.' : 'Hero visual is missing its category artwork.');
   const serviceNames = (spec.services || []).map(item => String(item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim());
@@ -410,8 +475,10 @@ function runQa(lead, spec, html, heroImage = null) {
   add('normalized_location', 'Location is normalized for display', !location.label.match(/^\d+\s/) && location.label.length > 1, `Display location: ${location.label || 'missing'}`);
   const paletteDistinct = String(spec.primaryColor || '').toLowerCase() !== String(spec.secondaryColor || '').toLowerCase();
   add('distinct_palette', 'Primary and secondary colors are distinct', paletteDistinct, `${spec.primaryColor} / ${spec.secondaryColor}`);
-  const safetyIds = new Set(['verified', 'not_published', 'preview_notice', 'contact', 'facts', 'no_scripts', 'no_internal_labels', 'no_motif_leak', 'no_prompt_language']);
-  const contentIds = new Set(['distinct_services', 'low_placeholder_density', 'normalized_location']);
+  const primaryWhiteContrast = contrastRatio(spec.primaryColor, '#ffffff');
+  add('primary_contrast', 'Primary color supports readable white text', primaryWhiteContrast >= 4.5, `${primaryWhiteContrast.toFixed(2)}:1 contrast against white.`);
+  const safetyIds = new Set(['verified', 'not_published', 'preview_notice', 'contact', 'facts', 'no_scripts', 'no_internal_labels', 'no_motif_leak', 'no_prompt_language', 'no_process_language']);
+  const contentIds = new Set(['distinct_services', 'low_placeholder_density', 'normalized_location', 'no_generic_filler', 'concise_headline']);
   const score = ids => {
     const group = checks.filter(check => ids.has(check.id));
     return group.length ? Math.round(group.filter(check => check.passed).length / group.length * 100) : 0;
@@ -423,12 +490,12 @@ function runQa(lead, spec, html, heroImage = null) {
     checks,
     requiresVisualReview: Boolean(heroImage?.dataUrl),
     visualReviewNote: heroImage?.dataUrl
-      ? 'This draft includes an AI-generated hero photo. Automated checks cannot verify image pixel content — visually confirm there is no embedded text, watermark, logo, or distorted imagery before catalog approval.'
+      ? 'This draft includes an AI-generated hero photo. Automated checks cannot verify image meaning or pixel content — confirm the image unmistakably matches the business category and contains no unrelated tools, embedded text, watermark, logo, or distorted imagery before catalog approval.'
       : '',
     scores: {
       safety: score(safetyIds),
       content: score(contentIds),
-      design: score(new Set(['family', 'distinct_palette', 'category_artwork_rendered'])),
+      design: score(new Set(['family', 'distinct_palette', 'primary_contrast', 'category_artwork_rendered'])),
       responsive: score(new Set(['responsive']))
     }
   };
