@@ -86,6 +86,25 @@ Stage 1.1 also:
 - scores safety, content, design, and responsive behavior,
 - blocks downloading a draft until every automated QA check passes.
 
+## Stage 1.2 human-quality safeguards
+
+The generator now also:
+
+- limits hero headlines to eight words and a layout-safe length,
+- generates business-specific section headings instead of fixed generic headings,
+- rejects behind-the-scenes generation language in customer-facing copy,
+- rejects known generic template filler,
+- checks primary-color contrast against white text,
+- uses a dark, high-contrast preview banner independent of the generated palette,
+- makes the navigation call button dial the verified phone number,
+- gives supported industries explicit positive and negative image instructions,
+- falls back to category SVG artwork when no controlled image category exists,
+- and warns human reviewers to reject images with unrelated tools or activities.
+
+Automated QA still cannot understand image pixels. A human must confirm that the
+activity, tools, setting, text, logos, anatomy, and overall image quality match the
+business before catalog approval.
+
 These checks improve draft quality but do not verify business claims. The complete
 draft and every fact still require human review.
 
