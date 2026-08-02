@@ -22,6 +22,7 @@ const CATEGORY_VISUALS = {
   moving: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="60" y="180" width="110" height="110" fill="none" stroke="#fff" stroke-width="2"/><rect x="190" y="120" width="140" height="140" fill="none" stroke="#fff" stroke-width="2"/><line x1="60" y1="180" x2="115" y2="140" stroke="#fff" stroke-width="2"/><line x1="170" y1="180" x2="225" y2="140" stroke="#fff" stroke-width="2"/></svg>`,
   hauling: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="0" y1="340" x2="400" y2="340" stroke="#fff" stroke-width="2"/><line x1="60" y1="40" x2="0" y2="340" stroke="#fff" stroke-width="2"/><line x1="220" y1="40" x2="160" y2="340" stroke="#fff" stroke-width="2"/><line x1="380" y1="40" x2="320" y2="340" stroke="#fff" stroke-width="2"/></svg>`,
   logistics: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="90" cy="120" r="12" fill="#fff"/><circle cx="300" cy="90" r="12" fill="#fff"/><circle cx="220" cy="240" r="12" fill="#fff"/><circle cx="340" cy="300" r="12" fill="#fff"/><circle cx="80" cy="300" r="12" fill="#fff"/><line x1="90" y1="120" x2="300" y2="90" stroke="#fff" stroke-width="2"/><line x1="300" y1="90" x2="220" y2="240" stroke="#fff" stroke-width="2"/><line x1="220" y1="240" x2="340" y2="300" stroke="#fff" stroke-width="2"/><line x1="220" y1="240" x2="80" y2="300" stroke="#fff" stroke-width="2"/></svg>`,
+  painting: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 80 Q140 40 380 100" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".55"/><path d="M20 180 Q160 130 380 200" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" opacity=".4"/><path d="M20 290 Q150 250 380 320" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".6"/></svg>`,
   default: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="300" cy="90" r="150" fill="none" stroke="#fff" stroke-width="2"/><circle cx="90" cy="320" r="90" fill="none" stroke="#fff" stroke-width="2"/></svg>`
 };
 
@@ -223,6 +224,52 @@ async function createSiteSpec(lead, reviewNotes = '') {
   return { spec, model, responseId: data.id || '' };
 }
 
+// Generates an optional photographic hero image via OpenAI's image API.
+// The prompt is built only from verified structured facts (never freeform
+// GPT copy), and explicitly forbids rendering any text/words/logos into the
+// image — the standard mitigation for the "prompt leaked into the image"
+// failure mode. This is a soft-fail feature: if generation is unavailable,
+// errors, or times out, callers must fall back to the category SVG artwork
+// and continue — it never blocks site generation.
+async function generateHeroImage(lead, spec) {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) return null;
+  const imageModel = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1';
+  const facts = leadFacts(lead);
+
+  const prompt = [
+    `A professional, photorealistic marketing photograph representing a ${facts.category || 'local service'} business in ${facts.locationLabel || 'a US city'}.`,
+    'Depict a realistic, relevant scene for this category (appropriate setting, tools, or environment) with natural lighting and a candid, editorial feel, in the manner of real small-business marketing photography.',
+    'Absolutely no text, words, letters, numbers, logos, signage, labels, price tags, or writing of any kind may appear anywhere in the image, on any surface, sign, vehicle, clothing, or object.',
+    'Do not depict any real, identifiable brand, logo, or trademark.',
+    'If a person appears, keep them secondary and not identifiable (from behind, at a distance, or with their face not in sharp focus).'
+  ].join(' ');
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 55000);
+    const response = await fetch('https://api.openai.com/v1/images/generations', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: imageModel, prompt, size: '1536x1024', n: 1 }),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    const data = await response.json();
+    if (!response.ok) {
+      console.error('Hero image generation failed', data?.error?.message || response.status);
+      return null;
+    }
+    const b64 = data?.data?.[0]?.b64_json;
+    if (!b64) return null;
+    return { dataUrl: `data:image/png;base64,${b64}`, model: imageModel, promptUsed: prompt };
+  } catch (error) {
+    console.error('Hero image generation error', error?.message || error);
+    return null;
+  }
+}
+
+
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, character => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -239,7 +286,7 @@ function renderList(items, className) {
   return items.map(item => `<li class="${className}">${escapeHtml(item)}</li>`).join('');
 }
 
-function renderSite(lead, spec) {
+function renderSite(lead, spec, heroImage = null) {
   const facts = leadFacts(lead);
   const initials = facts.businessName.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join('').toUpperCase();
   const phoneHref = facts.phone ? `tel:${facts.phone.replace(/[^\d+]/g, '')}` : '#contact';
@@ -288,7 +335,7 @@ function renderSite(lead, spec) {
   <main class="wrap">
     <div class="hero">
       <div class="hero-copy">
-        <div class="eyebrow">${escapeHtml(facts.category)} · ${escapeHtml(facts.locationLabel || 'Location to confirm')}</div>
+        <div class="eyebrow">${[escapeHtml(facts.category), escapeHtml(facts.locationLabel || 'Location to confirm')].filter(Boolean).join(' · ')}</div>
         <h1>${escapeHtml(spec.headline)}</h1>
         <p class="lede">${escapeHtml(spec.description)}</p>
         <div class="actions">
@@ -296,7 +343,7 @@ function renderSite(lead, spec) {
           <a class="button outline" href="#services">Explore services</a>
         </div>
       </div>
-      <div class="visual" data-visual="${artwork.key}">${artwork.svg}</div>
+      <div class="visual" data-visual="${artwork.key}"${heroImage?.dataUrl ? ` data-hero-image="ai-generated" style="background-image:url('${heroImage.dataUrl}');background-size:cover;background-position:center"` : ''}>${heroImage?.dataUrl ? '' : artwork.svg}</div>
     </div>
     <section id="services">
       <div class="section-head"><div><div class="eyebrow">What customers may need</div><h2>Useful information, organized clearly.</h2></div><p>This independent preview uses supplied lead details and industry-relevant structure. Specific offerings must be confirmed before launch.</p></div>
@@ -328,7 +375,7 @@ function renderSite(lead, spec) {
 </html>`;
 }
 
-function runQa(lead, spec, html) {
+function runQa(lead, spec, html, heroImage = null) {
   const checks = [];
   const add = (id, label, passed, detail) => checks.push({ id, label, passed: Boolean(passed), detail });
   add('verified', 'Lead is verified', lead.verification === 'Verified', `Verification: ${lead.verification || 'missing'}`);
@@ -352,8 +399,8 @@ function runQa(lead, spec, html) {
   ].filter(Boolean);
   const promptLeakField = copyFields.find(text => promptLanguagePattern.test(text));
   add('no_prompt_language', 'Customer-facing copy contains no AI art-direction phrasing', !promptLeakField, promptLeakField ? `Found art-direction language in copy: "${promptLeakField}"` : 'No art-direction phrasing detected in copy fields.');
-  const artworkRendered = /data-visual="[a-z]+"/.test(html) && /<svg[\s>]/i.test(html);
-  add('category_artwork_rendered', 'Category-driven hero artwork rendered successfully', artworkRendered, artworkRendered ? 'Hero artwork present.' : 'Hero visual is missing its category artwork.');
+  const artworkRendered = /data-visual="[a-z]+"/.test(html) && (/<svg[\s>]/i.test(html) || /data-hero-image="ai-generated"/.test(html));
+  add('category_artwork_rendered', 'Hero visual rendered successfully (artwork or photo)', artworkRendered, artworkRendered ? 'Hero artwork present.' : 'Hero visual is missing its category artwork.');
   const serviceNames = (spec.services || []).map(item => String(item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim());
   const serviceCopy = (spec.services || []).map(item => `${item.name || ''} ${item.summary || ''}`.toLowerCase());
   add('distinct_services', 'Service topics are distinct', new Set(serviceNames).size === serviceNames.length, `${new Set(serviceNames).size} unique names across ${serviceNames.length} cards.`);
@@ -374,6 +421,10 @@ function runQa(lead, spec, html) {
     passedCount: checks.filter(check => check.passed).length,
     totalCount: checks.length,
     checks,
+    requiresVisualReview: Boolean(heroImage?.dataUrl),
+    visualReviewNote: heroImage?.dataUrl
+      ? 'This draft includes an AI-generated hero photo. Automated checks cannot verify image pixel content — visually confirm there is no embedded text, watermark, logo, or distorted imagery before catalog approval.'
+      : '',
     scores: {
       safety: score(safetyIds),
       content: score(contentIds),
@@ -391,6 +442,7 @@ module.exports = {
   pickCategoryVisual,
   buildPrompt,
   createSiteSpec,
+  generateHeroImage,
   renderSite,
   runQa,
   leadFacts
