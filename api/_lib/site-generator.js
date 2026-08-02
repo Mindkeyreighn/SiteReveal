@@ -9,6 +9,28 @@ const DESIGN_FAMILIES = [
   'Landscape-led local service'
 ];
 
+// Purely decorative, hand-authored SVG artwork keyed by verified lead category.
+// These are static markup only — never populated from AI output — so there is
+// no way for generated text (a prompt, a motif description, an internal label)
+// to appear inside the hero visual. If a category has no explicit entry, the
+// generic "default" pattern is used.
+const CATEGORY_VISUALS = {
+  cleaning: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="120" cy="140" r="70" fill="none" stroke="#fff" stroke-width="2"/><circle cx="250" cy="90" r="34" fill="none" stroke="#fff" stroke-width="2"/><circle cx="290" cy="260" r="95" fill="none" stroke="#fff" stroke-width="2"/><circle cx="80" cy="300" r="30" fill="none" stroke="#fff" stroke-width="2"/></svg>`,
+  irrigation: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M40 260 Q120 200 200 260 T360 260" fill="none" stroke="#fff" stroke-width="2"/><path d="M20 200 Q100 140 180 200 T340 200" fill="none" stroke="#fff" stroke-width="2"/><circle cx="300" cy="110" r="16" fill="#fff" opacity=".5"/><circle cx="250" cy="150" r="10" fill="#fff" opacity=".4"/></svg>`,
+  landscaping: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M60 340 Q60 200 120 120" fill="none" stroke="#fff" stroke-width="2"/><path d="M120 340 Q130 220 210 140" fill="none" stroke="#fff" stroke-width="2"/><path d="M190 340 Q210 240 300 170" fill="none" stroke="#fff" stroke-width="2"/><path d="M270 340 Q290 260 360 210" fill="none" stroke="#fff" stroke-width="2"/></svg>`,
+  trades: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M40 340 L200 60 L360 340 Z" fill="none" stroke="#fff" stroke-width="2"/><line x1="100" y1="240" x2="300" y2="240" stroke="#fff" stroke-width="2"/><line x1="140" y1="160" x2="260" y2="160" stroke="#fff" stroke-width="2"/></svg>`,
+  moving: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="60" y="180" width="110" height="110" fill="none" stroke="#fff" stroke-width="2"/><rect x="190" y="120" width="140" height="140" fill="none" stroke="#fff" stroke-width="2"/><line x1="60" y1="180" x2="115" y2="140" stroke="#fff" stroke-width="2"/><line x1="170" y1="180" x2="225" y2="140" stroke="#fff" stroke-width="2"/></svg>`,
+  hauling: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="0" y1="340" x2="400" y2="340" stroke="#fff" stroke-width="2"/><line x1="60" y1="40" x2="0" y2="340" stroke="#fff" stroke-width="2"/><line x1="220" y1="40" x2="160" y2="340" stroke="#fff" stroke-width="2"/><line x1="380" y1="40" x2="320" y2="340" stroke="#fff" stroke-width="2"/></svg>`,
+  logistics: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="90" cy="120" r="12" fill="#fff"/><circle cx="300" cy="90" r="12" fill="#fff"/><circle cx="220" cy="240" r="12" fill="#fff"/><circle cx="340" cy="300" r="12" fill="#fff"/><circle cx="80" cy="300" r="12" fill="#fff"/><line x1="90" y1="120" x2="300" y2="90" stroke="#fff" stroke-width="2"/><line x1="300" y1="90" x2="220" y2="240" stroke="#fff" stroke-width="2"/><line x1="220" y1="240" x2="340" y2="300" stroke="#fff" stroke-width="2"/><line x1="220" y1="240" x2="80" y2="300" stroke="#fff" stroke-width="2"/></svg>`,
+  default: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="300" cy="90" r="150" fill="none" stroke="#fff" stroke-width="2"/><circle cx="90" cy="320" r="90" fill="none" stroke="#fff" stroke-width="2"/></svg>`
+};
+
+function pickCategoryVisual(category) {
+  const key = String(category || '').toLowerCase().trim();
+  const known = Object.prototype.hasOwnProperty.call(CATEGORY_VISUALS, key) && key !== 'default';
+  return { key: known ? key : 'default', svg: known ? CATEGORY_VISUALS[key] : CATEGORY_VISUALS.default };
+}
+
 const SPEC_SCHEMA = {
   type: 'object',
   additionalProperties: false,
@@ -227,6 +249,7 @@ function renderSite(lead, spec) {
     ? 'Use the verified contact information below.'
     : 'Contact details must be confirmed before launch.';
   const familyClass = `family-${DESIGN_FAMILIES.indexOf(spec.designFamily) + 1}`;
+  const artwork = pickCategoryVisual(facts.category);
 
   return `<!doctype html>
 <html lang="en">
@@ -247,7 +270,7 @@ function renderSite(lead, spec) {
     h1{font-size:clamp(48px,7vw,96px);line-height:.92;letter-spacing:-.055em;margin:22px 0}.lede{font-size:clamp(18px,2vw,24px);max-width:650px;color:#4f5c57}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
     .outline{background:transparent;color:var(--ink)}.visual{position:relative;min-height:430px;overflow:hidden;background:linear-gradient(145deg,var(--primary),var(--secondary))}
     .visual:before,.visual:after{content:"";position:absolute;border:1px solid #ffffff66;border-radius:50%}.visual:before{width:420px;height:420px;right:-100px;top:-70px}.visual:after{width:250px;height:250px;left:-80px;bottom:-40px}
-    .visual-card{position:absolute;inset:auto 32px 32px;background:#0b1210dc;color:#fff;border:1px solid #ffffff38;border-radius:18px;padding:26px}.visual-card strong{display:block;font-size:28px;margin-top:8px}
+    .visual svg{position:absolute;inset:0;width:100%;height:100%;opacity:.6}
     section{padding:90px 0}.section-head{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:end;margin-bottom:36px}h2{font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:-.04em;margin:0}
     .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px}.card span{color:var(--primary);font-weight:900}
     .signature{background:#0c1512;color:#fff;border-radius:28px;padding:clamp(36px,6vw,76px);display:grid;grid-template-columns:.8fr 1.2fr;gap:45px}.signature ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}.signature li{padding:16px 18px;border:1px solid #ffffff2e;border-radius:12px;background:#ffffff0a}
@@ -273,9 +296,7 @@ function renderSite(lead, spec) {
           <a class="button outline" href="#services">Explore services</a>
         </div>
       </div>
-      <div class="visual">
-        <div class="visual-card"><span>${escapeHtml(spec.designFamily)}</span><strong>${escapeHtml(spec.visualMotif)}</strong></div>
-      </div>
+      <div class="visual" data-visual="${artwork.key}">${artwork.svg}</div>
     </div>
     <section id="services">
       <div class="section-head"><div><div class="eyebrow">What customers may need</div><h2>Useful information, organized clearly.</h2></div><p>This independent preview uses supplied lead details and industry-relevant structure. Specific offerings must be confirmed before launch.</p></div>
@@ -318,6 +339,21 @@ function runQa(lead, spec, html) {
   add('contact', 'At least one verified contact route or explicit confirmation notice', Boolean(lead.phone || lead.email || html.includes('Contact details must be confirmed')), lead.phone || lead.email || 'Contact confirmation notice included.');
   add('facts', 'Fact ledger produced', Array.isArray(spec.factsUsed) && Array.isArray(spec.factsNeedingConfirmation), `${spec.factsUsed?.length || 0} used, ${spec.factsNeedingConfirmation?.length || 0} to confirm.`);
   add('no_scripts', 'Generated draft contains no executable scripts', !/<script[\s>]/i.test(html), 'Renderer does not emit scripts.');
+  const leakedFamilyLabel = DESIGN_FAMILIES.find(family => html.includes(family));
+  add('no_internal_labels', 'No internal design-family label visible in the draft', !leakedFamilyLabel, leakedFamilyLabel ? `Found "${leakedFamilyLabel}" rendered as visible text.` : 'No internal labels present.');
+  const motifLeaked = Boolean(spec.visualMotif) && html.includes(spec.visualMotif);
+  add('no_motif_leak', 'AI visual-direction text is not rendered as visible copy', !motifLeaked, motifLeaked ? 'The visualMotif field appears verbatim in the rendered HTML.' : 'visualMotif was not found in visible output.');
+  const promptLanguagePattern = /\b(abstract composition|digital art|illustration of|photo of|photograph of|rendered in the style of|image of|depicting|art direction|visual motif)\b/i;
+  const copyFields = [
+    spec.headline, spec.tagline, spec.description, spec.signatureModuleTitle,
+    ...(spec.services || []).flatMap(s => [s.name, s.summary]),
+    ...(spec.trustPoints || []).flatMap(t => [t.title, t.detail]),
+    ...(spec.signatureModuleItems || [])
+  ].filter(Boolean);
+  const promptLeakField = copyFields.find(text => promptLanguagePattern.test(text));
+  add('no_prompt_language', 'Customer-facing copy contains no AI art-direction phrasing', !promptLeakField, promptLeakField ? `Found art-direction language in copy: "${promptLeakField}"` : 'No art-direction phrasing detected in copy fields.');
+  const artworkRendered = /data-visual="[a-z]+"/.test(html) && /<svg[\s>]/i.test(html);
+  add('category_artwork_rendered', 'Category-driven hero artwork rendered successfully', artworkRendered, artworkRendered ? 'Hero artwork present.' : 'Hero visual is missing its category artwork.');
   const serviceNames = (spec.services || []).map(item => String(item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim());
   const serviceCopy = (spec.services || []).map(item => `${item.name || ''} ${item.summary || ''}`.toLowerCase());
   add('distinct_services', 'Service topics are distinct', new Set(serviceNames).size === serviceNames.length, `${new Set(serviceNames).size} unique names across ${serviceNames.length} cards.`);
@@ -327,7 +363,7 @@ function runQa(lead, spec, html) {
   add('normalized_location', 'Location is normalized for display', !location.label.match(/^\d+\s/) && location.label.length > 1, `Display location: ${location.label || 'missing'}`);
   const paletteDistinct = String(spec.primaryColor || '').toLowerCase() !== String(spec.secondaryColor || '').toLowerCase();
   add('distinct_palette', 'Primary and secondary colors are distinct', paletteDistinct, `${spec.primaryColor} / ${spec.secondaryColor}`);
-  const safetyIds = new Set(['verified', 'not_published', 'preview_notice', 'contact', 'facts', 'no_scripts']);
+  const safetyIds = new Set(['verified', 'not_published', 'preview_notice', 'contact', 'facts', 'no_scripts', 'no_internal_labels', 'no_motif_leak', 'no_prompt_language']);
   const contentIds = new Set(['distinct_services', 'low_placeholder_density', 'normalized_location']);
   const score = ids => {
     const group = checks.filter(check => ids.has(check.id));
@@ -341,7 +377,7 @@ function runQa(lead, spec, html) {
     scores: {
       safety: score(safetyIds),
       content: score(contentIds),
-      design: score(new Set(['family', 'distinct_palette'])),
+      design: score(new Set(['family', 'distinct_palette', 'category_artwork_rendered'])),
       responsive: score(new Set(['responsive']))
     }
   };
@@ -349,8 +385,10 @@ function runQa(lead, spec, html) {
 
 module.exports = {
   DESIGN_FAMILIES,
+  CATEGORY_VISUALS,
   SPEC_SCHEMA,
   normalizeLocation,
+  pickCategoryVisual,
   buildPrompt,
   createSiteSpec,
   renderSite,
