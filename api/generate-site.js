@@ -2,7 +2,7 @@
 
 const { verifyAdmin, sendJson } = require('./_lib/admin');
 const { getLead, insertJob, updateJob, updateLead } = require('./_lib/supabase');
-const { createSiteSpec, renderSite, runQa } = require('./_lib/site-generator');
+const { createSiteSpec, generateHeroImage, renderSite, runQa } = require('./_lib/site-generator');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -57,14 +57,20 @@ module.exports = async function handler(req, res) {
     });
 
     const { spec, model, responseId } = await createSiteSpec(lead, reviewNotes);
-    const html = renderSite(lead, spec);
-    const qa = runQa(lead, spec, html);
+    const heroImage = await generateHeroImage(lead, spec);
+    const html = renderSite(lead, spec, heroImage);
+    const qa = runQa(lead, spec, html, heroImage);
 
     const savedJob = await updateJob(job.id, {
       status: 'review_ready',
       model,
       design_family: spec.designFamily,
-      site_spec: { ...spec, openaiResponseId: responseId, reviewRequestNotes: reviewNotes },
+      site_spec: {
+        ...spec,
+        openaiResponseId: responseId,
+        reviewRequestNotes: reviewNotes,
+        heroImage: heroImage ? { generated: true, model: heroImage.model, promptUsed: heroImage.promptUsed } : { generated: false }
+      },
       generated_html: html,
       qa_results: qa,
       error_message: null
