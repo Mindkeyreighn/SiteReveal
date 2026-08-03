@@ -140,6 +140,24 @@ generator's structural floor; it does not replace visual catalog review. Reject 
 draft whose photography, spacing, copy specificity, or overall identity still falls
 below the strongest published SiteReveal sites.
 
+## Stage 1.4 branded-experience quality
+
+Stage 1.4 raises the automated review to 32 checks and targets the remaining gap
+between a polished template and a memorable catalog site. It adds:
+
+- coordinated four-tone brand palettes instead of a single accent and neutral,
+- stronger color blocking and section-to-section visual rhythm,
+- more distinctive card shapes and family-specific typography,
+- benefit-led hero and introductory copy instead of brochure labels,
+- mechanical proofreading for common spelling, repetition, spacing, and punctuation failures,
+- family-specific signature experiences,
+- and an interactive, private project checklist and notes board for field-service sites.
+
+The field-service planner uses ordinary HTML form controls without executable
+scripts. Nothing is submitted or transmitted; customers can use it while preparing
+for a call. Other families retain their own specialist guide, lookbook, neighborhood
+postcard, diagnostic console, or property-map experiences.
+
 ## Current safety gates
 
 - Only the configured admin can call the generation endpoint.
