@@ -108,6 +108,38 @@ business before catalog approval.
 These checks improve draft quality but do not verify business claims. The complete
 draft and every fact still require human review.
 
+## Stage 1.3 catalog-quality generation
+
+Stage 1.3 replaces the single shared page template with six independent structural
+renderers. The selected family now changes the page architecture, module types,
+content rhythm, typography treatment, and responsive composition—not only colors.
+
+The six systems are:
+
+- Field-service editorial
+- Heritage specialist
+- Premium appointment/service
+- Warm neighborhood business
+- Technical/trades authority
+- Landscape-led local service
+
+Every generated draft now requires:
+
+- at least six major sections,
+- at least six distinct section compositions,
+- at least twelve meaningful headings,
+- four distinct service topics,
+- three distinct proof points,
+- a four-step customer preparation journey,
+- a category-specific signature module,
+- a structural family that fits the lead category,
+- and all existing safety, factual, contrast, responsive, and copy-quality gates.
+
+The automated review contains 28 checks. A 28/28 result means the draft meets the
+generator's structural floor; it does not replace visual catalog review. Reject any
+draft whose photography, spacing, copy specificity, or overall identity still falls
+below the strongest published SiteReveal sites.
+
 ## Current safety gates
 
 - Only the configured admin can call the generation endpoint.
