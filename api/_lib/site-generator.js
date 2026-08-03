@@ -81,6 +81,8 @@ const SPEC_SCHEMA = {
     'description',
     'primaryColor',
     'secondaryColor',
+    'accentColor',
+    'surfaceColor',
     'ctaLabel',
     'services',
     'trustPoints',
@@ -129,6 +131,8 @@ const SPEC_SCHEMA = {
     description: { type: 'string', minLength: 20, maxLength: 320 },
     primaryColor: { type: 'string', pattern: '^#[0-9a-fA-F]{6}$' },
     secondaryColor: { type: 'string', pattern: '^#[0-9a-fA-F]{6}$' },
+    accentColor: { type: 'string', pattern: '^#[0-9a-fA-F]{6}$' },
+    surfaceColor: { type: 'string', pattern: '^#[0-9a-fA-F]{6}$' },
     ctaLabel: { type: 'string', minLength: 3, maxLength: 30 },
     services: {
       type: 'array',
@@ -256,6 +260,8 @@ function buildPrompt(lead, reviewNotes = '') {
     'Create four processSteps that help a customer prepare, contact, clarify scope, and confirm next steps without pretending the business follows an unverified formal process.',
     'Write a specific introTitle, introBody, processTitle, processIntro, serviceSectionIntro, signatureModuleIntro, contactTitle, and contactIntro. Together they must form a coherent full-page story, not repeat the hero.',
     'Write a short visualLabel and visualCaption that describe the customer decision or category, never the AI image or design process.',
+    'Proofread every customer-facing field carefully. Reject misspellings, fragments, accidental commas, repeated words, and malformed plurals before returning the SiteSpec.',
+    'Choose a coordinated four-color brand palette: primaryColor is a dark readable brand color with at least 4.5:1 contrast against white; secondaryColor is a light neutral; accentColor is a distinct warm or vivid highlight; surfaceColor is a soft tinted panel color. All four must be visibly distinct and appropriate to the category.',
     'Choose a visualMotif that is unmistakably relevant to the category, described as an abstract composition without inventing a business photo.',
     'Write a concise headline of no more than 8 words that will fit in 2–3 desktop lines. Write specific serviceSectionTitle and trustSectionTitle headings for this business category.',
     'The finished page must feel comparable to a custom small-business website: category-specific language, varied section purposes, useful visual rhythm, and no repeated section concepts.',
@@ -542,6 +548,12 @@ function runQa(lead, spec, html, heroImage = null) {
   const genericFillerPattern = /\b(dependable place to start|useful information,? organized clearly|quality service|trusted partner|take the next step)\b/i;
   const genericField = copyFields.find(text => genericFillerPattern.test(text));
   add('no_generic_filler', 'Generic template filler is absent', !genericField, genericField ? `Found generic wording: "${genericField}"` : 'No blocked generic filler detected.');
+  const proofreadingPattern = /\b(sheenes|colours colors|and and|the the|services services)\b|\s[,.;:!?]|[,.;:!?]{2,}/i;
+  const proofreadingField = copyFields.find(text => proofreadingPattern.test(String(text)));
+  add('proofread_copy', 'Customer-facing copy passes mechanical proofreading', !proofreadingField, proofreadingField ? `Possible copy error: "${proofreadingField}"` : 'No obvious spelling, repetition, spacing, or punctuation errors detected.');
+  const brochurePattern = /^(painting|cleaning|landscaping|service|project) (project )?(categories|information|guidance)|direct contact information/i;
+  const brochureField = [spec.description, spec.introBody, spec.tagline].find(text => brochurePattern.test(String(text || '').trim()));
+  add('benefit_led_copy', 'Core copy leads with a customer benefit instead of brochure labels', !brochureField, brochureField ? `Brochure-style core copy: "${brochureField}"` : 'Core copy is benefit-led.');
   const headlineWords = String(spec.headline || '').trim().split(/\s+/).filter(Boolean).length;
   add('concise_headline', 'Headline is concise enough for the layout', String(spec.headline || '').length <= 58 && headlineWords <= 8, `${String(spec.headline || '').length} characters, ${headlineWords} words.`);
   const expectedRenderer = FAMILY_SLUGS[spec.designFamily];
@@ -560,6 +572,7 @@ function runQa(lead, spec, html, heroImage = null) {
   add('complete_process', 'Customer preparation journey is complete and distinct', processTitles.length === 4 && new Set(processTitles).size === processTitles.length, `${new Set(processTitles).size} unique steps across ${processTitles.length} positions.`);
   const genericSignature = /^(project guide|service guide|planning guide|what to know|helpful details)$/i.test(String(spec.signatureModuleTitle || '').trim());
   add('specific_signature', 'Signature module has a category-specific identity', !genericSignature && (spec.signatureModuleItems || []).length >= 4, genericSignature ? 'Signature title is generic.' : `${(spec.signatureModuleItems || []).length} signature items with a specific title.`);
+  add('signature_experience', 'Page includes a designed family-specific signature experience', /data-signature-experience="[^"]+"/.test(html), 'A distinct planning, guide, lookbook, diagnostic, or property module is required.');
   const artworkRendered = /data-visual="[a-z]+"/.test(html) && (/<svg[\s>]/i.test(html) || /data-hero-image="ai-generated"/.test(html));
   add('category_artwork_rendered', 'Hero visual rendered successfully (artwork or photo)', artworkRendered, artworkRendered ? 'Hero artwork present.' : 'Hero visual is missing its category artwork.');
   const serviceNames = (spec.services || []).map(item => String(item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim());
@@ -571,10 +584,12 @@ function runQa(lead, spec, html, heroImage = null) {
   add('normalized_location', 'Location is normalized for display', !location.label.match(/^\d+\s/) && location.label.length > 1, `Display location: ${location.label || 'missing'}`);
   const paletteDistinct = String(spec.primaryColor || '').toLowerCase() !== String(spec.secondaryColor || '').toLowerCase();
   add('distinct_palette', 'Primary and secondary colors are distinct', paletteDistinct, `${spec.primaryColor} / ${spec.secondaryColor}`);
+  const palette = [spec.primaryColor, spec.secondaryColor, spec.accentColor, spec.surfaceColor].map(value => String(value || '').toLowerCase());
+  add('complete_brand_palette', 'Four-tone brand palette is complete and distinct', palette.every(value => /^#[0-9a-f]{6}$/.test(value)) && new Set(palette).size === 4, `${new Set(palette).size} distinct colors across ${palette.length} brand roles.`);
   const primaryWhiteContrast = contrastRatio(spec.primaryColor, '#ffffff');
   add('primary_contrast', 'Primary color supports readable white text', primaryWhiteContrast >= 4.5, `${primaryWhiteContrast.toFixed(2)}:1 contrast against white.`);
   const safetyIds = new Set(['verified', 'not_published', 'preview_notice', 'contact', 'facts', 'no_scripts', 'no_internal_labels', 'no_motif_leak', 'no_prompt_language', 'no_process_language']);
-  const contentIds = new Set(['distinct_services', 'low_placeholder_density', 'normalized_location', 'no_generic_filler', 'concise_headline', 'distinct_proof_points', 'complete_process', 'specific_signature', 'catalog_content_depth']);
+  const contentIds = new Set(['distinct_services', 'low_placeholder_density', 'normalized_location', 'no_generic_filler', 'proofread_copy', 'benefit_led_copy', 'concise_headline', 'distinct_proof_points', 'complete_process', 'specific_signature', 'signature_experience', 'catalog_content_depth']);
   const score = ids => {
     const group = checks.filter(check => ids.has(check.id));
     return group.length ? Math.round(group.filter(check => check.passed).length / group.length * 100) : 0;
@@ -591,7 +606,7 @@ function runQa(lead, spec, html, heroImage = null) {
     scores: {
       safety: score(safetyIds),
       content: score(contentIds),
-      design: score(new Set(['family', 'true_family_renderer', 'family_category_fit', 'distinct_palette', 'primary_contrast', 'category_artwork_rendered', 'catalog_section_depth', 'varied_compositions'])),
+      design: score(new Set(['family', 'true_family_renderer', 'family_category_fit', 'distinct_palette', 'complete_brand_palette', 'primary_contrast', 'category_artwork_rendered', 'catalog_section_depth', 'varied_compositions'])),
       responsive: score(new Set(['responsive']))
     }
   };
