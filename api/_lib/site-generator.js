@@ -1,5 +1,7 @@
 'use strict';
 
+const { renderCatalogSite, FAMILY_SLUGS } = require('./site-renderers');
+
 const DESIGN_FAMILIES = [
   'Field-service editorial',
   'Heritage specialist',
@@ -61,8 +63,20 @@ const SPEC_SCHEMA = {
   required: [
     'designFamily',
     'headline',
+    'introTitle',
+    'introBody',
     'serviceSectionTitle',
+    'serviceSectionIntro',
     'trustSectionTitle',
+    'processTitle',
+    'processIntro',
+    'processSteps',
+    'proofPoints',
+    'visualLabel',
+    'visualCaption',
+    'signatureModuleIntro',
+    'contactTitle',
+    'contactIntro',
     'tagline',
     'description',
     'primaryColor',
@@ -79,8 +93,38 @@ const SPEC_SCHEMA = {
   properties: {
     designFamily: { type: 'string', enum: DESIGN_FAMILIES },
     headline: { type: 'string', minLength: 8, maxLength: 58 },
+    introTitle: { type: 'string', minLength: 8, maxLength: 70 },
+    introBody: { type: 'string', minLength: 30, maxLength: 260 },
     serviceSectionTitle: { type: 'string', minLength: 8, maxLength: 62 },
+    serviceSectionIntro: { type: 'string', minLength: 24, maxLength: 180 },
     trustSectionTitle: { type: 'string', minLength: 8, maxLength: 62 },
+    processTitle: { type: 'string', minLength: 8, maxLength: 62 },
+    processIntro: { type: 'string', minLength: 24, maxLength: 180 },
+    processSteps: {
+      type: 'array', minItems: 4, maxItems: 4,
+      items: {
+        type: 'object', additionalProperties: false, required: ['title', 'detail'],
+        properties: {
+          title: { type: 'string', minLength: 3, maxLength: 48 },
+          detail: { type: 'string', minLength: 18, maxLength: 120 }
+        }
+      }
+    },
+    proofPoints: {
+      type: 'array', minItems: 3, maxItems: 3,
+      items: {
+        type: 'object', additionalProperties: false, required: ['title', 'detail'],
+        properties: {
+          title: { type: 'string', minLength: 3, maxLength: 42 },
+          detail: { type: 'string', minLength: 12, maxLength: 90 }
+        }
+      }
+    },
+    visualLabel: { type: 'string', minLength: 3, maxLength: 30 },
+    visualCaption: { type: 'string', minLength: 6, maxLength: 70 },
+    signatureModuleIntro: { type: 'string', minLength: 24, maxLength: 180 },
+    contactTitle: { type: 'string', minLength: 8, maxLength: 62 },
+    contactIntro: { type: 'string', minLength: 18, maxLength: 150 },
     tagline: { type: 'string', minLength: 4, maxLength: 90 },
     description: { type: 'string', minLength: 20, maxLength: 320 },
     primaryColor: { type: 'string', pattern: '^#[0-9a-fA-F]{6}$' },
@@ -88,7 +132,7 @@ const SPEC_SCHEMA = {
     ctaLabel: { type: 'string', minLength: 3, maxLength: 30 },
     services: {
       type: 'array',
-      minItems: 3,
+      minItems: 4,
       maxItems: 6,
       items: {
         type: 'object',
@@ -118,7 +162,7 @@ const SPEC_SCHEMA = {
     signatureModuleTitle: { type: 'string', minLength: 4, maxLength: 70 },
     signatureModuleItems: {
       type: 'array',
-      minItems: 3,
+      minItems: 4,
       maxItems: 5,
       items: { type: 'string', minLength: 3, maxLength: 90 }
     },
@@ -178,6 +222,24 @@ function leadFacts(lead) {
   };
 }
 
+function familyFitsCategory(category, family) {
+  const value = String(category || '').toLowerCase();
+  const rules = [
+    { match: /paint/, allowed: ['Field-service editorial', 'Heritage specialist'] },
+    { match: /landscap|lawn|yard|irrigat|sprinkler/, allowed: ['Landscape-led local service', 'Field-service editorial'] },
+    { match: /nail|beauty|salon/, allowed: ['Premium appointment/service', 'Warm neighborhood business'] },
+    { match: /pet|groom|dog|animal/, allowed: ['Warm neighborhood business', 'Premium appointment/service'] },
+    { match: /clean|janitorial|maid/, allowed: ['Warm neighborhood business', 'Field-service editorial'] },
+    { match: /mechanic|automotive|repair/, allowed: ['Field-service editorial', 'Technical/trades authority'] },
+    { match: /weld|fabricat|powder coating/, allowed: ['Technical/trades authority', 'Heritage specialist'] },
+    { match: /boat|marine|restoration|taxiderm/, allowed: ['Heritage specialist', 'Technical/trades authority'] },
+    { match: /moving|hauling/, allowed: ['Field-service editorial', 'Technical/trades authority'] },
+    { match: /logistic|trucking|transport/, allowed: ['Technical/trades authority', 'Field-service editorial'] }
+  ];
+  const rule = rules.find(item => item.match.test(value));
+  return !rule || rule.allowed.includes(family);
+}
+
 function buildPrompt(lead, reviewNotes = '') {
   const facts = leadFacts(lead);
   return [
@@ -185,11 +247,18 @@ function buildPrompt(lead, reviewNotes = '') {
     'Use only the supplied facts. Never invent an owner name, years in business, credentials, license, guarantee, price, rating, review quote, service area, availability, or exact service that is not explicitly supplied.',
     'If the supplied description is sparse, use industry knowledge only to organize useful category-level project considerations. Do not present them as confirmed offerings and do not turn the entire website into a list of questions.',
     'The site is an independent preview, not the official business website.',
-    'Choose exactly one locked structural family and create one business-specific signature module.',
+    'Choose exactly one locked structural family. Families are full page-composition systems, not palette choices.',
+    'Family guidance: Field-service editorial suits mobile/local services and practical project work; Heritage specialist suits established craft, restoration, marine, or specialist businesses; Premium appointment/service suits nails, beauty, salons, and appointment-led care; Warm neighborhood business suits pet, family, and approachable local services; Technical/trades authority is only for genuinely technical systems, welding, diagnostics, fabrication, or engineering-heavy trades; Landscape-led local service suits lawn, landscape, irrigation, and property care.',
+    'Create a business-specific signature module that could not be dropped unchanged into an unrelated industry.',
     'Create 3–6 distinct category-topic cards. Each needs a different useful name and customer-focused summary. Do not repeat "to confirm", "details and availability", "customers may ask", or the business name across cards. Put uncertainty in factsNeedingConfirmation instead.',
     'Write three distinct trust points with practical customer benefits. Do not reuse service copy.',
+    'Create three concise proofPoints for a narrow proof strip. They may reference only supplied facts or safe customer actions; never invent credentials or outcomes.',
+    'Create four processSteps that help a customer prepare, contact, clarify scope, and confirm next steps without pretending the business follows an unverified formal process.',
+    'Write a specific introTitle, introBody, processTitle, processIntro, serviceSectionIntro, signatureModuleIntro, contactTitle, and contactIntro. Together they must form a coherent full-page story, not repeat the hero.',
+    'Write a short visualLabel and visualCaption that describe the customer decision or category, never the AI image or design process.',
     'Choose a visualMotif that is unmistakably relevant to the category, described as an abstract composition without inventing a business photo.',
     'Write a concise headline of no more than 8 words that will fit in 2–3 desktop lines. Write specific serviceSectionTitle and trustSectionTitle headings for this business category.',
+    'The finished page must feel comparable to a custom small-business website: category-specific language, varied section purposes, useful visual rhythm, and no repeated section concepts.',
     'Avoid generic filler such as dependable place to start, useful information organized clearly, quality service, your trusted partner, or take the next step unless supplied.',
     'Customer-facing fields must not mention the generation process. Do not use supplied lead details, supplied phone number, independent preview, industry-relevant structure, details must be confirmed, or similar behind-the-scenes language. The renderer supplies the required legal preview disclaimer separately.',
     'Use locationLabel for display copy. Treat address as a full address, not a city name.',
@@ -343,7 +412,7 @@ function contrastRatio(first, second) {
   return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
 }
 
-function renderSite(lead, spec, heroImage = null) {
+function renderLegacySite(lead, spec, heroImage = null) {
   const facts = leadFacts(lead);
   const initials = facts.businessName.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join('').toUpperCase();
   const phoneHref = facts.phone ? `tel:${facts.phone.replace(/[^\d+]/g, '')}` : '#contact';
@@ -432,6 +501,12 @@ function renderSite(lead, spec, heroImage = null) {
 </html>`;
 }
 
+function renderSite(lead, spec, heroImage = null) {
+  const facts = leadFacts(lead);
+  const artwork = pickCategoryVisual(facts.category);
+  return renderCatalogSite(facts, spec, artwork, heroImage);
+}
+
 function runQa(lead, spec, html, heroImage = null) {
   const checks = [];
   const add = (id, label, passed, detail) => checks.push({ id, label, passed: Boolean(passed), detail });
@@ -439,7 +514,7 @@ function runQa(lead, spec, html, heroImage = null) {
   add('not_published', 'Lead remains unpublished', !lead.published, lead.published ? 'Lead is currently public.' : 'Draft remains private.');
   add('family', 'Locked structural family selected', DESIGN_FAMILIES.includes(spec.designFamily), spec.designFamily);
   add('preview_notice', 'Preview disclaimer included', html.includes('BUSINESS DETAILS MUST BE APPROVED'), 'Required preview language.');
-  add('responsive', 'Responsive viewport and mobile rule included', html.includes('width=device-width') && html.includes('@media(max-width:800px)'), 'Static renderer check.');
+  add('responsive', 'Responsive viewport and mobile rule included', html.includes('width=device-width') && /@media\(max-width:\d+px\)/.test(html), 'Static renderer check.');
   add('contact', 'At least one verified contact route or explicit confirmation notice', Boolean(lead.phone || lead.email || html.includes('Contact details must be confirmed')), lead.phone || lead.email || 'Contact confirmation notice included.');
   add('facts', 'Fact ledger produced', Array.isArray(spec.factsUsed) && Array.isArray(spec.factsNeedingConfirmation), `${spec.factsUsed?.length || 0} used, ${spec.factsNeedingConfirmation?.length || 0} to confirm.`);
   add('no_scripts', 'Generated draft contains no executable scripts', !/<script[\s>]/i.test(html), 'Renderer does not emit scripts.');
@@ -449,9 +524,14 @@ function runQa(lead, spec, html, heroImage = null) {
   add('no_motif_leak', 'AI visual-direction text is not rendered as visible copy', !motifLeaked, motifLeaked ? 'The visualMotif field appears verbatim in the rendered HTML.' : 'visualMotif was not found in visible output.');
   const promptLanguagePattern = /\b(abstract composition|digital art|illustration of|photo of|photograph of|rendered in the style of|image of|depicting|art direction|visual motif)\b/i;
   const copyFields = [
-    spec.headline, spec.serviceSectionTitle, spec.trustSectionTitle, spec.tagline, spec.description, spec.signatureModuleTitle,
+    spec.headline, spec.introTitle, spec.introBody, spec.serviceSectionTitle, spec.serviceSectionIntro, spec.trustSectionTitle,
+    spec.processTitle, spec.processIntro, spec.visualLabel, spec.visualCaption,
+    spec.tagline, spec.description, spec.signatureModuleTitle, spec.signatureModuleIntro,
+    spec.contactTitle, spec.contactIntro,
     ...(spec.services || []).flatMap(s => [s.name, s.summary]),
     ...(spec.trustPoints || []).flatMap(t => [t.title, t.detail]),
+    ...(spec.proofPoints || []).flatMap(t => [t.title, t.detail]),
+    ...(spec.processSteps || []).flatMap(t => [t.title, t.detail]),
     ...(spec.signatureModuleItems || [])
   ].filter(Boolean);
   const promptLeakField = copyFields.find(text => promptLanguagePattern.test(text));
@@ -464,6 +544,22 @@ function runQa(lead, spec, html, heroImage = null) {
   add('no_generic_filler', 'Generic template filler is absent', !genericField, genericField ? `Found generic wording: "${genericField}"` : 'No blocked generic filler detected.');
   const headlineWords = String(spec.headline || '').trim().split(/\s+/).filter(Boolean).length;
   add('concise_headline', 'Headline is concise enough for the layout', String(spec.headline || '').length <= 58 && headlineWords <= 8, `${String(spec.headline || '').length} characters, ${headlineWords} words.`);
+  const expectedRenderer = FAMILY_SLUGS[spec.designFamily];
+  add('true_family_renderer', 'Selected family uses its own structural renderer', Boolean(expectedRenderer) && html.includes(`data-family-renderer="${expectedRenderer}"`), expectedRenderer || 'Unknown renderer.');
+  add('family_category_fit', 'Structural family fits the business category', familyFitsCategory(lead.category, spec.designFamily), `${spec.designFamily} / ${lead.category || 'category missing'}`);
+  const sectionCount = (html.match(/<section\b/g) || []).length;
+  add('catalog_section_depth', 'Page has catalog-level section depth', sectionCount >= 6, `${sectionCount} major sections rendered; at least 6 required.`);
+  const layoutNames = [...html.matchAll(/data-layout="([^"]+)"/g)].map(match => match[1]);
+  const uniqueLayouts = new Set(layoutNames);
+  add('varied_compositions', 'Page uses varied section compositions', uniqueLayouts.size >= 6, `${uniqueLayouts.size} distinct compositions rendered.`);
+  const headingCount = (html.match(/<h[1-3]\b/g) || []).length;
+  add('catalog_content_depth', 'Page has catalog-level content depth', headingCount >= 12, `${headingCount} meaningful headings rendered; at least 12 required.`);
+  const proofTitles = (spec.proofPoints || []).map(item => String(item.title || '').toLowerCase().trim());
+  add('distinct_proof_points', 'Proof strip points are distinct', proofTitles.length === 3 && new Set(proofTitles).size === proofTitles.length, `${new Set(proofTitles).size} unique proof points.`);
+  const processTitles = (spec.processSteps || []).map(item => String(item.title || '').toLowerCase().trim());
+  add('complete_process', 'Customer preparation journey is complete and distinct', processTitles.length === 4 && new Set(processTitles).size === processTitles.length, `${new Set(processTitles).size} unique steps across ${processTitles.length} positions.`);
+  const genericSignature = /^(project guide|service guide|planning guide|what to know|helpful details)$/i.test(String(spec.signatureModuleTitle || '').trim());
+  add('specific_signature', 'Signature module has a category-specific identity', !genericSignature && (spec.signatureModuleItems || []).length >= 4, genericSignature ? 'Signature title is generic.' : `${(spec.signatureModuleItems || []).length} signature items with a specific title.`);
   const artworkRendered = /data-visual="[a-z]+"/.test(html) && (/<svg[\s>]/i.test(html) || /data-hero-image="ai-generated"/.test(html));
   add('category_artwork_rendered', 'Hero visual rendered successfully (artwork or photo)', artworkRendered, artworkRendered ? 'Hero artwork present.' : 'Hero visual is missing its category artwork.');
   const serviceNames = (spec.services || []).map(item => String(item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim());
@@ -478,7 +574,7 @@ function runQa(lead, spec, html, heroImage = null) {
   const primaryWhiteContrast = contrastRatio(spec.primaryColor, '#ffffff');
   add('primary_contrast', 'Primary color supports readable white text', primaryWhiteContrast >= 4.5, `${primaryWhiteContrast.toFixed(2)}:1 contrast against white.`);
   const safetyIds = new Set(['verified', 'not_published', 'preview_notice', 'contact', 'facts', 'no_scripts', 'no_internal_labels', 'no_motif_leak', 'no_prompt_language', 'no_process_language']);
-  const contentIds = new Set(['distinct_services', 'low_placeholder_density', 'normalized_location', 'no_generic_filler', 'concise_headline']);
+  const contentIds = new Set(['distinct_services', 'low_placeholder_density', 'normalized_location', 'no_generic_filler', 'concise_headline', 'distinct_proof_points', 'complete_process', 'specific_signature', 'catalog_content_depth']);
   const score = ids => {
     const group = checks.filter(check => ids.has(check.id));
     return group.length ? Math.round(group.filter(check => check.passed).length / group.length * 100) : 0;
@@ -495,7 +591,7 @@ function runQa(lead, spec, html, heroImage = null) {
     scores: {
       safety: score(safetyIds),
       content: score(contentIds),
-      design: score(new Set(['family', 'distinct_palette', 'primary_contrast', 'category_artwork_rendered'])),
+      design: score(new Set(['family', 'true_family_renderer', 'family_category_fit', 'distinct_palette', 'primary_contrast', 'category_artwork_rendered', 'catalog_section_depth', 'varied_compositions'])),
       responsive: score(new Set(['responsive']))
     }
   };
